@@ -1,0 +1,682 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation Environments &mdash; Singularity container 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Appendix" href="appendix.html" />
+    <link rel="prev" title="Troubleshooting" href="troubleshooting.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Singularity container
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="admin_quickstart.html">Administration Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="the_singularity_config_file.html">The Singularity Config File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_checks.html">Container Checks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation Environments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#singularity-on-hpc">Singularity on HPC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#workflows">Workflows</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#integration-with-mpi">Integration with MPI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tutorials">Tutorials</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mpi-development-example">MPI Development Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#code-example-using-open-mpi-2-1-0-stable">Code Example using Open MPI 2.1.0 Stable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#code-example-using-open-mpi-git-master">Code Example using Open MPI git master</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#image-environment">Image Environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#directory-access">Directory access</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#current-working-directory">Current Working Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#standard-io-and-pipes">Standard IO and pipes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#containing-the-container">Containing the container</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#in-layman-terms">In layman terms…</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Singularity container</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Installation Environments</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/installation_environments.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation-environments">
+<h1>Installation Environments<a class="headerlink" href="#installation-environments" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="singularity-on-hpc">
+<h2>Singularity on HPC<a class="headerlink" href="#singularity-on-hpc" title="Permalink to this headline">¶</a></h2>
+<p>One of the architecturally defined features in Singularity is that it
+can execute containers like they are native programs or scripts on a
+host computer. As a result, integration with schedulers is simple and
+runs exactly as you would expect. All standard input, output, error,
+pipes, IPC, and other communication pathways that locally running
+programs employ are synchronized with the applications running locally
+within the container.
+Additionally, because Singularity is not emulating a full hardware
+level virtualization paradigm, there is no need to separate out any
+sandboxed networks or file systems because there is no concept of
+user-escalation within a container. Users can run Singularity
+containers just as they run any other program on the HPC resource.</p>
+<div class="section" id="workflows">
+<h3>Workflows<a class="headerlink" href="#workflows" title="Permalink to this headline">¶</a></h3>
+<p>We are in the process of developing Singularity Hub, which will allow
+for generation of workflows using Singularity containers in an online
+interface, and easy deployment on standard research clusters (e.g.,
+SLURM, SGE). Currently, the Singularity core software is installed on
+the following research clusters, meaning you can run Singularity
+containers as part of your jobs:</p>
+<ul class="simple">
+<li>The <a class="reference external" href="http://sherlock.stanford.edu/">Sherlock cluster</a> at <a class="reference external" href="https://srcc.stanford.edu/">Stanford
+University</a></li>
+<li><a class="reference external" href="https://www.xsede.org/news/-/news/item/7624">SDSC Comet and
+Gordon</a> (XSEDE)</li>
+<li><a class="reference external" href="http://docs.massive.org.au/index.html">MASSIVE M1 M2 and M3</a>
+(Monash University and Australian National Merit Allocation Scheme)</li>
+</ul>
+<div class="section" id="integration-with-mpi">
+<h4>Integration with MPI<a class="headerlink" href="#integration-with-mpi" title="Permalink to this headline">¶</a></h4>
+<p>Another result of the Singularity architecture is the ability to
+properly integrate with the Message Passing Interface (MPI). Work has
+already been done for out of the box compatibility with Open MPI (both
+in Open MPI v2.1.x as well as part of Singularity). The Open
+MPI/Singularity workflow works as follows:</p>
+<ol class="arabic simple">
+<li>mpirun is called by the resource manager or the user directly from a
+shell</li>
+<li>Open MPI then calls the process management daemon (ORTED)</li>
+<li>The ORTED process launches the Singularity container requested by the
+mpirun command</li>
+<li>Singularity builds the container and namespace environment</li>
+<li>Singularity then launches the MPI application within the container</li>
+<li>The MPI application launches and loads the Open MPI libraries</li>
+<li>The Open MPI libraries connect back to the ORTED process via the
+Process Management Interface (PMI)</li>
+<li>At this point the processes within the container run as they would
+normally directly on the host.</li>
+</ol>
+<p>This entire process happens behind the scenes, and from the user’s
+perspective running via MPI is as simple as just calling mpirun on the
+host as they would normally.
+Below are example snippets of building and installing OpenMPI into a
+container and then running an example MPI program through Singularity.</p>
+</div>
+<div class="section" id="tutorials">
+<h4>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="https://singularity-admindoc.readthedocs.io/en/latest/appendix.html#using-host-libraries-gpu-drivers-and-openmpi-btls">Using Host libraries: GPU drivers and OpenMPI BTLs</a></p>
+</div>
+<div class="section" id="mpi-development-example">
+<h4>MPI Development Example<a class="headerlink" href="#mpi-development-example" title="Permalink to this headline">¶</a></h4>
+<p><strong>What are supported Open MPI Version(s)?</strong> To achieve proper
+container’ized Open MPI support, you should use Open MPI version 2.1.
+There are however three caveats:</p>
+<ol class="arabic simple">
+<li>Open MPI 1.10.x may work but we expect you will need exactly matching
+version of PMI and Open MPI on both host and container (the 2.1
+series should relax this requirement)</li>
+<li>Open MPI 2.1.0 has a bug affecting compilation of libraries for some
+interfaces (particularly Mellanox interfaces using libmxm are known
+to fail). If your in this situation you should use the master branch
+of Open MPI rather than the release.</li>
+<li>Using Open MPI 2.1 does not magically allow your container to connect
+to networking fabric libraries in the host. If your cluster has, for
+example, an infiniband network you still need to install OFED
+libraries into the container. Alternatively you could bind mount both
+Open MPI and networking libraries into the container, but this could
+run afoul of glib compatibility issues (its generally OK if the
+container glibc is more recent than the host, but not the other way
+around)</li>
+</ol>
+</div>
+<div class="section" id="code-example-using-open-mpi-2-1-0-stable">
+<h4>Code Example using Open MPI 2.1.0 Stable<a class="headerlink" href="#code-example-using-open-mpi-2-1-0-stable" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ # Include the appropriate development tools into the container (notice we are calling
+
+$ # singularity as root and the container is writable)
+
+$ sudo singularity exec -w /tmp/Centos-7.img yum groupinstall &quot;Development Tools&quot;
+
+$
+
+$ # Obtain the development version of Open MPI
+
+$ wget https://www.open-mpi.org/software/ompi/v2.1/downloads/openmpi-2.1.0.tar.bz2
+
+$ tar jtf openmpi-2.1.0.tar.bz2
+
+$ cd openmpi-2.1.0
+
+$
+
+$ singularity exec /tmp/Centos-7.img ./configure --prefix=/usr/local
+
+$ singularity exec /tmp/Centos-7.img make
+
+$
+
+$ # Install OpenMPI into the container (notice now running as root and container is writable)
+
+$ sudo singularity exec -w -B /home /tmp/Centos-7.img make install
+
+$
+
+$ # Build the OpenMPI ring example and place the binary in this directory
+
+$ singularity exec /tmp/Centos-7.img mpicc examples/ring_c.c -o ring
+
+$
+
+$ # Install the MPI binary into the container at /usr/bin/ring
+
+$ sudo singularity copy /tmp/Centos-7.img ./ring /usr/bin/
+
+$
+
+$ # Run the MPI program within the container by calling the MPIRUN on the host
+
+$ mpirun -np 20 singularity exec /tmp/Centos-7.img /usr/bin/ring
+</pre></div>
+</div>
+</div>
+<div class="section" id="code-example-using-open-mpi-git-master">
+<h4>Code Example using Open MPI git master<a class="headerlink" href="#code-example-using-open-mpi-git-master" title="Permalink to this headline">¶</a></h4>
+<p>The previous example (using the Open MPI 2.1.0 stable release) should
+work fine on most hardware but if you have an issue, try running the
+example below (using the Open MPI Master branch):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ # Include the appropriate development tools into the container (notice we are calling
+
+$ # singularity as root and the container is writable)
+
+$ sudo singularity exec -w /tmp/Centos-7.img yum groupinstall &quot;Development Tools&quot;
+
+$
+
+$ # Clone the OpenMPI GitHub master branch in current directory (on host)
+
+$ git clone https://github.com/open-mpi/ompi.git
+
+$ cd ompi
+
+$
+
+$ # Build OpenMPI in the working directory, using the tool chain within the container
+
+$ singularity exec /tmp/Centos-7.img ./autogen.pl
+
+$ singularity exec /tmp/Centos-7.img ./configure --prefix=/usr/local
+
+$ singularity exec /tmp/Centos-7.img make
+
+$
+
+$ # Install OpenMPI into the container (notice now running as root and container is writable)
+
+$ sudo singularity exec -w -B /home /tmp/Centos-7.img make install
+
+$
+
+$ # Build the OpenMPI ring example and place the binary in this directory
+
+$ singularity exec /tmp/Centos-7.img mpicc examples/ring_c.c -o ring
+
+$
+
+$ # Install the MPI binary into the container at /usr/bin/ring
+
+$ sudo singularity copy /tmp/Centos-7.img ./ring /usr/bin/
+
+$
+
+$ # Run the MPI program within the container by calling the MPIRUN on the host
+
+$ mpirun -np 20 singularity exec /tmp/Centos-7.img /usr/bin/ring
+
+
+
+Process 0 sending 10 to 1, tag 201 (20 processes in ring)
+
+Process 0 sent to 1
+
+Process 0 decremented value: 9
+
+Process 0 decremented value: 8
+
+Process 0 decremented value: 7
+
+Process 0 decremented value: 6
+
+Process 0 decremented value: 5
+
+Process 0 decremented value: 4
+
+Process 0 decremented value: 3
+
+Process 0 decremented value: 2
+
+Process 0 decremented value: 1
+
+Process 0 decremented value: 0
+
+Process 0 exiting
+
+Process 1 exiting
+
+Process 2 exiting
+
+Process 3 exiting
+
+Process 4 exiting
+
+Process 5 exiting
+
+Process 6 exiting
+
+Process 7 exiting
+
+Process 8 exiting
+
+Process 9 exiting
+
+Process 10 exiting
+
+Process 11 exiting
+
+Process 12 exiting
+
+Process 13 exiting
+
+Process 14 exiting
+
+Process 15 exiting
+
+Process 16 exiting
+
+Process 17 exiting
+
+Process 18 exiting
+
+Process 19 exiting
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="image-environment">
+<h2>Image Environment<a class="headerlink" href="#image-environment" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="directory-access">
+<h3>Directory access<a class="headerlink" href="#directory-access" title="Permalink to this headline">¶</a></h3>
+<p>By default Singularity tries to create a seamless user experience
+between the host and the container. To do this, Singularity makes
+various locations accessible within the container automatically. For
+example, the user’s home directory is always bound into the container as
+is /tmp and /var/tmp. Additionally your current working directory
+(cwd/pwd) is also bound into the container iff it is not an operating
+system directory or already accessible via another mount. For almost all
+cases, this will work flawlessly as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pwd
+
+/home/gmk/demo
+
+$ singularity shell container.img
+
+Singularity/container.img&gt; pwd
+
+/home/gmk/demo
+
+Singularity/container.img&gt; ls -l debian.def
+
+-rw-rw-r--. 1 gmk gmk 125 May 28 10:35 debian.def
+
+Singularity/container.img&gt; exit
+
+$
+</pre></div>
+</div>
+<p>For directory binds to function properly, there must be an existing
+target endpoint within the container (just like a mount point). This
+means that if your home directory exists in a non-standard base
+directory like “/foobar/username” then the base directory “/foobar”
+must already exist within the container.
+Singularity will not create these base directories! You must enter the
+container with the option <code class="docutils literal notranslate"><span class="pre">--writable</span></code> being set, and create the directory
+manually.</p>
+<div class="section" id="current-working-directory">
+<h4>Current Working Directory<a class="headerlink" href="#current-working-directory" title="Permalink to this headline">¶</a></h4>
+<p>Singularity will try to replicate your current working directory within
+the container. Sometimes this is straight forward and possible, other
+times it is not (e.g. if the base dir of your current working directory
+does not exist). In that case, Singularity will retain the file
+descriptor to your current directory and change you back to it. If you
+do a ‘pwd’ within the container, you may see some weird things. For
+example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pwd
+
+/foobar
+
+$ ls -l
+
+total 0
+
+-rw-r--r--. 1 root root 0 Jun  1 11:32 mooooo
+
+$ singularity shell ~/demo/container.img
+
+WARNING: CWD bind directory not present: /foobar
+
+Singularity/container.img&gt; pwd
+
+(unreachable)/foobar
+
+Singularity/container.img&gt; ls -l
+
+total 0
+
+-rw-r--r--. 1 root root 0 Jun  1 18:32 mooooo
+
+Singularity/container.img&gt; exit
+
+$
+</pre></div>
+</div>
+<p>But notice how even though the directory location is not resolvable, the
+directory contents are available.</p>
+</div>
+</div>
+<div class="section" id="standard-io-and-pipes">
+<h3>Standard IO and pipes<a class="headerlink" href="#standard-io-and-pipes" title="Permalink to this headline">¶</a></h3>
+<p>Singularity automatically sends and receives all standard IO from the
+host to the applications within the container to facilitate expected
+behavior from the interaction between the host and the container. For
+example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cat debian.def | singularity exec container.img grep &#39;MirrorURL&#39;
+
+MirrorURL &quot;http://ftp.us.debian.org/debian/&quot;
+
+$
+
+Making changes to the container (writable)
+
+By default, containers are accessed as read only. This is both to enable parallel container execution (e.g. MPI). To enter a container using exec, run, or shell you must pass the --writable flag in order to open the image as read/writable.
+</pre></div>
+</div>
+</div>
+<div class="section" id="containing-the-container">
+<h3>Containing the container<a class="headerlink" href="#containing-the-container" title="Permalink to this headline">¶</a></h3>
+<p>By providing the argument <code class="docutils literal notranslate"><span class="pre">--contain</span></code> to <code class="docutils literal notranslate"><span class="pre">exec</span></code>, <code class="docutils literal notranslate"><span class="pre">run</span></code> or <code class="docutils literal notranslate"><span class="pre">shell</span></code> you will find that shared directories
+are no longer shared. For example, the user’s home directory is
+writable, but it is non-persistent between non-overlapping runs.</p>
+</div>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Redistribution</span> <span class="ow">and</span> <span class="n">use</span> <span class="ow">in</span> <span class="n">source</span> <span class="ow">and</span> <span class="n">binary</span> <span class="n">forms</span><span class="p">,</span> <span class="k">with</span> <span class="ow">or</span> <span class="n">without</span>
+<span class="n">modification</span><span class="p">,</span> <span class="n">are</span> <span class="n">permitted</span> <span class="n">provided</span> <span class="n">that</span> <span class="n">the</span> <span class="n">following</span> <span class="n">conditions</span> <span class="n">are</span> <span class="n">met</span><span class="p">:</span>
+
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">Redistributions</span> <span class="n">of</span> <span class="n">source</span> <span class="n">code</span> <span class="n">must</span> <span class="n">retain</span> <span class="n">the</span> <span class="n">above</span> <span class="n">copyright</span> <span class="n">notice</span><span class="p">,</span>
+<span class="n">this</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">conditions</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">following</span> <span class="n">disclaimer</span><span class="o">.</span>
+
+<span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">Redistributions</span> <span class="ow">in</span> <span class="n">binary</span> <span class="n">form</span> <span class="n">must</span> <span class="n">reproduce</span> <span class="n">the</span> <span class="n">above</span> <span class="n">copyright</span> <span class="n">notice</span><span class="p">,</span>
+<span class="n">this</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">conditions</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">following</span> <span class="n">disclaimer</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">documentation</span>
+<span class="ow">and</span><span class="o">/</span><span class="ow">or</span> <span class="n">other</span> <span class="n">materials</span> <span class="n">provided</span> <span class="k">with</span> <span class="n">the</span> <span class="n">distribution</span><span class="o">.</span>
+
+<span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="n">Neither</span> <span class="n">the</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">University</span> <span class="n">of</span> <span class="n">California</span><span class="p">,</span> <span class="n">Lawrence</span> <span class="n">Berkeley</span>
+<span class="n">National</span> <span class="n">Laboratory</span><span class="p">,</span> <span class="n">U</span><span class="o">.</span><span class="n">S</span><span class="o">.</span> <span class="n">Dept</span><span class="o">.</span> <span class="n">of</span> <span class="n">Energy</span> <span class="n">nor</span> <span class="n">the</span> <span class="n">names</span> <span class="n">of</span> <span class="n">its</span> <span class="n">contributors</span>
+<span class="n">may</span> <span class="n">be</span> <span class="n">used</span> <span class="n">to</span> <span class="n">endorse</span> <span class="ow">or</span> <span class="n">promote</span> <span class="n">products</span> <span class="n">derived</span> <span class="kn">from</span> <span class="nn">this</span> <span class="n">software</span> <span class="n">without</span>
+<span class="n">specific</span> <span class="n">prior</span> <span class="n">written</span> <span class="n">permission</span><span class="o">.</span>
+
+<span class="n">THIS</span> <span class="n">SOFTWARE</span> <span class="n">IS</span> <span class="n">PROVIDED</span> <span class="n">BY</span> <span class="n">THE</span> <span class="n">COPYRIGHT</span> <span class="n">HOLDERS</span> <span class="n">AND</span> <span class="n">CONTRIBUTORS</span> <span class="s2">&quot;AS IS&quot;</span>
+<span class="n">AND</span> <span class="n">ANY</span> <span class="n">EXPRESS</span> <span class="n">OR</span> <span class="n">IMPLIED</span> <span class="n">WARRANTIES</span><span class="p">,</span> <span class="n">INCLUDING</span><span class="p">,</span> <span class="n">BUT</span> <span class="n">NOT</span> <span class="n">LIMITED</span> <span class="n">TO</span><span class="p">,</span> <span class="n">THE</span>
+<span class="n">IMPLIED</span> <span class="n">WARRANTIES</span> <span class="n">OF</span> <span class="n">MERCHANTABILITY</span> <span class="n">AND</span> <span class="n">FITNESS</span> <span class="n">FOR</span> <span class="n">A</span> <span class="n">PARTICULAR</span> <span class="n">PURPOSE</span> <span class="n">ARE</span>
+<span class="n">DISCLAIMED</span><span class="o">.</span> <span class="n">IN</span> <span class="n">NO</span> <span class="n">EVENT</span> <span class="n">SHALL</span> <span class="n">THE</span> <span class="n">COPYRIGHT</span> <span class="n">OWNER</span> <span class="n">OR</span> <span class="n">CONTRIBUTORS</span> <span class="n">BE</span> <span class="n">LIABLE</span>
+<span class="n">FOR</span> <span class="n">ANY</span> <span class="n">DIRECT</span><span class="p">,</span> <span class="n">INDIRECT</span><span class="p">,</span> <span class="n">INCIDENTAL</span><span class="p">,</span> <span class="n">SPECIAL</span><span class="p">,</span> <span class="n">EXEMPLARY</span><span class="p">,</span> <span class="n">OR</span> <span class="n">CONSEQUENTIAL</span>
+<span class="n">DAMAGES</span> <span class="p">(</span><span class="n">INCLUDING</span><span class="p">,</span> <span class="n">BUT</span> <span class="n">NOT</span> <span class="n">LIMITED</span> <span class="n">TO</span><span class="p">,</span> <span class="n">PROCUREMENT</span> <span class="n">OF</span> <span class="n">SUBSTITUTE</span> <span class="n">GOODS</span> <span class="n">OR</span>
+<span class="n">SERVICES</span><span class="p">;</span> <span class="n">LOSS</span> <span class="n">OF</span> <span class="n">USE</span><span class="p">,</span> <span class="n">DATA</span><span class="p">,</span> <span class="n">OR</span> <span class="n">PROFITS</span><span class="p">;</span> <span class="n">OR</span> <span class="n">BUSINESS</span> <span class="n">INTERRUPTION</span><span class="p">)</span> <span class="n">HOWEVER</span>
+<span class="n">CAUSED</span> <span class="n">AND</span> <span class="n">ON</span> <span class="n">ANY</span> <span class="n">THEORY</span> <span class="n">OF</span> <span class="n">LIABILITY</span><span class="p">,</span> <span class="n">WHETHER</span> <span class="n">IN</span> <span class="n">CONTRACT</span><span class="p">,</span> <span class="n">STRICT</span> <span class="n">LIABILITY</span><span class="p">,</span>
+<span class="n">OR</span> <span class="n">TORT</span> <span class="p">(</span><span class="n">INCLUDING</span> <span class="n">NEGLIGENCE</span> <span class="n">OR</span> <span class="n">OTHERWISE</span><span class="p">)</span> <span class="n">ARISING</span> <span class="n">IN</span> <span class="n">ANY</span> <span class="n">WAY</span> <span class="n">OUT</span> <span class="n">OF</span> <span class="n">THE</span> <span class="n">USE</span>
+<span class="n">OF</span> <span class="n">THIS</span> <span class="n">SOFTWARE</span><span class="p">,</span> <span class="n">EVEN</span> <span class="n">IF</span> <span class="n">ADVISED</span> <span class="n">OF</span> <span class="n">THE</span> <span class="n">POSSIBILITY</span> <span class="n">OF</span> <span class="n">SUCH</span> <span class="n">DAMAGE</span><span class="o">.</span>
+
+<span class="n">You</span> <span class="n">are</span> <span class="n">under</span> <span class="n">no</span> <span class="n">obligation</span> <span class="n">whatsoever</span> <span class="n">to</span> <span class="n">provide</span> <span class="nb">any</span> <span class="n">bug</span> <span class="n">fixes</span><span class="p">,</span> <span class="n">patches</span><span class="p">,</span> <span class="ow">or</span>
+<span class="n">upgrades</span> <span class="n">to</span> <span class="n">the</span> <span class="n">features</span><span class="p">,</span> <span class="n">functionality</span> <span class="ow">or</span> <span class="n">performance</span> <span class="n">of</span> <span class="n">the</span> <span class="n">source</span> <span class="n">code</span>
+<span class="p">(</span><span class="s2">&quot;Enhancements&quot;</span><span class="p">)</span> <span class="n">to</span> <span class="n">anyone</span><span class="p">;</span> <span class="n">however</span><span class="p">,</span> <span class="k">if</span> <span class="n">you</span> <span class="n">choose</span> <span class="n">to</span> <span class="n">make</span> <span class="n">your</span> <span class="n">Enhancements</span>
+<span class="n">available</span> <span class="n">either</span> <span class="n">publicly</span><span class="p">,</span> <span class="ow">or</span> <span class="n">directly</span> <span class="n">to</span> <span class="n">Lawrence</span> <span class="n">Berkeley</span> <span class="n">National</span>
+<span class="n">Laboratory</span><span class="p">,</span> <span class="n">without</span> <span class="n">imposing</span> <span class="n">a</span> <span class="n">separate</span> <span class="n">written</span> <span class="n">license</span> <span class="n">agreement</span> <span class="k">for</span> <span class="n">such</span>
+<span class="n">Enhancements</span><span class="p">,</span> <span class="n">then</span> <span class="n">you</span> <span class="n">hereby</span> <span class="n">grant</span> <span class="n">the</span> <span class="n">following</span> <span class="n">license</span><span class="p">:</span> <span class="n">a</span>  <span class="n">non</span><span class="o">-</span><span class="n">exclusive</span><span class="p">,</span>
+<span class="n">royalty</span><span class="o">-</span><span class="n">free</span> <span class="n">perpetual</span> <span class="n">license</span> <span class="n">to</span> <span class="n">install</span><span class="p">,</span> <span class="n">use</span><span class="p">,</span> <span class="n">modify</span><span class="p">,</span> <span class="n">prepare</span> <span class="n">derivative</span>
+<span class="n">works</span><span class="p">,</span> <span class="n">incorporate</span> <span class="n">into</span> <span class="n">other</span> <span class="n">computer</span> <span class="n">software</span><span class="p">,</span> <span class="n">distribute</span><span class="p">,</span> <span class="ow">and</span> <span class="n">sublicense</span>
+<span class="n">such</span> <span class="n">enhancements</span> <span class="ow">or</span> <span class="n">derivative</span> <span class="n">works</span> <span class="n">thereof</span><span class="p">,</span> <span class="ow">in</span> <span class="n">binary</span> <span class="ow">and</span> <span class="n">source</span> <span class="n">code</span> <span class="n">form</span><span class="o">.</span>
+
+<span class="n">If</span> <span class="n">you</span> <span class="n">have</span> <span class="n">questions</span> <span class="n">about</span> <span class="n">your</span> <span class="n">rights</span> <span class="n">to</span> <span class="n">use</span> <span class="ow">or</span> <span class="n">distribute</span> <span class="n">this</span> <span class="n">software</span><span class="p">,</span>
+<span class="n">please</span> <span class="n">contact</span> <span class="n">Berkeley</span> <span class="n">Lab</span><span class="s1">&#39;s Innovation &amp; Partnerships Office at</span>
+<span class="n">IPO</span><span class="nd">@lbl</span><span class="o">.</span><span class="n">gov</span><span class="o">.</span>
+
+<span class="n">NOTICE</span><span class="o">.</span>  <span class="n">This</span> <span class="n">Software</span> <span class="n">was</span> <span class="n">developed</span> <span class="n">under</span> <span class="n">funding</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">U</span><span class="o">.</span><span class="n">S</span><span class="o">.</span> <span class="n">Department</span> <span class="n">of</span>
+<span class="n">Energy</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">U</span><span class="o">.</span><span class="n">S</span><span class="o">.</span> <span class="n">Government</span> <span class="n">consequently</span> <span class="n">retains</span> <span class="n">certain</span> <span class="n">rights</span><span class="o">.</span> <span class="n">As</span> <span class="n">such</span><span class="p">,</span>
+<span class="n">the</span> <span class="n">U</span><span class="o">.</span><span class="n">S</span><span class="o">.</span> <span class="n">Government</span> <span class="n">has</span> <span class="n">been</span> <span class="n">granted</span> <span class="k">for</span> <span class="n">itself</span> <span class="ow">and</span> <span class="n">others</span> <span class="n">acting</span> <span class="n">on</span> <span class="n">its</span>
+<span class="n">behalf</span> <span class="n">a</span> <span class="n">paid</span><span class="o">-</span><span class="n">up</span><span class="p">,</span> <span class="n">nonexclusive</span><span class="p">,</span> <span class="n">irrevocable</span><span class="p">,</span> <span class="n">worldwide</span> <span class="n">license</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">Software</span>
+<span class="n">to</span> <span class="n">reproduce</span><span class="p">,</span> <span class="n">distribute</span> <span class="n">copies</span> <span class="n">to</span> <span class="n">the</span> <span class="n">public</span><span class="p">,</span> <span class="n">prepare</span> <span class="n">derivative</span> <span class="n">works</span><span class="p">,</span> <span class="ow">and</span>
+<span class="n">perform</span> <span class="n">publicly</span> <span class="ow">and</span> <span class="n">display</span> <span class="n">publicly</span><span class="p">,</span> <span class="ow">and</span> <span class="n">to</span> <span class="n">permit</span> <span class="n">other</span> <span class="n">to</span> <span class="n">do</span> <span class="n">so</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="section" id="in-layman-terms">
+<h3>In layman terms…<a class="headerlink" href="#in-layman-terms" title="Permalink to this headline">¶</a></h3>
+<p>In addition to the (already widely used and very free open source)
+standard BSD 3 clause license, there is also wording specific to
+contributors which ensures that we have permission to release,
+distribute and include a particular contribution, enhancement, or fix as
+part of Singularity proper. For example any contributions submitted will
+have the standard BSD 3 clause terms (unless specifically and otherwise
+stated) and that the contribution is comprised of original new code that
+the contributor has authority to contribute.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="appendix.html" class="btn btn-neutral float-right" title="Appendix" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="troubleshooting.html" class="btn btn-neutral" title="Troubleshooting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

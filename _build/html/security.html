@@ -1,0 +1,742 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Security &mdash; Singularity container 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Singularity Config File" href="the_singularity_config_file.html" />
+    <link rel="prev" title="Administration QuickStart" href="admin_quickstart.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Singularity container
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="admin_quickstart.html">Administration Quickstart</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Security</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#container-security-paradigms">Container security paradigms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#untrusted-users-running-untrusted-containers">Untrusted users running untrusted containers!</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#privilege-escalation-is-necessary-for-containerization">Privilege escalation is necessary for containerization!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-does-singularity-do-it">How does Singularity do it?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#where-are-the-singularity-priviledged-components">Where are the Singularity priviledged components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#can-i-install-singularity-as-a-user">Can I install Singularity as a user?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#container-permissions-and-usage-strategy">Container permissions and usage strategy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#controlling-what-kind-of-containers-are-allowed">controlling what kind of containers are allowed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#limiting-usage-to-specific-container-file-owners">limiting usage to specific container file owners</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#limiting-usage-to-specific-paths">limiting usage to specific paths</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a-peek-into-the-setuid-program-flow">A peek into the SetUID program flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-peek-into-the-rootless-program-flow">A peek into the “rootless” program flow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="the_singularity_config_file.html">The Singularity Config File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_checks.html">Container Checks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation_environments.html">Installation Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Singularity container</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Security</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/security.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="security">
+<h1>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="container-security-paradigms">
+<h2>Container security paradigms<a class="headerlink" href="#container-security-paradigms" title="Permalink to this headline">¶</a></h2>
+<p>First some background. Most container platforms operate on the
+premise, <strong>trusted users running trusted containers</strong>. This means that
+the primary UNIX account controlling the container platform is either
+“root” or user(s) that root has deputized (either via <code class="docutils literal notranslate"><span class="pre">sudo</span></code> or given access
+to a control socket of a root owned daemon process).
+Singularity on the other hand, operates on a different premise because
+it was developed for HPC type infrastructures where you have users,
+none of which are considered trusted. This means the paradigm is
+considerably different as we must support <strong>untrusted users running
+untrusted containers</strong>.</p>
+</div>
+<div class="section" id="untrusted-users-running-untrusted-containers">
+<h2>Untrusted users running untrusted containers!<a class="headerlink" href="#untrusted-users-running-untrusted-containers" title="Permalink to this headline">¶</a></h2>
+<p>This simple phrase describes the security perspective Singularity is
+designed with. And if you additionally consider the fact that running
+containers at all typically requires some level of privilege
+escalation, means that attention to security is of the utmost
+importance.</p>
+<div class="section" id="privilege-escalation-is-necessary-for-containerization">
+<h3>Privilege escalation is necessary for containerization!<a class="headerlink" href="#privilege-escalation-is-necessary-for-containerization" title="Permalink to this headline">¶</a></h3>
+<p>As mentioned, there are several containerization system calls and
+functions which are considered “privileged” in that they must be
+executed with a certain level of capability/privilege. To do this, all
+container systems must employ one of the following mechanisms:</p>
+<ol class="arabic simple">
+<li><strong>Limit usage to root:</strong> Only allow the root user (or users granted <code class="docutils literal notranslate"><span class="pre">sudo</span></code>)
+to run containers. This has the obvious limitation of not allowing
+arbitrary users the ability to run containers, nor does it allow
+users to run containers as themselves. Access to data, security data,
+and securing systems becomes difficult and perhaps impossible.</li>
+<li><strong>Root owned daemon process:</strong> Some container systems use a root
+owned daemon background process which manages the containers and
+spawns the jobs within the container. Implementations of this
+typically have an IPC control socket for communicating with this root
+owned daemon process and if you wish to allow trusted users to
+control the daemon, you must give them access to the control socket.
+This is the Docker model.</li>
+<li><strong>SetUID:</strong> Set UID is the “old school” UNIX method for running a
+particular program with escalated permission. While it is widely used
+due to it’s legacy and POSIX requirement, it lacks the ability to
+manage fine grained control of what a process can and can not do; a
+SetUID root program runs as root with all capabilities that comes
+with root. For this reason, SetUID programs are traditional targets
+for hackers.</li>
+<li><strong>User Namespace:</strong> The Linux kernel’s user namespace may allow a
+user to virtually become another user and run a limited set
+privileged system functions. Here the privilege escalation is managed
+via the Linux kernel which takes the onus off of the program. This is
+a new kernel feature and thus requires new kernels and not all
+distributions have equally adopted this technology.</li>
+<li><strong>Capability Sets:</strong> Linux handles permissions, access, and roles via
+capability sets. The root user has these capabilities automatically
+activated while non-privileged users typically do not have these
+capabilities enabled. You can enable and disable capabilities on a
+per process and per file basis (if allowed to do so).</li>
+</ol>
+</div>
+<div class="section" id="how-does-singularity-do-it">
+<h3>How does Singularity do it?<a class="headerlink" href="#how-does-singularity-do-it" title="Permalink to this headline">¶</a></h3>
+<p>Singularity must allow users to run containers as themselves which rules
+out options 1 and 2 from the above list. Singularity supports the rest
+of the options to following degrees of functionally:</p>
+<ul class="simple">
+<li><strong>User Namespace:</strong> Singularity supports the user namespace natively
+and can run completely unprivileged (“rootless”) since version 2.2
+(October 2016) but features are severely limited. You will not be
+able to use container “images” and will be forced to only work with
+directory (sandbox) based containers. Additionally, as mentioned, the
+user namespace is not equally supported on all distribution kernels
+so don’t count on legacy system support and usability may vary.</li>
+<li><strong>SetUID:</strong> This is the default usage model for Singularity because
+it gives the most flexibility in terms of supported features and
+legacy compliance. It is also the most risky from a security
+perspective. For that reason, Singularity has been developed with
+transparency in mind. The code is written with attention to
+simplicity and readability and Singularity increases the effective
+permission set only when it is necessary, and drops it immediately
+(as can be seen with the <code class="docutils literal notranslate"><span class="pre">–debug</span></code> run flag). There have been several
+independent audits of the source code, and while they are not
+definitive, it is a good assurance.</li>
+<li><strong>Capability Sets:</strong> This is where Singularity is headed as an
+alternative to SetUID because it allows for much finer grained
+capability control and will support all of Singularity’s features.
+The downside is that it is not supported equally on shared file
+systems.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="where-are-the-singularity-priviledged-components">
+<h2>Where are the Singularity priviledged components<a class="headerlink" href="#where-are-the-singularity-priviledged-components" title="Permalink to this headline">¶</a></h2>
+<p>When you install Singularity as root, it will automatically setup the
+necessary files as SetUID (as of version 2.4, this is the default run
+mode). The location of these files is dependent on how Singularity was
+installed and the options passed to the <code class="docutils literal notranslate"><span class="pre">configure</span></code> script. Assuming a default <code class="docutils literal notranslate"><span class="pre">./configure</span></code> run
+which installs files into <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> of <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code> you can find the SetUID programs as
+follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ find /usr/local/libexec/singularity/ -perm -4000
+
+/usr/local/libexec/singularity/bin/start-suid
+
+/usr/local/libexec/singularity/bin/action-suid
+
+/usr/local/libexec/singularity/bin/mount-suid
+</pre></div>
+</div>
+<p>Each of the binaries is named accordingly to the action that it is
+suited for, and generally, each handles the required privilege
+escalation necessary for Singularity to operate. What specifically
+requires escalated privileges?</p>
+<ol class="arabic simple">
+<li>Mounting (and looping) the Singularity container image</li>
+<li>Creation of the necessary namespaces in the kernel</li>
+<li>Binding host paths into the container</li>
+</ol>
+<p>Removing any of these SUID binaries or changing the permissions on them
+would cause Singularity to utilize the non-SUID workflows. Each file
+with <code class="docutils literal notranslate"><span class="pre">*-suid</span></code> also has a non-suid equivalent:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">singularity</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">start</span>
+
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">singularity</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">action</span>
+
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">singularity</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mount</span>
+</pre></div>
+</div>
+<p>While most of these workflows will not properly function without the
+SUID components, we have provided these fall back executables for
+sites that wish to limit the SETUID capabilities to the bare
+essentials/minimum. To disable the SetUID portions of Singularity, you
+can either remove the above <code class="docutils literal notranslate"><span class="pre">*-suid</span></code> files, or you can edit the setting for <code class="docutils literal notranslate"><span class="pre">allow</span> <span class="pre">suid</span></code> at
+the top of the <code class="docutils literal notranslate"><span class="pre">singularity.conf</span></code> file, which is typically located in <code class="docutils literal notranslate"><span class="pre">$PREFIX/etc/singularity/singularity.conf</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ALLOW SETUID: [BOOL]</span>
+
+<span class="c1"># DEFAULT: yes</span>
+
+<span class="c1"># Should we allow users to utilize the setuid program flow within Singularity?</span>
+
+<span class="c1"># note1: This is the default mode, and to utilize all features, this option</span>
+
+<span class="c1"># will need to be enabled.</span>
+
+<span class="c1"># note2: If this option is disabled, it will rely on the user namespace</span>
+
+<span class="c1"># exclusively which has not been integrated equally between the different</span>
+
+<span class="c1"># Linux distributions.</span>
+
+<span class="n">allow</span> <span class="n">setuid</span> <span class="o">=</span> <span class="n">yes</span>
+</pre></div>
+</div>
+<p>You can also install Singularity as root without any of the SetUID
+components with the configure option <code class="docutils literal notranslate"><span class="pre">--disable-suid</span></code> as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./configure --disable-suid --prefix=/usr/local
+
+$ make
+
+$ sudo make install
+</pre></div>
+</div>
+</div>
+<div class="section" id="can-i-install-singularity-as-a-user">
+<h2>Can I install Singularity as a user?<a class="headerlink" href="#can-i-install-singularity-as-a-user" title="Permalink to this headline">¶</a></h2>
+<p>Yes, but don’t expect all of the functions to work. If the SetUID
+components are not present, Singularity will attempt to use the “user
+namespace”. Even if the kernel you are using supports this namespace
+fully, you will still not be able to access all of the Singularity
+features.</p>
+</div>
+<div class="section" id="container-permissions-and-usage-strategy">
+<h2>Container permissions and usage strategy<a class="headerlink" href="#container-permissions-and-usage-strategy" title="Permalink to this headline">¶</a></h2>
+<p>As a system admin, you want to set up a configuration that is
+customized for your cluster or shared resource. In the following
+paragraphs, we will elaborate on this container permissions strategy,
+giving detail about which users are allowed to run containers, along
+with image curation and ownership.</p>
+<p>These settings can all be found in the Singularity configuration file
+which is installed to <code class="docutils literal notranslate"><span class="pre">$PREFIX/etc/singularity/singularity.conf</span></code>. When running in a privileged mode, the
+configuration file <strong>MUST</strong> be owned by root and thus the system
+administrator always has the final control.</p>
+<div class="section" id="controlling-what-kind-of-containers-are-allowed">
+<h3>controlling what kind of containers are allowed<a class="headerlink" href="#controlling-what-kind-of-containers-are-allowed" title="Permalink to this headline">¶</a></h3>
+<p>Singularity supports several different container formats:</p>
+<ul class="simple">
+<li><strong>squashfs:</strong> Compressed immutable (read only) container images
+(default in version 2.4)</li>
+<li><strong>extfs:</strong> Raw file system writable container images</li>
+<li><strong>dir:</strong> Sandbox containers (chroot style directories)</li>
+</ul>
+<p>Using the Singularity configuration file, you can control what types of
+containers Singularity will support:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ALLOW CONTAINER ${TYPE}: [BOOL]</span>
+
+<span class="c1"># DEFAULT: yes</span>
+
+<span class="c1"># This feature limits what kind of containers that Singularity will allow</span>
+
+<span class="c1"># users to use (note this does not apply for root).</span>
+
+<span class="n">allow</span> <span class="n">container</span> <span class="n">squashfs</span> <span class="o">=</span> <span class="n">yes</span>
+
+<span class="n">allow</span> <span class="n">container</span> <span class="n">extfs</span> <span class="o">=</span> <span class="n">yes</span>
+
+<span class="n">allow</span> <span class="n">container</span> <span class="nb">dir</span> <span class="o">=</span> <span class="n">yes</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="limiting-usage-to-specific-container-file-owners">
+<h3>limiting usage to specific container file owners<a class="headerlink" href="#limiting-usage-to-specific-container-file-owners" title="Permalink to this headline">¶</a></h3>
+<p>One benefit of using container images is that they exist on the
+filesystem as any other file would. This means that POSIX permissions
+are mandatory. Here you can configure Singularity to only “trust”
+containers that are owned by a particular set of users.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># LIMIT CONTAINER OWNERS: [STRING]</span>
+<span class="c1"># DEFAULT: NULL</span>
+<span class="c1"># Only allow containers to be used that are owned by a given user. If this</span>
+<span class="c1"># configuration is undefined (commented or set to NULL), all containers are</span>
+<span class="c1"># allowed to be used. This feature only applies when Singularity is running in</span>
+<span class="c1"># SUID mode and the user is non-root.</span>
+<span class="c1">#limit container owners = gmk, singularity, nobody</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are in a high risk security environment, you may want to
+enable this feature. Trusting container images to users could allow a
+malicious user to modify an image either before or while being used and
+cause unexpected behavior from the kernel (e.g. a <a class="reference external" href="https://en.wikipedia.org/wiki/Denial-of-service_attack">DOS
+attack</a>). For
+more information, please see: <a class="reference external" href="https://lwn.net/Articles/652468/">https://lwn.net/Articles/652468/</a></p>
+</div>
+</div>
+<div class="section" id="limiting-usage-to-specific-paths">
+<h3>limiting usage to specific paths<a class="headerlink" href="#limiting-usage-to-specific-paths" title="Permalink to this headline">¶</a></h3>
+<p>The configuration file also gives you the ability to limit containers to
+specific paths. This is very useful to ensure that only trusted or
+blessed container’s are being used (it is also beneficial to ensure that
+containers are only being used on performant file systems).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># LIMIT CONTAINER PATHS: [STRING]</span>
+
+<span class="c1"># DEFAULT: NULL</span>
+
+<span class="c1"># Only allow containers to be used that are located within an allowed path</span>
+
+<span class="c1"># prefix. If this configuration is undefined (commented or set to NULL),</span>
+
+<span class="c1"># containers will be allowed to run from anywhere on the file system. This</span>
+
+<span class="c1"># feature only applies when Singularity is running in SUID mode and the user is</span>
+
+<span class="c1"># non-root.</span>
+
+<span class="c1">#limit container paths = /scratch, /tmp, /global</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>Singularity offers a very comprehensive auditing mechanism via the
+system log. For each command that is issued, it prints the UID, PID, and
+location of the command. For example, let’s see what happens if we shell
+into an image:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity exec ubuntu true
+
+$ singularity shell --home $HOME:/ ubuntu
+
+Singularity: Invoking an interactive shell within container...
+
+
+ERROR  : Failed to execv() /.singularity.d/actions/shell, continuing to /bin/sh: No such file or directory
+
+ERROR  : What are you doing gmk, this is highly irregular!
+
+ABORT  : Retval = 255
+</pre></div>
+</div>
+<p>We can then peek into the system log to see what was recorded:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Oct  5 08:51:12 localhost Singularity: action-suid (U=1000,P=32320)&gt; USER=gmk, IMAGE=&#39;ubuntu&#39;, COMMAND=&#39;exec&#39;
+
+Oct  5 08:53:13 localhost Singularity: action-suid (U=1000,P=32311)&gt; USER=gmk, IMAGE=&#39;ubuntu&#39;, COMMAND=&#39;shell&#39;
+
+Oct  5 08:53:13 localhost Singularity: action-suid (U=1000,P=32311)&gt; Failed to execv() /.singularity.d/actions/shell, continuing to /bin/sh: No such file or directory
+
+Oct  5 08:53:13 localhost Singularity: action-suid (U=1000,P=32311)&gt; What are you doing gmk, this is highly irregular!
+
+Oct  5 08:53:13 localhost Singularity: action-suid (U=1000,P=32311)&gt; Retval = 255
+</pre></div>
+</div>
+<div class="section" id="a-peek-into-the-setuid-program-flow">
+<h3>A peek into the SetUID program flow<a class="headerlink" href="#a-peek-into-the-setuid-program-flow" title="Permalink to this headline">¶</a></h3>
+<p>We can also add the <code class="docutils literal notranslate"><span class="pre">--debug</span></code> argument to any command itself at runtime to see
+everything that Singularity is doing. In this case we can run
+Singularity in debug mode and request use of the PID namespace so we can
+see what Singularity is doing there:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity --debug shell --pid ubuntu
+
+Enabling debugging
+
+Ending argument loop
+
+Singularity version: 2.3.9-development.gc35b753
+
+Exec&#39;ing: /usr/local/libexec/singularity/cli/shell.exec
+
+Evaluating args: &#39;--pid ubuntu&#39;
+</pre></div>
+</div>
+<p>(snipped to PID namespace implementation)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">singularity_runtime_ns_pid</span><span class="p">()</span>              <span class="n">Using</span> <span class="n">PID</span> <span class="n">namespace</span><span class="p">:</span> <span class="n">CLONE_NEWPID</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">singularity_runtime_ns_pid</span><span class="p">()</span>              <span class="n">Virtualizing</span> <span class="n">PID</span> <span class="n">namespace</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">singularity_registry_get</span><span class="p">()</span>                <span class="n">Returning</span> <span class="n">NULL</span> <span class="n">on</span> <span class="s1">&#39;DAEMON_START&#39;</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">prepare_fork</span><span class="p">()</span>                            <span class="n">Creating</span> <span class="n">parent</span><span class="o">/</span><span class="n">child</span> <span class="n">coordination</span> <span class="n">pipes</span><span class="o">.</span>
+
+<span class="n">VERBOSE</span> <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">singularity_fork</span><span class="p">()</span>                        <span class="n">Forking</span> <span class="n">child</span> <span class="n">process</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">singularity_priv_escalate</span><span class="p">()</span>               <span class="n">Temporarily</span> <span class="n">escalating</span> <span class="n">privileges</span> <span class="p">(</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>      <span class="n">singularity_priv_escalate</span><span class="p">()</span>               <span class="n">Clearing</span> <span class="n">supplementary</span> <span class="n">GIDs</span><span class="o">.</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>      <span class="n">singularity_priv_drop</span><span class="p">()</span>                   <span class="n">Dropping</span> <span class="n">privileges</span> <span class="n">to</span> <span class="n">UID</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">GID</span><span class="o">=</span><span class="mi">1000</span> <span class="p">(</span><span class="mi">8</span> <span class="n">supplementary</span> <span class="n">GIDs</span><span class="p">)</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>      <span class="n">singularity_priv_drop</span><span class="p">()</span>                   <span class="n">Restoring</span> <span class="n">supplementary</span> <span class="n">groups</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">singularity_priv_drop</span><span class="p">()</span>                   <span class="n">Confirming</span> <span class="n">we</span> <span class="n">have</span> <span class="n">correct</span> <span class="n">UID</span><span class="o">/</span><span class="n">GID</span>
+
+<span class="n">VERBOSE</span> <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">singularity_fork</span><span class="p">()</span>                        <span class="n">Hello</span> <span class="kn">from</span> <span class="nn">parent</span> <span class="n">process</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">install_generic_signal_handle</span><span class="p">()</span>           <span class="n">Assigning</span> <span class="n">generic</span> <span class="n">sigaction</span><span class="p">()</span><span class="n">s</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">install_generic_signal_handle</span><span class="p">()</span>           <span class="n">Creating</span> <span class="n">generic</span> <span class="n">signal</span> <span class="n">pipes</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">install_sigchld_signal_handle</span><span class="p">()</span>           <span class="n">Assigning</span> <span class="n">SIGCHLD</span> <span class="n">sigaction</span><span class="p">()</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">install_sigchld_signal_handle</span><span class="p">()</span>           <span class="n">Creating</span> <span class="n">sigchld</span> <span class="n">signal</span> <span class="n">pipes</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">singularity_fork</span><span class="p">()</span>                        <span class="n">Dropping</span> <span class="n">permissions</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>      <span class="n">singularity_priv_drop</span><span class="p">()</span>                   <span class="n">Dropping</span> <span class="n">privileges</span> <span class="n">to</span> <span class="n">UID</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">GID</span><span class="o">=</span><span class="mi">1000</span> <span class="p">(</span><span class="mi">8</span> <span class="n">supplementary</span> <span class="n">GIDs</span><span class="p">)</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>      <span class="n">singularity_priv_drop</span><span class="p">()</span>                   <span class="n">Restoring</span> <span class="n">supplementary</span> <span class="n">groups</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">singularity_priv_drop</span><span class="p">()</span>                   <span class="n">Confirming</span> <span class="n">we</span> <span class="n">have</span> <span class="n">correct</span> <span class="n">UID</span><span class="o">/</span><span class="n">GID</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">singularity_signal_go_ahead</span><span class="p">()</span>             <span class="n">Sending</span> <span class="n">go</span><span class="o">-</span><span class="n">ahead</span> <span class="n">signal</span><span class="p">:</span> <span class="mi">0</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">30961</span><span class="p">]</span>   <span class="n">wait_child</span><span class="p">()</span>                              <span class="n">Parent</span> <span class="n">process</span> <span class="ow">is</span> <span class="n">waiting</span> <span class="n">on</span> <span class="n">child</span> <span class="n">process</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>          <span class="n">singularity_priv_drop</span><span class="p">()</span>                   <span class="n">Dropping</span> <span class="n">privileges</span> <span class="n">to</span> <span class="n">UID</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">GID</span><span class="o">=</span><span class="mi">1000</span> <span class="p">(</span><span class="mi">8</span> <span class="n">supplementary</span> <span class="n">GIDs</span><span class="p">)</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>          <span class="n">singularity_priv_drop</span><span class="p">()</span>                   <span class="n">Restoring</span> <span class="n">supplementary</span> <span class="n">groups</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">singularity_priv_drop</span><span class="p">()</span>                   <span class="n">Confirming</span> <span class="n">we</span> <span class="n">have</span> <span class="n">correct</span> <span class="n">UID</span><span class="o">/</span><span class="n">GID</span>
+
+<span class="n">VERBOSE</span> <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">singularity_fork</span><span class="p">()</span>                        <span class="n">Hello</span> <span class="kn">from</span> <span class="nn">child</span> <span class="n">process</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">singularity_wait_for_go_ahead</span><span class="p">()</span>           <span class="n">Waiting</span> <span class="k">for</span> <span class="n">go</span><span class="o">-</span><span class="n">ahead</span> <span class="n">signal</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">singularity_wait_for_go_ahead</span><span class="p">()</span>           <span class="n">Received</span> <span class="n">go</span><span class="o">-</span><span class="n">ahead</span> <span class="n">signal</span><span class="p">:</span> <span class="mi">0</span>
+
+<span class="n">VERBOSE</span> <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">singularity_registry_set</span><span class="p">()</span>                <span class="n">Adding</span> <span class="n">value</span> <span class="n">to</span> <span class="n">registry</span><span class="p">:</span> <span class="s1">&#39;PIDNS_ENABLED&#39;</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+</pre></div>
+</div>
+<p>(snipped to end)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">envar_set</span><span class="p">()</span>                               <span class="n">Unsetting</span> <span class="n">environment</span> <span class="n">variable</span><span class="p">:</span> <span class="n">SINGULARITY_APPNAME</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">singularity_registry_get</span><span class="p">()</span>                <span class="n">Returning</span> <span class="n">value</span> <span class="kn">from</span> <span class="nn">registry</span><span class="p">:</span> <span class="s1">&#39;COMMAND&#39;</span> <span class="o">=</span> <span class="s1">&#39;shell&#39;</span>
+
+<span class="n">LOG</span>     <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">main</span><span class="p">()</span>                                    <span class="n">USER</span><span class="o">=</span><span class="n">gmk</span><span class="p">,</span> <span class="n">IMAGE</span><span class="o">=</span><span class="s1">&#39;ubuntu&#39;</span><span class="p">,</span> <span class="n">COMMAND</span><span class="o">=</span><span class="s1">&#39;shell&#39;</span>
+
+<span class="n">INFO</span>    <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">action_shell</span><span class="p">()</span>                            <span class="n">Singularity</span><span class="p">:</span> <span class="n">Invoking</span> <span class="n">an</span> <span class="n">interactive</span> <span class="n">shell</span> <span class="n">within</span> <span class="n">container</span><span class="o">...</span>
+
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">action_shell</span><span class="p">()</span>                            <span class="n">Exec</span><span class="s1">&#39;ing /.singularity.d/actions/shell</span>
+
+<span class="n">Singularity</span> <span class="n">ubuntu</span><span class="p">:</span><span class="o">~&gt;</span>
+</pre></div>
+</div>
+<p>Not only do I see all of the configuration options that I (probably
+forgot about) previously set, I can trace the entire flow of Singularity
+from the first execution of an action (shell) to the final shell into
+the container. Each line also describes what is the effective UID
+running the command, what is the PID, and what is the function emitting
+the debug message.</p>
+</div>
+<div class="section" id="a-peek-into-the-rootless-program-flow">
+<h3>A peek into the “rootless” program flow<a class="headerlink" href="#a-peek-into-the-rootless-program-flow" title="Permalink to this headline">¶</a></h3>
+<p>The above snippet was using the default SetUID program flow with a
+container image file named “ubuntu”. For comparison, if we also use the <code class="docutils literal notranslate"><span class="pre">--userns</span></code>
+flag, and snip in the same places, you can see how the effective UID is
+never escalated, but we have the same outcome using a sandbox directory
+(chroot) style container.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity -d shell --pid --userns ubuntu.dir/
+
+Enabling debugging
+
+Ending argument loop
+
+Singularity version: 2.3.9-development.gc35b753
+
+Exec&#39;ing: /usr/local/libexec/singularity/cli/shell.exec
+
+Evaluating args: &#39;--pid --userns ubuntu.dir/&#39;
+</pre></div>
+</div>
+<p>(snipped to PID namespace implementation, same place as above)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">singularity_runtime_ns_pid</span><span class="p">()</span>              <span class="n">Using</span> <span class="n">PID</span> <span class="n">namespace</span><span class="p">:</span> <span class="n">CLONE_NEWPID</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">singularity_runtime_ns_pid</span><span class="p">()</span>              <span class="n">Virtualizing</span> <span class="n">PID</span> <span class="n">namespace</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">singularity_registry_get</span><span class="p">()</span>                <span class="n">Returning</span> <span class="n">NULL</span> <span class="n">on</span> <span class="s1">&#39;DAEMON_START&#39;</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">prepare_fork</span><span class="p">()</span>                            <span class="n">Creating</span> <span class="n">parent</span><span class="o">/</span><span class="n">child</span> <span class="n">coordination</span> <span class="n">pipes</span><span class="o">.</span>
+
+<span class="n">VERBOSE</span> <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">singularity_fork</span><span class="p">()</span>                        <span class="n">Forking</span> <span class="n">child</span> <span class="n">process</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">singularity_priv_escalate</span><span class="p">()</span>               <span class="n">Not</span> <span class="n">escalating</span> <span class="n">privileges</span><span class="p">,</span> <span class="n">user</span> <span class="n">namespace</span> <span class="n">enabled</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">singularity_priv_drop</span><span class="p">()</span>                   <span class="n">Not</span> <span class="n">dropping</span> <span class="n">privileges</span><span class="p">,</span> <span class="n">user</span> <span class="n">namespace</span> <span class="n">enabled</span>
+
+<span class="n">VERBOSE</span> <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">singularity_fork</span><span class="p">()</span>                        <span class="n">Hello</span> <span class="kn">from</span> <span class="nn">parent</span> <span class="n">process</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">install_generic_signal_handle</span><span class="p">()</span>           <span class="n">Assigning</span> <span class="n">generic</span> <span class="n">sigaction</span><span class="p">()</span><span class="n">s</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">install_generic_signal_handle</span><span class="p">()</span>           <span class="n">Creating</span> <span class="n">generic</span> <span class="n">signal</span> <span class="n">pipes</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">install_sigchld_signal_handle</span><span class="p">()</span>           <span class="n">Assigning</span> <span class="n">SIGCHLD</span> <span class="n">sigaction</span><span class="p">()</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">install_sigchld_signal_handle</span><span class="p">()</span>           <span class="n">Creating</span> <span class="n">sigchld</span> <span class="n">signal</span> <span class="n">pipes</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">singularity_signal_go_ahead</span><span class="p">()</span>             <span class="n">Sending</span> <span class="n">go</span><span class="o">-</span><span class="n">ahead</span> <span class="n">signal</span><span class="p">:</span> <span class="mi">0</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">32081</span><span class="p">]</span>   <span class="n">wait_child</span><span class="p">()</span>                              <span class="n">Parent</span> <span class="n">process</span> <span class="ow">is</span> <span class="n">waiting</span> <span class="n">on</span> <span class="n">child</span> <span class="n">process</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">singularity_priv_drop</span><span class="p">()</span>                   <span class="n">Not</span> <span class="n">dropping</span> <span class="n">privileges</span><span class="p">,</span> <span class="n">user</span> <span class="n">namespace</span> <span class="n">enabled</span>
+
+<span class="n">VERBOSE</span> <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">singularity_fork</span><span class="p">()</span>                        <span class="n">Hello</span> <span class="kn">from</span> <span class="nn">child</span> <span class="n">process</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">singularity_wait_for_go_ahead</span><span class="p">()</span>           <span class="n">Waiting</span> <span class="k">for</span> <span class="n">go</span><span class="o">-</span><span class="n">ahead</span> <span class="n">signal</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">singularity_wait_for_go_ahead</span><span class="p">()</span>           <span class="n">Received</span> <span class="n">go</span><span class="o">-</span><span class="n">ahead</span> <span class="n">signal</span><span class="p">:</span> <span class="mi">0</span>
+
+<span class="n">VERBOSE</span> <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">singularity_registry_set</span><span class="p">()</span>                <span class="n">Adding</span> <span class="n">value</span> <span class="n">to</span> <span class="n">registry</span><span class="p">:</span> <span class="s1">&#39;PIDNS_ENABLED&#39;</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+</pre></div>
+</div>
+<p>(snipped to end)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">envar_set</span><span class="p">()</span>                               <span class="n">Unsetting</span> <span class="n">environment</span> <span class="n">variable</span><span class="p">:</span> <span class="n">SINGULARITY_APPNAME</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">singularity_registry_get</span><span class="p">()</span>                <span class="n">Returning</span> <span class="n">value</span> <span class="kn">from</span> <span class="nn">registry</span><span class="p">:</span> <span class="s1">&#39;COMMAND&#39;</span> <span class="o">=</span> <span class="s1">&#39;shell&#39;</span>
+
+<span class="n">LOG</span>     <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">main</span><span class="p">()</span>                                    <span class="n">USER</span><span class="o">=</span><span class="n">gmk</span><span class="p">,</span> <span class="n">IMAGE</span><span class="o">=</span><span class="s1">&#39;ubuntu.dir&#39;</span><span class="p">,</span> <span class="n">COMMAND</span><span class="o">=</span><span class="s1">&#39;shell&#39;</span>
+
+<span class="n">INFO</span>    <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">action_shell</span><span class="p">()</span>                            <span class="n">Singularity</span><span class="p">:</span> <span class="n">Invoking</span> <span class="n">an</span> <span class="n">interactive</span> <span class="n">shell</span> <span class="n">within</span> <span class="n">container</span><span class="o">...</span>
+
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>       <span class="n">action_shell</span><span class="p">()</span>                            <span class="n">Exec</span><span class="s1">&#39;ing /.singularity.d/actions/shell</span>
+
+<span class="n">Singularity</span> <span class="n">ubuntu</span><span class="o">.</span><span class="n">dir</span><span class="p">:</span><span class="o">~&gt;</span> <span class="n">whoami</span>
+
+<span class="n">gmk</span>
+
+<span class="n">Singularity</span> <span class="n">ubuntu</span><span class="o">.</span><span class="n">dir</span><span class="p">:</span><span class="o">~&gt;</span>
+</pre></div>
+</div>
+<p>Here you can see that the output and functionality is very similar,
+but we never increased any privilege and none of the <code class="docutils literal notranslate"><span class="pre">*-suid</span></code> program flow was
+utilized. We had to use a chroot style directory container (as images
+are not supported with the user namespace, but you can clearly see
+that the effective UID never had to change to run this container.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Singularity can natively create and manage chroot style
+containers just like images! The above image was created using the
+command: <code class="docutils literal notranslate"><span class="pre">singularity</span> <span class="pre">build</span> <span class="pre">ubuntu.dir</span> <span class="pre">docker://ubuntu:latest</span></code></p>
+</div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Singularity supports multiple modes of operation to meet your security
+needs. For most HPC centers, and general usage scenarios, the default
+run mode is most effective and featurefull. For the security critical
+implementations, the user namespace workflow maybe a better option. It
+becomes a balance security and functionality (the most secure systems do
+nothing).</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="the_singularity_config_file.html" class="btn btn-neutral float-right" title="The Singularity Config File" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="admin_quickstart.html" class="btn btn-neutral" title="Administration QuickStart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
