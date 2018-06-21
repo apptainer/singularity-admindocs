@@ -122,7 +122,7 @@ user requested bind (done with -B/–bind) or one specified via the
 configuration file. To handle this, you will want to specify those
 paths using this directive. For example:
 
-::
+.. code-block:: none
 
     autofs bug path = /share/PI
 
@@ -164,15 +164,15 @@ you may need to increase the number of loop devices that your system
 supports by doing the following:
 Edit or create the file ``/etc/modprobe.d/loop.conf`` and add the following line:
 
-::
+.. code-block:: none
 
     options loop max_loop=128
 
 After making this change, you should be able to reboot your system or
 unload/reload the loop device as root using the following commands:
 
-::
+.. code-block:: none
 
     # modprobe -r loop
-    
+
     # modprobe loop

@@ -77,7 +77,7 @@ container and then running an example MPI program through Singularity.
 Tutorials
 ---------
 
-`Using Host libraries: GPU drivers and OpenMPI BTLs <https://singularity-admindoc.readthedocs.io/en/latest/appendix.html#using-host-libraries-gpu-drivers-and-openmpi-btls>`__
+:ref:`Using Host libraries: GPU drivers and OpenMPI BTLs <using-host-libraries-gpu-drivers-and-openmpi-btls>`
 
 MPI Development Example
 -----------------------
@@ -107,7 +107,7 @@ There are however three caveats:
 Code Example using Open MPI 2.1.0 Stable
 ----------------------------------------
 
-::
+.. code-block:: none
 
     $ # Include the appropriate development tools into the container (notice we are calling
 
@@ -163,7 +163,7 @@ The previous example (using the Open MPI 2.1.0 stable release) should
 work fine on most hardware but if you have an issue, try running the
 example below (using the Open MPI Master branch):
 
-::
+.. code-block:: none
 
     $ # Include the appropriate development tools into the container (notice we are calling
 
@@ -296,7 +296,7 @@ is /tmp and /var/tmp. Additionally your current working directory
 system directory or already accessible via another mount. For almost all
 cases, this will work flawlessly as follows:
 
-::
+.. code-block:: none
 
     $ pwd
 
@@ -336,7 +336,7 @@ descriptor to your current directory and change you back to it. If you
 do a ‘pwd’ within the container, you may see some weird things. For
 example:
 
-::
+.. code-block:: none
 
     $ pwd
 
@@ -377,7 +377,7 @@ host to the applications within the container to facilitate expected
 behavior from the interaction between the host and the container. For
 example:
 
-::
+.. code-block:: none
 
     $ cat debian.def | singularity exec container.img grep 'MirrorURL'
 
@@ -401,54 +401,93 @@ writable, but it is non-persistent between non-overlapping runs.
 License
 -------
 
-::
+.. code-block:: none
 
     Redistribution and use in source and binary forms, with or without
+
     modification, are permitted provided that the following conditions are met:
 
+
     (1) Redistributions of source code must retain the above copyright notice,
+
     this list of conditions and the following disclaimer.
 
+
     (2) Redistributions in binary form must reproduce the above copyright notice,
+
     this list of conditions and the following disclaimer in the documentation
+
     and/or other materials provided with the distribution.
 
+
     (3) Neither the name of the University of California, Lawrence Berkeley
+
     National Laboratory, U.S. Dept. of Energy nor the names of its contributors
+
     may be used to endorse or promote products derived from this software without
+
     specific prior written permission.
 
+
     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+
     AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+
     IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+
     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+
     FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+
     DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+
     SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+
     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+
     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+
     You are under no obligation whatsoever to provide any bug fixes, patches, or
+
     upgrades to the features, functionality or performance of the source code
+
     ("Enhancements") to anyone; however, if you choose to make your Enhancements
+
     available either publicly, or directly to Lawrence Berkeley National
+
     Laboratory, without imposing a separate written license agreement for such
+
     Enhancements, then you hereby grant the following license: a  non-exclusive,
+
     royalty-free perpetual license to install, use, modify, prepare derivative
+
     works, incorporate into other computer software, distribute, and sublicense
+
     such enhancements or derivative works thereof, in binary and source code form.
 
+
     If you have questions about your rights to use or distribute this software,
+
     please contact Berkeley Lab's Innovation & Partnerships Office at
+
     IPO@lbl.gov.
 
+
     NOTICE.  This Software was developed under funding from the U.S. Department of
+
     Energy and the U.S. Government consequently retains certain rights. As such,
+
     the U.S. Government has been granted for itself and others acting on its
+
     behalf a paid-up, nonexclusive, irrevocable, worldwide license in the Software
+
     to reproduce, distribute copies to the public, prepare derivative works, and
+
     perform publicly and display publicly, and to permit other to do so.
+
 
 In layman terms...
 ==================

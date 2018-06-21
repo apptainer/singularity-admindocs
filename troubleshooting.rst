@@ -14,22 +14,22 @@ Singularity must be installed by root into a location that allows for
 section of this manual). If you fail to do that, you may have user’s
 reporting one of the following error conditions:
 
-::
+.. code-block:: none
 
     ERROR  : Singularity must be executed in privileged mode to use images
 
     ABORT  : Retval = 255
 
-::
+.. code-block:: none
 
     ERROR  : User namespace not supported, and program not running privileged.
 
     ABORT  : Retval = 255
 
-::
+.. code-block:: none
 
     ABORT  : This program must be SUID root
-    
+
     ABORT  : Retval = 255
 
 If one of these errors is reported, it is best to check the installation

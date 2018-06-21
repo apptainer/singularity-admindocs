@@ -1,3 +1,6 @@
+
+.. _security:
+
 ========
 Security
 ========
@@ -113,7 +116,7 @@ installed and the options passed to the ``configure`` script. Assuming a default
 which installs files into ``--prefix`` of ``/usr/local`` you can find the SetUID programs as
 follows:
 
-::
+.. code-block:: none
 
     $ find /usr/local/libexec/singularity/ -perm -4000
 
@@ -139,7 +142,7 @@ Removing any of these SUID binaries or changing the permissions on them
 would cause Singularity to utilize the non-SUID workflows. Each file
 with ``*-suid`` also has a non-suid equivalent:
 
-::
+.. code-block:: none
 
     /usr/local/libexec/singularity/bin/start
 
@@ -154,7 +157,7 @@ essentials/minimum. To disable the SetUID portions of Singularity, you
 can either remove the above ``*-suid`` files, or you can edit the setting for ``allow suid`` at
 the top of the ``singularity.conf`` file, which is typically located in ``$PREFIX/etc/singularity/singularity.conf``.
 
-::
+.. code-block:: none
 
     # ALLOW SETUID: [BOOL]
 
@@ -178,7 +181,7 @@ the top of the ``singularity.conf`` file, which is typically located in ``$PREFI
 You can also install Singularity as root without any of the SetUID
 components with the configure option ``--disable-suid`` as follows:
 
-::
+.. code-block:: none
 
     $ ./configure --disable-suid --prefix=/usr/local
 
@@ -227,7 +230,7 @@ Singularity supports several different container formats:
 Using the Singularity configuration file, you can control what types of
 containers Singularity will support:
 
-::
+.. code-block:: none
 
     # ALLOW CONTAINER ${TYPE}: [BOOL]
 
@@ -252,15 +255,22 @@ filesystem as any other file would. This means that POSIX permissions
 are mandatory. Here you can configure Singularity to only “trust”
 containers that are owned by a particular set of users.
 
-::
+.. code-block:: none
 
     # LIMIT CONTAINER OWNERS: [STRING]
+
     # DEFAULT: NULL
+
     # Only allow containers to be used that are owned by a given user. If this
+
     # configuration is undefined (commented or set to NULL), all containers are
+
     # allowed to be used. This feature only applies when Singularity is running in
+
     # SUID mode and the user is non-root.
+
     #limit container owners = gmk, singularity, nobody
+
 
 .. note:: If you are in a high risk security environment, you may want to
     enable this feature. Trusting container images to users could allow a
@@ -277,7 +287,7 @@ specific paths. This is very useful to ensure that only trusted or
 blessed container’s are being used (it is also beneficial to ensure that
 containers are only being used on performant file systems).
 
-::
+.. code-block:: none
 
     # LIMIT CONTAINER PATHS: [STRING]
 
@@ -305,7 +315,7 @@ system log. For each command that is issued, it prints the UID, PID, and
 location of the command. For example, let’s see what happens if we shell
 into an image:
 
-::
+.. code-block:: none
 
     $ singularity exec ubuntu true
 
@@ -323,7 +333,7 @@ into an image:
 
 We can then peek into the system log to see what was recorded:
 
-::
+.. code-block:: none
 
     Oct  5 08:51:12 localhost Singularity: action-suid (U=1000,P=32320)> USER=gmk, IMAGE='ubuntu', COMMAND='exec'
 
@@ -346,7 +356,7 @@ everything that Singularity is doing. In this case we can run
 Singularity in debug mode and request use of the PID namespace so we can
 see what Singularity is doing there:
 
-::
+.. code-block:: none
 
     $ singularity --debug shell --pid ubuntu
 
@@ -363,7 +373,7 @@ see what Singularity is doing there:
 
 (snipped to PID namespace implementation)
 
-::
+.. code-block:: none
 
     DEBUG   [U=1000,P=30961]   singularity_runtime_ns_pid()              Using PID namespace: CLONE_NEWPID
 
@@ -424,7 +434,7 @@ see what Singularity is doing there:
 
 (snipped to end)
 
-::
+.. code-block:: none
 
     DEBUG   [U=1000,P=1]       envar_set()                               Unsetting environment variable: SINGULARITY_APPNAME
 
@@ -455,7 +465,7 @@ flag, and snip in the same places, you can see how the effective UID is
 never escalated, but we have the same outcome using a sandbox directory
 (chroot) style container.
 
-::
+.. code-block:: none
 
     $ singularity -d shell --pid --userns ubuntu.dir/
 
@@ -471,7 +481,7 @@ never escalated, but we have the same outcome using a sandbox directory
 
 (snipped to PID namespace implementation, same place as above)
 
-::
+.. code-block:: none
 
     DEBUG   [U=1000,P=32081]   singularity_runtime_ns_pid()              Using PID namespace: CLONE_NEWPID
 
@@ -514,7 +524,7 @@ never escalated, but we have the same outcome using a sandbox directory
 
 (snipped to end)
 
-::
+.. code-block:: none
 
     DEBUG   [U=1000,P=1]       envar_set()                               Unsetting environment variable: SINGULARITY_APPNAME
 
@@ -532,7 +542,7 @@ never escalated, but we have the same outcome using a sandbox directory
     gmk
 
     Singularity ubuntu.dir:~>
-    
+
 
 Here you can see that the output and functionality is very similar,
 but we never increased any privilege and none of the ``*-suid`` program flow was
