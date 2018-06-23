@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Appendix &mdash; Singularity container 1.0 documentation</title>
+  <title>Appendix &mdash; Singularity container 2.5.1 documentation</title>
   
 
   
@@ -104,7 +104,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#building-an-ubuntu-image-on-a-rhel-host">Building an Ubuntu image on a RHEL host</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#preparation">Preparation</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#creating-the-definition-file">Creating the Definition File</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id1">Creating your image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Creating your image</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#use-here-documents-with-runcmd">Use here documents with RunCmd</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#use-installpkgs-with-multiple-packages">Use InstallPkgs with multiple packages</a></li>
 </ul>
@@ -180,7 +180,7 @@
   <div class="section" id="appendix">
 <h1>Appendix<a class="headerlink" href="#appendix" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="using-host-libraries-gpu-drivers-and-openmpi-btls">
-<h2>Using Host libraries: GPU drivers and OpenMPI BTLs<a class="headerlink" href="#using-host-libraries-gpu-drivers-and-openmpi-btls" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Using Host libraries: GPU drivers and OpenMPI BTLs<a class="headerlink" href="#using-host-libraries-gpu-drivers-and-openmpi-btls" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note" id="sec-tutorial-gpu-drivers-and-openmpi">
 <p class="first admonition-title">Note</p>
 <p class="last"><strong>Much of the GPU portion of this tutorial is deprecated by the</strong> <code class="docutils literal notranslate"><span class="pre">--nv</span></code> <strong>option
@@ -217,218 +217,218 @@ network for Lustre and MPI communications)</li>
 <p>Since we are building an ubuntu image, it may be easier to create an ubuntu VM to create the image.
 Alternatively you can follow the recipe <a class="reference external" href="https://singularity-admindoc.readthedocs.io/en/latest/appendix.html#building-an-ubuntu-image-on-a-rhel-host">here</a>.</p>
 <p>Use the following def file to create the image.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bootstrap</span><span class="p">:</span> <span class="n">debootstrap</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: debootstrap
 
-<span class="n">MirrorURL</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">us</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span>
+MirrorURL: http://us.archive.ubuntu.com/ubuntu/
 
-<span class="n">OSVersion</span><span class="p">:</span> <span class="n">xenial</span>
+OSVersion: xenial
 
-<span class="n">Include</span><span class="p">:</span> <span class="n">apt</span>
+Include: apt
 
 
 
-<span class="o">%</span><span class="n">post</span>
+%post
 
-<span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">software</span><span class="o">-</span><span class="n">properties</span><span class="o">-</span><span class="n">common</span>
+apt install -y software-properties-common
 
-<span class="n">apt</span><span class="o">-</span><span class="n">add</span><span class="o">-</span><span class="n">repository</span> <span class="o">-</span><span class="n">y</span> <span class="n">universe</span>
+apt-add-repository -y universe
 
-<span class="n">apt</span> <span class="n">update</span>
+apt update
 
-<span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">wget</span>
+apt install -y wget
 
-<span class="n">mkdir</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">openmpi</span> <span class="o">||</span> <span class="n">echo</span> <span class="s2">&quot;Directory exists&quot;</span>
+mkdir /usr/local/openmpi || echo &quot;Directory exists&quot;
 
-<span class="n">mkdir</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">mellanox</span> <span class="o">||</span> <span class="n">echo</span> <span class="s2">&quot;Directory exists&quot;</span>
+mkdir /opt/mellanox || echo &quot;Directory exists&quot;
 
-<span class="n">mkdir</span> <span class="o">/</span><span class="n">all_hostlibs</span> <span class="o">||</span> <span class="n">echo</span> <span class="s2">&quot;Directory exists&quot;</span>
+mkdir /all_hostlibs || echo &quot;Directory exists&quot;
 
-<span class="n">mkdir</span> <span class="o">/</span><span class="n">desired_hostlibs</span> <span class="o">||</span> <span class="n">echo</span> <span class="s2">&quot;Directory exists&quot;</span>
+mkdir /desired_hostlibs || echo &quot;Directory exists&quot;
 
-<span class="n">mkdir</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">libibverbs</span><span class="o">.</span><span class="n">d</span> <span class="o">||</span> <span class="n">echo</span> <span class="s2">&quot;Directory exists&quot;</span>
+mkdir /etc/libibverbs.d || echo &quot;Directory exists&quot;
 
-<span class="n">echo</span> <span class="s2">&quot;driver mlx4&quot;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">libibverbs</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">mlx4</span><span class="o">.</span><span class="n">driver</span>
+echo &quot;driver mlx4&quot; &gt; /etc/libibverbs.d/mlx4.driver
 
-<span class="n">echo</span> <span class="s2">&quot;driver mlx5&quot;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">libibverbs</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">mlx5</span><span class="o">.</span><span class="n">driver</span>
+echo &quot;driver mlx5&quot; &gt; /etc/libibverbs.d/mlx5.driver
 
-<span class="n">adduser</span> <span class="n">slurm</span> <span class="o">||</span> <span class="n">echo</span> <span class="s2">&quot;User exists&quot;</span>
+adduser slurm || echo &quot;User exists&quot;
 
-<span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">gist</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">l1ll1</span><span class="o">/</span><span class="mi">89</span><span class="n">b3f067d5b790ace6e6767be5ea2851</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="mi">422</span><span class="n">c8b5446c6479285cd29d1bf5be60f1b359b90</span><span class="o">/</span><span class="n">desired_hostlibs</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">O</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">desired_hostlibs</span><span class="o">.</span><span class="n">txt</span>
+wget https://gist.githubusercontent.com/l1ll1/89b3f067d5b790ace6e6767be5ea2851/raw/422c8b5446c6479285cd29d1bf5be60f1b359b90/desired_hostlibs.txt -O /tmp/desired_hostlibs.txt
 
-<span class="n">cat</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">desired_hostlibs</span><span class="o">.</span><span class="n">txt</span> <span class="o">|</span> <span class="n">xargs</span> <span class="o">-</span><span class="n">I</span><span class="p">{}</span> <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">all_hostlibs</span><span class="o">/</span><span class="p">{}</span> <span class="o">/</span><span class="n">desired_hostlibs</span><span class="o">/</span><span class="p">{}</span>
+cat /tmp/desired_hostlibs.txt | xargs -I{} ln -s /all_hostlibs/{} /desired_hostlibs/{}
 
-<span class="n">rm</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">desired_hostlibs</span><span class="o">.</span><span class="n">txt</span>
+rm /tmp/desired_hostlibs.txt
 </pre></div>
 </div>
 <p>The mysterious <code class="docutils literal notranslate"><span class="pre">wget</span></code> line gets a list of all the libraries that the CentOS host has in <code class="docutils literal notranslate"><span class="pre">/lib64</span></code> that we
 think its safe to use in the container. Specifically these are things like nvidia drivers.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">libvdpau_nvidia</span><span class="o">.</span><span class="n">so</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>libvdpau_nvidia.so
 
-<span class="n">libnvidia</span><span class="o">-</span><span class="n">opencl</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+libnvidia-opencl.so.1
 
-<span class="n">libnvidia</span><span class="o">-</span><span class="n">ml</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+libnvidia-ml.so.1
 
-<span class="n">libnvidia</span><span class="o">-</span><span class="n">ml</span><span class="o">.</span><span class="n">so</span>
+libnvidia-ml.so
 
-<span class="n">libnvidia</span><span class="o">-</span><span class="n">ifr</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+libnvidia-ifr.so.1
 
-<span class="n">libnvidia</span><span class="o">-</span><span class="n">ifr</span><span class="o">.</span><span class="n">so</span>
+libnvidia-ifr.so
 
-<span class="n">libnvidia</span><span class="o">-</span><span class="n">fbc</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+libnvidia-fbc.so.1
 
-<span class="n">libnvidia</span><span class="o">-</span><span class="n">fbc</span><span class="o">.</span><span class="n">so</span>
+libnvidia-fbc.so
 
-<span class="n">libnvidia</span><span class="o">-</span><span class="n">encode</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+libnvidia-encode.so.1
 
-<span class="n">libnvidia</span><span class="o">-</span><span class="n">encode</span><span class="o">.</span><span class="n">so</span>
+libnvidia-encode.so
 
-<span class="n">libnvidia</span><span class="o">-</span><span class="n">cfg</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+libnvidia-cfg.so.1
 
-<span class="n">libnvidia</span><span class="o">-</span><span class="n">cfg</span><span class="o">.</span><span class="n">so</span>
+libnvidia-cfg.so
 
-<span class="n">libicudata</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">50</span>
+libicudata.so.50
 
-<span class="n">libicudata</span><span class="o">.</span><span class="n">so</span>
+libicudata.so
 
-<span class="n">libcuda</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+libcuda.so.1
 
-<span class="n">libcuda</span><span class="o">.</span><span class="n">so</span>
+libcuda.so
 
-<span class="n">libGLX_nvidia</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">0</span>
+libGLX_nvidia.so.0
 
-<span class="n">libGLESv2_nvidia</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">2</span>
+libGLESv2_nvidia.so.2
 
-<span class="n">libGLESv1_CM_nvidia</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+libGLESv1_CM_nvidia.so.1
 
-<span class="n">libEGL_nvidia</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">0</span>
+libEGL_nvidia.so.0
 
-<span class="n">libibcm</span><span class="o">.</span><span class="n">a</span>
+libibcm.a
 
-<span class="n">libibcm</span><span class="o">.</span><span class="n">so</span>
+libibcm.so
 
-<span class="n">libibcm</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+libibcm.so.1
 
-<span class="n">libibcm</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
+libibcm.so.1.0.0
 
-<span class="n">libibdiag</span><span class="o">-</span><span class="mf">2.1</span><span class="o">.</span><span class="mf">1.</span><span class="n">so</span>
+libibdiag-2.1.1.so
 
-<span class="n">libibdiag</span><span class="o">.</span><span class="n">a</span>
+libibdiag.a
 
-<span class="n">libibdiag</span><span class="o">.</span><span class="n">la</span>
+libibdiag.la
 
-<span class="n">libibdiag</span><span class="o">.</span><span class="n">so</span>
+libibdiag.so
 
-<span class="n">libibdiagnet_plugins_ifc</span><span class="o">-</span><span class="mf">2.1</span><span class="o">.</span><span class="mf">1.</span><span class="n">so</span>
+libibdiagnet_plugins_ifc-2.1.1.so
 
-<span class="n">libibdiagnet_plugins_ifc</span><span class="o">.</span><span class="n">a</span>
+libibdiagnet_plugins_ifc.a
 
-<span class="n">libibdiagnet_plugins_ifc</span><span class="o">.</span><span class="n">la</span>
+libibdiagnet_plugins_ifc.la
 
-<span class="n">libibdiagnet_plugins_ifc</span><span class="o">.</span><span class="n">so</span>
+libibdiagnet_plugins_ifc.so
 
-<span class="n">libibdmcom</span><span class="o">-</span><span class="mf">2.1</span><span class="o">.</span><span class="mf">1.</span><span class="n">so</span>
+libibdmcom-2.1.1.so
 
-<span class="n">libibdmcom</span><span class="o">.</span><span class="n">a</span>
+libibdmcom.a
 
-<span class="n">libibdmcom</span><span class="o">.</span><span class="n">la</span>
+libibdmcom.la
 
-<span class="n">libibdmcom</span><span class="o">.</span><span class="n">so</span>
+libibdmcom.so
 
-<span class="n">libiberty</span><span class="o">.</span><span class="n">a</span>
+libiberty.a
 
-<span class="n">libibis</span><span class="o">-</span><span class="mf">2.1</span><span class="o">.</span><span class="mf">1.</span><span class="n">so</span><span class="o">.</span><span class="mi">3</span>
+libibis-2.1.1.so.3
 
-<span class="n">libibis</span><span class="o">-</span><span class="mf">2.1</span><span class="o">.</span><span class="mf">1.</span><span class="n">so</span><span class="o">.</span><span class="mf">3.0</span><span class="o">.</span><span class="mi">3</span>
+libibis-2.1.1.so.3.0.3
 
-<span class="n">libibis</span><span class="o">.</span><span class="n">a</span>
+libibis.a
 
-<span class="n">libibis</span><span class="o">.</span><span class="n">la</span>
+libibis.la
 
-<span class="n">libibis</span><span class="o">.</span><span class="n">so</span>
+libibis.so
 
-<span class="n">libibmad</span><span class="o">.</span><span class="n">a</span>
+libibmad.a
 
-<span class="n">libibmad</span><span class="o">.</span><span class="n">so</span>
+libibmad.so
 
-<span class="n">libibmad</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">5</span>
+libibmad.so.5
 
-<span class="n">libibmad</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mf">5.5</span><span class="o">.</span><span class="mi">0</span>
+libibmad.so.5.5.0
 
-<span class="n">libibnetdisc</span><span class="o">.</span><span class="n">a</span>
+libibnetdisc.a
 
-<span class="n">libibnetdisc</span><span class="o">.</span><span class="n">so</span>
+libibnetdisc.so
 
-<span class="n">libibnetdisc</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">5</span>
+libibnetdisc.so.5
 
-<span class="n">libibnetdisc</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mf">5.3</span><span class="o">.</span><span class="mi">0</span>
+libibnetdisc.so.5.3.0
 
-<span class="n">libibsysapi</span><span class="o">-</span><span class="mf">2.1</span><span class="o">.</span><span class="mf">1.</span><span class="n">so</span>
+libibsysapi-2.1.1.so
 
-<span class="n">libibsysapi</span><span class="o">.</span><span class="n">a</span>
+libibsysapi.a
 
-<span class="n">libibsysapi</span><span class="o">.</span><span class="n">la</span>
+libibsysapi.la
 
-<span class="n">libibsysapi</span><span class="o">.</span><span class="n">so</span>
+libibsysapi.so
 
-<span class="n">libibumad</span><span class="o">.</span><span class="n">a</span>
+libibumad.a
 
-<span class="n">libibumad</span><span class="o">.</span><span class="n">so</span>
+libibumad.so
 
-<span class="n">libibumad</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">3</span>
+libibumad.so.3
 
-<span class="n">libibumad</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">0</span>
+libibumad.so.3.1.0
 
-<span class="n">libibus</span><span class="o">-</span><span class="mf">1.0</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">5</span>
+libibus-1.0.so.5
 
-<span class="n">libibus</span><span class="o">-</span><span class="mf">1.0</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mf">5.0</span><span class="o">.</span><span class="mi">503</span>
+libibus-1.0.so.5.0.503
 
-<span class="n">libibus</span><span class="o">-</span><span class="n">qt</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+libibus-qt.so.1
 
-<span class="n">libibus</span><span class="o">-</span><span class="n">qt</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mf">1.3</span><span class="o">.</span><span class="mi">0</span>
+libibus-qt.so.1.3.0
 
-<span class="n">libibverbs</span><span class="o">.</span><span class="n">a</span>
+libibverbs.a
 
-<span class="n">libibverbs</span><span class="o">.</span><span class="n">so</span>
+libibverbs.so
 
-<span class="n">libibverbs</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+libibverbs.so.1
 
-<span class="n">libibverbs</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
+libibverbs.so.1.0.0
 
-<span class="n">liblustreapi</span><span class="o">.</span><span class="n">so</span>
+liblustreapi.so
 
-<span class="n">libmlx4</span><span class="o">-</span><span class="n">rdmav2</span><span class="o">.</span><span class="n">so</span>
+libmlx4-rdmav2.so
 
-<span class="n">libmlx4</span><span class="o">.</span><span class="n">a</span>
+libmlx4.a
 
-<span class="n">libmlx5</span><span class="o">-</span><span class="n">rdmav2</span><span class="o">.</span><span class="n">so</span>
+libmlx5-rdmav2.so
 
-<span class="n">libmlx5</span><span class="o">.</span><span class="n">a</span>
+libmlx5.a
 
-<span class="n">libnl</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+libnl.so.1
 
-<span class="n">libnuma</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+libnuma.so.1
 
-<span class="n">libosmcomp</span><span class="o">.</span><span class="n">a</span>
+libosmcomp.a
 
-<span class="n">libosmcomp</span><span class="o">.</span><span class="n">so</span>
+libosmcomp.so
 
-<span class="n">libosmcomp</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">3</span>
+libosmcomp.so.3
 
-<span class="n">libosmcomp</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mf">3.0</span><span class="o">.</span><span class="mi">6</span>
+libosmcomp.so.3.0.6
 
-<span class="n">libosmvendor</span><span class="o">.</span><span class="n">a</span>
+libosmvendor.a
 
-<span class="n">libosmvendor</span><span class="o">.</span><span class="n">so</span>
+libosmvendor.so
 
-<span class="n">libosmvendor</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">3</span>
+libosmvendor.so.3
 
-<span class="n">libosmvendor</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mf">3.0</span><span class="o">.</span><span class="mi">8</span>
+libosmvendor.so.3.0.8
 
-<span class="n">libpciaccess</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">0</span>
+libpciaccess.so.0
 
-<span class="n">librdmacm</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">1</span>
+librdmacm.so.1
 
-<span class="n">libwrap</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">0</span>
+libwrap.so.0
 </pre></div>
 </div>
 <p>Also note:</p>
@@ -441,13 +441,13 @@ all the bits of OpenMPI and Mellanox and Slurm that we need.</li>
 <div class="section" id="executing-your-image">
 <h3>Executing your image<a class="headerlink" href="#executing-your-image" title="Permalink to this headline">¶</a></h3>
 <p>On our system we do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SINGULARITYENV_LD_LIBRARY_PATH</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">openmpi</span><span class="o">/</span><span class="mf">2.1</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">gcc4</span><span class="o">/</span><span class="n">lib</span><span class="p">:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">munge</span><span class="o">-</span><span class="mf">0.5</span><span class="o">.</span><span class="mi">11</span><span class="o">/</span><span class="n">lib</span><span class="p">:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">slurm</span><span class="o">-</span><span class="mf">16.05</span><span class="o">.</span><span class="mi">4</span><span class="o">/</span><span class="n">lib</span><span class="p">:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">slurm</span><span class="o">-</span><span class="mf">16.05</span><span class="o">.</span><span class="mi">4</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">slurm</span><span class="p">:</span><span class="o">/</span><span class="n">desired_hostlibs</span><span class="p">:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">mellanox</span><span class="o">/</span><span class="n">mxm</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SINGULARITYENV_LD_LIBRARY_PATH=/usr/local/openmpi/2.1.0-gcc4/lib:/opt/munge-0.5.11/lib:/opt/slurm-16.05.4/lib:/opt/slurm-16.05.4/lib/slurm:/desired_hostlibs:/opt/mellanox/mxm/lib/
 
-<span class="n">export</span> <span class="n">SINGULARITYENV_LD_LIBRARY_PATH</span>
+export SINGULARITYENV_LD_LIBRARY_PATH
 </pre></div>
 </div>
 <p>then</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">srun</span>  <span class="n">singularity</span> <span class="n">exec</span> <span class="o">-</span><span class="n">B</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">openmpi</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">openmpi</span> <span class="o">-</span><span class="n">B</span> <span class="o">/</span><span class="n">opt</span><span class="p">:</span><span class="o">/</span><span class="n">opt</span> <span class="o">-</span><span class="n">B</span> <span class="o">/</span><span class="n">lib64</span><span class="p">:</span><span class="o">/</span><span class="n">all_hostlibs</span> <span class="n">hostlibs</span><span class="o">.</span><span class="n">img</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">binary</span><span class="o">&gt;</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>srun  singularity exec -B /usr/local/openmpi:/usr/local/openmpi -B /opt:/opt -B /lib64:/all_hostlibs hostlibs.img &lt;path to binary&gt;
 </pre></div>
 </div>
 </div>
@@ -470,7 +470,7 @@ to install. After Singularity is installed on your computer, you will need to in
 package is a tool that will allow you to create Debian-based distributions such as Ubuntu. In order to install ‘debootstrap’, you will
 also need to install ‘epel-release’. You will need to download the appropriate RPM from the EPEL website. Make sure you download the correct
 version of the RPM for your release.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># First, wget the appropriate RPM from the EPEL website (https://dl.fedoraproject.org/pub/epel/)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># First, wget the appropriate RPM from the EPEL website (https://dl.fedoraproject.org/pub/epel/)
 
 # In this example we used RHEL 7, so we downloaded epel-release-latest-7.noarch.rpm
 
@@ -492,23 +492,23 @@ $ sudo yum install debootstrap
 <p>You will need to create a definition file to describe how to build your Ubuntu image. Definition files are plain text files that contain Singularity
 keywords. By using certain Singularity keywords, you can specify how you want your image to be built. The extension ‘.def’ is recommended for user clarity.
 Below is a definition file for a minimal Ubuntu image:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DistType</span> <span class="s2">&quot;debian&quot;</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DistType &quot;debian&quot;
 
-<span class="n">MirrorURL</span> <span class="s2">&quot;http://us.archive.ubuntu.com/ubuntu/&quot;</span>
+MirrorURL &quot;http://us.archive.ubuntu.com/ubuntu/&quot;
 
-<span class="n">OSVersion</span> <span class="s2">&quot;trusty&quot;</span>
-
-
-
-<span class="n">Setup</span>
-
-<span class="n">Bootstrap</span>
+OSVersion &quot;trusty&quot;
 
 
 
-<span class="n">Cleanup</span>
+Setup
 
-<span class="n">The</span> <span class="n">following</span> <span class="n">keywords</span> <span class="n">were</span> <span class="n">used</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">definition</span> <span class="n">file</span><span class="p">:</span>
+Bootstrap
+
+
+
+Cleanup
+
+The following keywords were used in this definition file:
 </pre></div>
 </div>
 <ul class="simple">
@@ -522,32 +522,32 @@ Below is a definition file for a minimal Ubuntu image:</p>
 </ul>
 <p>While this definition file is enough to create a working Ubuntu image, you may want increased customization of your image. There are several Singularity keywords that allow the user to do
 things such as install packages or files. Some of these keywords are used in the example below:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DistType</span> <span class="s2">&quot;debian&quot;</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DistType &quot;debian&quot;
 
-<span class="n">MirrorURL</span> <span class="s2">&quot;http://us.archive.ubuntu.com/ubuntu/&quot;</span>
+MirrorURL &quot;http://us.archive.ubuntu.com/ubuntu/&quot;
 
-<span class="n">OSVersion</span> <span class="s2">&quot;trusty&quot;</span>
-
-
-<span class="n">Setup</span>
-
-<span class="n">Bootstrap</span>
+OSVersion &quot;trusty&quot;
 
 
-<span class="n">InstallPkgs</span> <span class="n">python</span>
+Setup
 
-<span class="n">InstallPkgs</span> <span class="n">wget</span>
-
-<span class="n">RunCmd</span> <span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">bootstrap</span><span class="o">.</span><span class="n">pypa</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">get</span><span class="o">-</span><span class="n">pip</span><span class="o">.</span><span class="n">py</span>
-
-<span class="n">RunCmd</span> <span class="n">python</span> <span class="n">get</span><span class="o">-</span><span class="n">pip</span><span class="o">.</span><span class="n">py</span>
-
-<span class="n">RunCmd</span> <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip</span>
-
-<span class="n">RunCmd</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">storage</span><span class="o">.</span><span class="n">googleapis</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">cpu</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="mf">0.9</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">cp27</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
+Bootstrap
 
 
-<span class="n">Cleanup</span>
+InstallPkgs python
+
+InstallPkgs wget
+
+RunCmd wget https://bootstrap.pypa.io/get-pip.py
+
+RunCmd python get-pip.py
+
+RunCmd ln -s /usr/local/bin/pip /usr/bin/pip
+
+RunCmd pip install --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.9.0-cp27-none-linux_x86_64.whl
+
+
+Cleanup
 </pre></div>
 </div>
 <p>Before going over exactly what image this definition file specifies, the remaining Singularity keywords should be introduced.</p>
@@ -561,15 +561,15 @@ things such as install packages or files. Some of these keywords are used in the
 MirrorURL, and OSVersion. However, after Setup and Bootstrap, we used the InstallPkgs keyword to install ‘python’ and ‘wget’. Then we used the RunCmd keyword to first download the pip installation wheel,
 and then to install ‘pip’. Subsequently, we also used RunCmd to pip install <code class="docutils literal notranslate"><span class="pre">TensorFlow</span></code>. Thus, we have created a definition file that will install ‘python’, ‘pip’, and ‘Tensorflow’ onto the new image.</p>
 </div>
-<div class="section" id="id1">
-<h4>Creating your image<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id2">
+<h4>Creating your image<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>Once you have created your definition file, you will be ready to actually create your image. You will do this by utilizing the Singularity ‘create’ and ‘bootstrap’ subcommands. The process for doing this
 can be seen below:</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">We have saved our definition file as “ubuntu.def”</p>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># First we will create an empty image container called ubuntu.img
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># First we will create an empty image container called ubuntu.img
 
 $ sudo singularity create ubuntu.img
 
@@ -644,36 +644,36 @@ Here are some tips and tricks that you can use to create more efficient definiti
 <h4>Use here documents with RunCmd<a class="headerlink" href="#use-here-documents-with-runcmd" title="Permalink to this headline">¶</a></h4>
 <p>Using here documents with conjunction with RunCmd can be a great way to decrease the number of RunCmd keywords that you need to include
 in your definition file. For example, we can substitute a here document into the previous example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DistType</span> <span class="s2">&quot;debian&quot;</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DistType &quot;debian&quot;
 
-<span class="n">MirrorURL</span> <span class="s2">&quot;http://us.archive.ubuntu.com/ubuntu/&quot;</span>
+MirrorURL &quot;http://us.archive.ubuntu.com/ubuntu/&quot;
 
-<span class="n">OSVersion</span> <span class="s2">&quot;trusty&quot;</span>
-
-
-<span class="n">Setup</span>
-
-<span class="n">Bootstrap</span>
+OSVersion &quot;trusty&quot;
 
 
-<span class="n">InstallPkgs</span> <span class="n">python</span>
+Setup
 
-<span class="n">InstallPkgs</span> <span class="n">wget</span>
-
-<span class="n">RunCmd</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">&lt;&lt;</span><span class="n">EOF</span>
-
-<span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">bootstrap</span><span class="o">.</span><span class="n">pypa</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">get</span><span class="o">-</span><span class="n">pip</span><span class="o">.</span><span class="n">py</span>
-
-<span class="n">python</span> <span class="n">get</span><span class="o">-</span><span class="n">pip</span><span class="o">.</span><span class="n">py</span>
-
-<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip</span>
-
-<span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">storage</span><span class="o">.</span><span class="n">googleapis</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">cpu</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="mf">0.9</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">cp27</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
-
-<span class="n">EOF</span>
+Bootstrap
 
 
-<span class="n">Cleanup</span>
+InstallPkgs python
+
+InstallPkgs wget
+
+RunCmd /bin/sh &lt;&lt;EOF
+
+wget https://bootstrap.pypa.io/get-pip.py
+
+python get-pip.py
+
+ln -s /usr/local/bin/pip /usr/bin/pip
+
+pip install --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.9.0-cp27-none-linux_x86_64.whl
+
+EOF
+
+
+Cleanup
 </pre></div>
 </div>
 <p>As you can see, using a here document allowed us to decrease the number of RunCmd keywords from 4 to 1. This can be useful when your definition file
@@ -683,34 +683,34 @@ has a lot of RunCmd keywords and can also ease copying and pasting command line 
 <h4>Use InstallPkgs with multiple packages<a class="headerlink" href="#use-installpkgs-with-multiple-packages" title="Permalink to this headline">¶</a></h4>
 <p>The InstallPkgs keyword is able to install multiple packages with a single keyword. Thus, another way you can increase the efficiency of your code is to
 use a single InstallPkgs keyword to install multiple packages, as seen below:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DistType</span> <span class="s2">&quot;debian&quot;</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>DistType &quot;debian&quot;
 
-<span class="n">MirrorURL</span> <span class="s2">&quot;http://us.archive.ubuntu.com/ubuntu/&quot;</span>
+MirrorURL &quot;http://us.archive.ubuntu.com/ubuntu/&quot;
 
-<span class="n">OSVersion</span> <span class="s2">&quot;trusty&quot;</span>
-
-
-<span class="n">Setup</span>
-
-<span class="n">Bootstrap</span>
+OSVersion &quot;trusty&quot;
 
 
-<span class="n">InstallPkgs</span> <span class="n">python</span> <span class="n">wget</span>
+Setup
 
-<span class="n">RunCmd</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">&lt;&lt;</span><span class="n">EOF</span>
-
-<span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">bootstrap</span><span class="o">.</span><span class="n">pypa</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">get</span><span class="o">-</span><span class="n">pip</span><span class="o">.</span><span class="n">py</span>
-
-<span class="n">python</span> <span class="n">get</span><span class="o">-</span><span class="n">pip</span><span class="o">.</span><span class="n">py</span>
-
-<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip</span>
-
-<span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">storage</span><span class="o">.</span><span class="n">googleapis</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">cpu</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="mf">0.9</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">cp27</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
-
-<span class="n">EOF</span>
+Bootstrap
 
 
-<span class="n">Cleanup</span>
+InstallPkgs python wget
+
+RunCmd /bin/sh &lt;&lt;EOF
+
+wget https://bootstrap.pypa.io/get-pip.py
+
+python get-pip.py
+
+ln -s /usr/local/bin/pip /usr/bin/pip
+
+pip install --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.9.0-cp27-none-linux_x86_64.whl
+
+EOF
+
+
+Cleanup
 </pre></div>
 </div>
 <p>Using a single InstallPkgs keyword to install both ‘python’ and ‘wget’ allowed to decrease the number of InstallPkgs keywords we had to use in our definition file.
@@ -760,7 +760,7 @@ This slimmed down our definition file and helped reduce clutter.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.5.1',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>The Singularity Config File &mdash; Singularity container 1.0 documentation</title>
+  <title>The Singularity Config File &mdash; Singularity container 2.5.1 documentation</title>
   
 
   
@@ -284,7 +284,7 @@ many levels of symbolic links” error. This error happens by way of a
 user requested bind (done with -B/–bind) or one specified via the
 configuration file. To handle this, you will want to specify those
 paths using this directive. For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">autofs</span> <span class="n">bug</span> <span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">PI</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>autofs bug path = /share/PI
 </pre></div>
 </div>
 </div>
@@ -322,14 +322,14 @@ that you have a lot of different users running Singularity containers,
 you may need to increase the number of loop devices that your system
 supports by doing the following:
 Edit or create the file <code class="docutils literal notranslate"><span class="pre">/etc/modprobe.d/loop.conf</span></code> and add the following line:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">options</span> <span class="n">loop</span> <span class="n">max_loop</span><span class="o">=</span><span class="mi">128</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>options loop max_loop=128
 </pre></div>
 </div>
 <p>After making this change, you should be able to reboot your system or
 unload/reload the loop device as root using the following commands:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># modprobe -r loop</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># modprobe -r loop
 
-<span class="c1"># modprobe loop</span>
+# modprobe loop
 </pre></div>
 </div>
 </div>
@@ -377,7 +377,7 @@ unload/reload the loop device as root using the following commands:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.5.1',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

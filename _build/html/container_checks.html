@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Container Checks &mdash; Singularity container 1.0 documentation</title>
+  <title>Container Checks &mdash; Singularity container 2.5.1 documentation</title>
   
 
   
@@ -195,7 +195,7 @@ these are all considered <code class="docutils literal notranslate"><span class=
 <a class="reference external" href="https://github.com/singularityware/singularity/blob/development/libexec/cli/check.help">check.help</a>
 displays examples of how the user specifies a tag:</li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Perform all default checks, these are the same
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Perform all default checks, these are the same
 
 $ singularity check ubuntu.img
 
@@ -214,15 +214,15 @@ action. The following is required:
 <strong>Relative to SINGULARITY_ROOTFS</strong> The script must perform check
 actions relative to <code class="docutils literal notranslate"><span class="pre">SINGULARITY_ROOTFS</span></code>. For example, in python you might change
 directory to this location:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import os
 
-<span class="n">base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SINGULARITY_ROOTFS&quot;</span><span class="p">]</span>
+base = os.environ[&quot;SINGULARITY_ROOTFS&quot;]
 
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+os.chdir(base)
 </pre></div>
 </div>
 <p>or do the same in bash:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd $SINGULARITY_ROOTFS
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd $SINGULARITY_ROOTFS
 
 ls $SINGULARITY_ROOTFS/var
 </pre></div>
@@ -243,20 +243,20 @@ a level, and prevent continuation of the build/bootstrap given a fail.
 <a class="reference external" href="https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh">check.sh</a> in the following</p>
 <blockquote>
 <div>format:</div></blockquote>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">##################################################################################</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>##################################################################################
 
-<span class="c1"># CHECK SCRIPTS</span>
+# CHECK SCRIPTS
 
-<span class="c1">##################################################################################</span>
+##################################################################################
 
 
-<span class="c1">#        [SUCCESS] [LEVEL]  [SCRIPT]                                                                         [TAGS]</span>
+#        [SUCCESS] [LEVEL]  [SCRIPT]                                                                         [TAGS]
 
-<span class="n">execute_check</span>    <span class="mi">0</span>    <span class="n">HIGH</span>  <span class="s2">&quot;bash $SINGULARITY_libexecdir/singularity/helpers/checks/1-hello-world.sh&quot;</span>       <span class="n">security</span>
+execute_check    0    HIGH  &quot;bash $SINGULARITY_libexecdir/singularity/helpers/checks/1-hello-world.sh&quot;       security
 
-<span class="n">execute_check</span>    <span class="mi">0</span>     <span class="n">LOW</span>  <span class="s2">&quot;python $SINGULARITY_libexecdir/singularity/helpers/checks/2-cache-content.py&quot;</span>   <span class="n">clean</span>
+execute_check    0     LOW  &quot;python $SINGULARITY_libexecdir/singularity/helpers/checks/2-cache-content.py&quot;   clean
 
-<span class="n">execute_check</span>    <span class="mi">0</span>    <span class="n">HIGH</span>  <span class="s2">&quot;python $SINGULARITY_libexecdir/singularity/helpers/checks/3-cve.py&quot;</span>             <span class="n">security</span>
+execute_check    0    HIGH  &quot;python $SINGULARITY_libexecdir/singularity/helpers/checks/3-cve.py&quot;             security
 </pre></div>
 </div>
 <p>The function <code class="docutils literal notranslate"><span class="pre">execute_check</span></code> will compare the level (<code class="docutils literal notranslate"><span class="pre">[LEVEL]</span></code>) with the user specified (or
@@ -317,7 +317,7 @@ so it can be integrated into the Singularity software for others to use.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.5.1',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

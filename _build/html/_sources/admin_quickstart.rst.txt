@@ -17,7 +17,7 @@ the appropriate development tools and packages installed. For Red Hat
 and derivatives, you should install the following ``yum`` group to ensure you
 have an appropriately setup build server:
 
-::
+.. code-block:: none
 
     $ sudo yum groupinstall "Development Tools"
 
@@ -28,7 +28,7 @@ You can download the source code either from the latest stable tarball
 release or via the GitHub master repository. Here is an example
 downloading and preparing the latest development code from GitHub:
 
-::
+.. code-block:: none
 
     $ mkdir ~/git
 
@@ -56,7 +56,7 @@ easiest to make sure you install Singularity to a local file system.
 
 Assuming that ``/usr/local`` is a local file system:
 
-::
+.. code-block:: none
 
     $ ./configure --prefix=/usr/local --sysconfdir=/etc
 
@@ -74,7 +74,7 @@ Also note that when you configure, ``squashfs-tools`` is **not** required, howev
 required for full functionality. You will see this message after the
 configuration:
 
-::
+.. code-block:: none
 
     mksquashfs from squash-tools is required for full functionality
 
@@ -99,7 +99,7 @@ within the path explicitly provided. Ideally this should be within the
 local filesystem, specific to only a single host or node.
 For example, the Makefile contains this variable by default:
 
-::
+.. code-block:: none
 
     CONTAINER_OVERLAY = ${prefix}/var/singularity/mnt/overlay
 
@@ -107,14 +107,14 @@ By supplying the configure argument ``--localstatedir=/some/other/place`` Singul
 with the following. Note that ``${prefix}/var`` that has been replaced by the supplied
 value:
 
-::
+.. code-block:: none
 
     CONTAINER_OVERLAY = /some/other/place/singularity/mnt/overlay
 
 In the case of cluster nodes, you will need to ensure the following
 directories are created on all nodes, with ``root:root`` ownership and ``0755`` permissions:
 
-::
+.. code-block:: none
 
     ${localstatedir}/singularity/mnt
 
@@ -138,7 +138,7 @@ Singularity includes all of the necessary bits to properly create an RPM
 package directly from the source tree, and you can create an RPM by
 doing the following:
 
-::
+.. code-block:: none
 
     $ ./configure
 
@@ -149,7 +149,7 @@ doing the following:
 
 Near the bottom of the build output you will see several lines like:
 
-::
+.. code-block:: none
 
     ...
     Wrote: /home/gmk/rpmbuild/SRPMS/singularity-2.3.el7.centos.src.rpm
@@ -166,7 +166,7 @@ You will want to identify the appropriate path to the binary RPM that
 you wish to install, in the above example the package we want to install
 is ``singularity-2.3.el7.centos.x86_64.rpm`` , and you should install it with the following command:
 
-::
+.. code-block:: none
 
     $ sudo yum install /home/gmk/rpmbuild/RPMS/x86_64/singularity-2.3.el7.centos.x86_64.rpm
 
@@ -175,11 +175,11 @@ is ``singularity-2.3.el7.centos.x86_64.rpm`` , and you should install it with th
     ‘PREFIX’ (below) to suit your needs, and use the following command to
     build:
 
-::
+.. code-block:: none
 
     $ PREFIX=/opt/singularity
 
     $ rpmbuild -ta --define="_prefix $PREFIX" --define "_sysconfdir $PREFIX/etc" --define "_defaultdocdir $PREFIX/share" singularity-*.tar.gz
 
-We recommend you look at our `security admin guide <https://singularity-admindoc.readthedocs.io/en/latest/security.html>`_ to get further information about container
+We recommend you look at our :ref:`security admin guide <security>` to get further information about container
 privileges and mounting.

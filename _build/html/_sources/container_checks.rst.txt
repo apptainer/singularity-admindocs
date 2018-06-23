@@ -34,7 +34,7 @@ The flow of checks is the following:
    `check.help <https://github.com/singularityware/singularity/blob/development/libexec/cli/check.help>`__
    displays examples of how the user specifies a tag:
 
-::
+.. code-block:: none
 
         # Perform all default checks, these are the same
 
@@ -57,7 +57,7 @@ action. The following is required:
 actions relative to ``SINGULARITY_ROOTFS``. For example, in python you might change
 directory to this location:
 
-::
+.. code-block:: none
 
     import os
 
@@ -68,7 +68,7 @@ directory to this location:
 
 or do the same in bash:
 
-::
+.. code-block:: none
 
     cd $SINGULARITY_ROOTFS
 
@@ -92,7 +92,7 @@ a level, and prevent continuation of the build/bootstrap given a fail.
 `check.sh <https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh>`__ in the following
   format:
 
-::
+.. code-block:: none
 
     ##################################################################################
 
@@ -108,7 +108,7 @@ a level, and prevent continuation of the build/bootstrap given a fail.
     execute_check    0     LOW  "python $SINGULARITY_libexecdir/singularity/helpers/checks/2-cache-content.py"   clean
 
     execute_check    0    HIGH  "python $SINGULARITY_libexecdir/singularity/helpers/checks/3-cve.py"             security
-    
+
 
 The function ``execute_check`` will compare the level (``[LEVEL]``) with the user specified (or
 default) ``SINGULARITY_CHECKLEVEL`` and execute the check only given it is under the specified

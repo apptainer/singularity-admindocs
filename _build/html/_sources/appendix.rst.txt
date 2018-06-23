@@ -3,6 +3,8 @@
 Appendix
 ========
 
+.. _using-host-libraries-gpu-drivers-and-openmpi-btls:
+
 --------------------------------------------------
 Using Host libraries: GPU drivers and OpenMPI BTLs
 --------------------------------------------------
@@ -51,7 +53,7 @@ Alternatively you can follow the recipe `here <https://singularity-admindoc.read
 
 Use the following def file to create the image.
 
-::
+.. code-block:: none
 
     Bootstrap: debootstrap
 
@@ -99,7 +101,7 @@ Use the following def file to create the image.
 The mysterious ``wget`` line gets a list of all the libraries that the CentOS host has in ``/lib64`` that we
 think its safe to use in the container. Specifically these are things like nvidia drivers.
 
-::
+.. code-block:: none
 
     libvdpau_nvidia.so
 
@@ -282,7 +284,7 @@ Executing your image
 
 On our system we do:
 
-::
+.. code-block:: none
 
     SINGULARITYENV_LD_LIBRARY_PATH=/usr/local/openmpi/2.1.0-gcc4/lib:/opt/munge-0.5.11/lib:/opt/slurm-16.05.4/lib:/opt/slurm-16.05.4/lib/slurm:/desired_hostlibs:/opt/mellanox/mxm/lib/
 
@@ -290,7 +292,7 @@ On our system we do:
 
 then
 
-::
+.. code-block:: none
 
     srun  singularity exec -B /usr/local/openmpi:/usr/local/openmpi -B /opt:/opt -B /lib64:/all_hostlibs hostlibs.img <path to binary>
 
@@ -319,7 +321,7 @@ package is a tool that will allow you to create Debian-based distributions such 
 also need to install ‘epel-release’. You will need to download the appropriate RPM from the EPEL website. Make sure you download the correct
 version of the RPM for your release.
 
-::
+.. code-block:: none
 
     # First, wget the appropriate RPM from the EPEL website (https://dl.fedoraproject.org/pub/epel/)
 
@@ -345,7 +347,7 @@ You will need to create a definition file to describe how to build your Ubuntu i
 keywords. By using certain Singularity keywords, you can specify how you want your image to be built. The extension ‘.def’ is recommended for user clarity.
 Below is a definition file for a minimal Ubuntu image:
 
-::
+.. code-block:: none
 
     DistType "debian"
 
@@ -377,7 +379,7 @@ Below is a definition file for a minimal Ubuntu image:
 While this definition file is enough to create a working Ubuntu image, you may want increased customization of your image. There are several Singularity keywords that allow the user to do
 things such as install packages or files. Some of these keywords are used in the example below:
 
-::
+.. code-block:: none
 
     DistType "debian"
 
@@ -425,7 +427,7 @@ can be seen below:
 
 .. note:: We have saved our definition file as “ubuntu.def”
 
-::
+.. code-block:: none
 
     # First we will create an empty image container called ubuntu.img
 
@@ -503,7 +505,7 @@ Use here documents with RunCmd
 Using here documents with conjunction with RunCmd can be a great way to decrease the number of RunCmd keywords that you need to include
 in your definition file. For example, we can substitute a here document into the previous example:
 
-::
+.. code-block:: none
 
     DistType "debian"
 
@@ -546,7 +548,7 @@ Use InstallPkgs with multiple packages
 The InstallPkgs keyword is able to install multiple packages with a single keyword. Thus, another way you can increase the efficiency of your code is to
 use a single InstallPkgs keyword to install multiple packages, as seen below:
 
-::
+.. code-block:: none
 
     DistType "debian"
 

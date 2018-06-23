@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Administration QuickStart &mdash; Singularity container 1.0 documentation</title>
+  <title>Administration QuickStart &mdash; Singularity container 2.5.1 documentation</title>
   
 
   
@@ -181,7 +181,7 @@ installation from source, and it will depend on your build host to have
 the appropriate development tools and packages installed. For Red Hat
 and derivatives, you should install the following <code class="docutils literal notranslate"><span class="pre">yum</span></code> group to ensure you
 have an appropriately setup build server:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo yum groupinstall &quot;Development Tools&quot;
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo yum groupinstall &quot;Development Tools&quot;
 </pre></div>
 </div>
 <div class="section" id="downloading-the-source">
@@ -189,7 +189,7 @@ have an appropriately setup build server:</p>
 <p>You can download the source code either from the latest stable tarball
 release or via the GitHub master repository. Here is an example
 downloading and preparing the latest development code from GitHub:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir ~/git
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mkdir ~/git
 
 $ cd ~/git
 
@@ -213,7 +213,7 @@ as <code class="docutils literal notranslate"><span class="pre">SUID</span></cod
 various network mounted file systems. To ensure proper support, it is
 easiest to make sure you install Singularity to a local file system.</p>
 <p>Assuming that <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code> is a local file system:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./configure --prefix=/usr/local --sysconfdir=/etc
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ./configure --prefix=/usr/local --sysconfdir=/etc
 
 $ make
 
@@ -230,7 +230,7 @@ user.</strong></p>
 <p>Also note that when you configure, <code class="docutils literal notranslate"><span class="pre">squashfs-tools</span></code> is <strong>not</strong> required, however it is
 required for full functionality. You will see this message after the
 configuration:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mksquashfs</span> <span class="kn">from</span> <span class="nn">squash</span><span class="o">-</span><span class="n">tools</span> <span class="ow">is</span> <span class="n">required</span> <span class="k">for</span> <span class="n">full</span> <span class="n">functionality</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mksquashfs from squash-tools is required for full functionality
 </pre></div>
 </div>
 <p>If you choose not to install <code class="docutils literal notranslate"><span class="pre">squashfs-tools</span></code>, you will hit an error when your users try
@@ -251,18 +251,18 @@ will override the prefix, instead placing the local state directories
 within the path explicitly provided. Ideally this should be within the
 local filesystem, specific to only a single host or node.
 For example, the Makefile contains this variable by default:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CONTAINER_OVERLAY = ${prefix}/var/singularity/mnt/overlay
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CONTAINER_OVERLAY = ${prefix}/var/singularity/mnt/overlay
 </pre></div>
 </div>
 <p>By supplying the configure argument <code class="docutils literal notranslate"><span class="pre">--localstatedir=/some/other/place</span></code> Singularity will instead be built
 with the following. Note that <code class="docutils literal notranslate"><span class="pre">${prefix}/var</span></code> that has been replaced by the supplied
 value:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CONTAINER_OVERLAY</span> <span class="o">=</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">other</span><span class="o">/</span><span class="n">place</span><span class="o">/</span><span class="n">singularity</span><span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">overlay</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CONTAINER_OVERLAY = /some/other/place/singularity/mnt/overlay
 </pre></div>
 </div>
 <p>In the case of cluster nodes, you will need to ensure the following
 directories are created on all nodes, with <code class="docutils literal notranslate"><span class="pre">root:root</span></code> ownership and <code class="docutils literal notranslate"><span class="pre">0755</span></code> permissions:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${localstatedir}/singularity/mnt
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>${localstatedir}/singularity/mnt
 
 ${localstatedir}/singularity/mnt/container
 
@@ -282,7 +282,7 @@ directory for <code class="docutils literal notranslate"><span class="pre">--loc
 <p>Singularity includes all of the necessary bits to properly create an RPM
 package directly from the source tree, and you can create an RPM by
 doing the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./configure
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ./configure
 
 $ make dist
 
@@ -290,22 +290,22 @@ $ rpmbuild -ta singularity-*.tar.gz
 </pre></div>
 </div>
 <p>Near the bottom of the build output you will see several lines like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
-<span class="n">Wrote</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">gmk</span><span class="o">/</span><span class="n">rpmbuild</span><span class="o">/</span><span class="n">SRPMS</span><span class="o">/</span><span class="n">singularity</span><span class="o">-</span><span class="mf">2.3</span><span class="o">.</span><span class="n">el7</span><span class="o">.</span><span class="n">centos</span><span class="o">.</span><span class="n">src</span><span class="o">.</span><span class="n">rpm</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>...
+Wrote: /home/gmk/rpmbuild/SRPMS/singularity-2.3.el7.centos.src.rpm
 
-<span class="n">Wrote</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">gmk</span><span class="o">/</span><span class="n">rpmbuild</span><span class="o">/</span><span class="n">RPMS</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">singularity</span><span class="o">-</span><span class="mf">2.3</span><span class="o">.</span><span class="n">el7</span><span class="o">.</span><span class="n">centos</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+Wrote: /home/gmk/rpmbuild/RPMS/x86_64/singularity-2.3.el7.centos.x86_64.rpm
 
-<span class="n">Wrote</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">gmk</span><span class="o">/</span><span class="n">rpmbuild</span><span class="o">/</span><span class="n">RPMS</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">singularity</span><span class="o">-</span><span class="n">devel</span><span class="o">-</span><span class="mf">2.3</span><span class="o">.</span><span class="n">el7</span><span class="o">.</span><span class="n">centos</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+Wrote: /home/gmk/rpmbuild/RPMS/x86_64/singularity-devel-2.3.el7.centos.x86_64.rpm
 
-<span class="n">Wrote</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">gmk</span><span class="o">/</span><span class="n">rpmbuild</span><span class="o">/</span><span class="n">RPMS</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">singularity</span><span class="o">-</span><span class="n">debuginfo</span><span class="o">-</span><span class="mf">2.3</span><span class="o">.</span><span class="n">el7</span><span class="o">.</span><span class="n">centos</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+Wrote: /home/gmk/rpmbuild/RPMS/x86_64/singularity-debuginfo-2.3.el7.centos.x86_64.rpm
 
-<span class="o">...</span>
+...
 </pre></div>
 </div>
 <p>You will want to identify the appropriate path to the binary RPM that
 you wish to install, in the above example the package we want to install
 is <code class="docutils literal notranslate"><span class="pre">singularity-2.3.el7.centos.x86_64.rpm</span></code> , and you should install it with the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo yum install /home/gmk/rpmbuild/RPMS/x86_64/singularity-2.3.el7.centos.x86_64.rpm
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo yum install /home/gmk/rpmbuild/RPMS/x86_64/singularity-2.3.el7.centos.x86_64.rpm
 </pre></div>
 </div>
 <div class="admonition note">
@@ -315,12 +315,12 @@ alternative location, you should define the environment variable
 ‘PREFIX’ (below) to suit your needs, and use the following command to
 build:</p>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ PREFIX=/opt/singularity
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ PREFIX=/opt/singularity
 
 $ rpmbuild -ta --define=&quot;_prefix $PREFIX&quot; --define &quot;_sysconfdir $PREFIX/etc&quot; --define &quot;_defaultdocdir $PREFIX/share&quot; singularity-*.tar.gz
 </pre></div>
 </div>
-<p>We recommend you look at our <a class="reference external" href="https://singularity-admindoc.readthedocs.io/en/latest/security.html">security admin guide</a> to get further information about container
+<p>We recommend you look at our <a class="reference internal" href="security.html#security"><span class="std std-ref">security admin guide</span></a> to get further information about container
 privileges and mounting.</p>
 </div>
 </div>
@@ -368,7 +368,7 @@ privileges and mounting.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.5.1',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
