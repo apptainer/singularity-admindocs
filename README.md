@@ -16,13 +16,11 @@ pip install -U Sphinx
 
 You're all set! after this you will only need to use your favorite editor for RST files.
 
-How to do stuff on RST?
------------------------
+### How to do stuff on RST?### 
 
 You can find a lot of information about RST on <a href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html">this site</a>
 
-How can I generate the html files once I have already edited the RST files?
----------------------------------------------------------------------------
+### How can I generate the html files once I have already edited the RST files? ### 
 
 This is pretty straightforward by going to the root of the project on the command line and then do:
 
@@ -31,8 +29,7 @@ make html
 ```
 This will generate a folder called **_build** which inside has the folder **_html** containing all the html files needed.
 
-How to generate PDF files then?
--------------------------------
+### How to generate PDF files then? ### 
 
 This is very similar to the previous step, you will need to execute on command line:
 
