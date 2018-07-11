@@ -1,6 +1,6 @@
 # Singularity Admin Docs
 
-This project uses <a href="http://docutils.sourceforge.net/rst.html"> reStructured Text (RST)</a> and <a href="https://readthedocs.org/">ReadTheDocs </a> . As a library for the current theme,  <a href="https://pypi.org/project/Sphinx/" alt="PyPI"><img src="https://img.shields.io/pypi/v/sphinx.svg"> Sphinx Python library </a> was used, using Python v. 2.7.
+This project uses <a href="http://docutils.sourceforge.net/rst.html"> reStructured Text (RST)</a> and <a href="https://readthedocs.org/">ReadTheDocs </a> . As a library for the current theme,  <a href="https://pypi.org/project/Sphinx/" alt="PyPI">Sphinx Python library </a> was used, using Python v. 2.7.
 **********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
 ### I want to contribute, how can I set up my environment? ###
 
