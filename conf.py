@@ -115,7 +115,7 @@ html_theme_options = {
 
 html_context = {
     'display_github': True,
-    'github_user': 'singularityware',
+    'github_user': 'sylabs',
     'github_repo': 'singularity-admindocs',
     'github_version': 'master',
     'conf_py_path': '/',

@@ -34,7 +34,7 @@ downloading and preparing the latest development code from GitHub:
 
     $ cd ~/git
 
-    $ git clone https://github.com/singularityware/singularity.git
+    $ git clone https://github.com/sylabs/singularity.git
 
     $ cd singularity
 
