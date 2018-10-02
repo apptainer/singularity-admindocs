@@ -28,7 +28,7 @@ What We will learn today
 This document describes how to use a bind mount, symlinks and ldconfig so that when the host
 libraries are updated the container does not need to be rebuilt.
 
-Note this tutorial is tested with Singularity commit `945c6ee343a1e6101e22396a90dfdb5944f442b6 <https://github.com/singularityware/singularity/commit/945c6ee343a1e6101e22396a90dfdb5944f442b6>`_,
+Note this tutorial is tested with Singularity commit `945c6ee343a1e6101e22396a90dfdb5944f442b6 <https://github.com/sylabs/singularity/commit/945c6ee343a1e6101e22396a90dfdb5944f442b6>`_,
 which is part of the (current) development branch, and thus it should work with version 2.3 when
 that is released. The version of OpenMPI used is 2.1.0 (versions above 2.1 should work).
 

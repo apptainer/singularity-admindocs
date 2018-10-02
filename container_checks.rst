@@ -15,13 +15,13 @@ What is a check?
 Broadly, a check is a script that is run over a mounted filesystem,
 primary with the purpose of checking for some security issue. This
 process is tightly controlled, meaning that the script names in the
-`checks <https://github.com/singularityware/singularity/tree/development/libexec/helpers/checks>`__
+`checks <https://github.com/sylabs/singularity/tree/development/libexec/helpers/checks>`__
 folder are hard coded into the script
-`check.sh <https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh>`__.
+`check.sh <https://github.com/sylabs/singularity/blob/development/libexec/helpers/check.sh>`__.
 The flow of checks is the following:
 
 -  the user calls ``singularity check container.img`` to invoke
-   `check.exec <https://github.com/singularityware/singularity/blob/development/libexec/cli/check.exec>`__
+   `check.exec <https://github.com/sylabs/singularity/blob/development/libexec/cli/check.exec>`__
 
 -  specification of ``--low``(3), ``--med``(2), or ``--high``(1) sets the level to perform. The
    level is a filter, meaning that a level of 3 will include 3,2,1, and
@@ -31,7 +31,7 @@ The flow of checks is the following:
    a kind of check. This is primarily to allow for extending the checks
    to do other types of things. For example, for this initial batch,
    these are all considered ``default`` checks. The
-   `check.help <https://github.com/singularityware/singularity/blob/development/libexec/cli/check.help>`__
+   `check.help <https://github.com/sylabs/singularity/blob/development/libexec/cli/check.help>`__
    displays examples of how the user specifies a tag:
 
 .. code-block:: none
@@ -83,13 +83,13 @@ status will be printed, with any relevant information. For more
 thorough checking, you might want to give more verbose output.
 
 **Return Code** The script return code of “success” is defined in
-`check.sh <https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh>`__, and other return
+`check.sh <https://github.com/sylabs/singularity/blob/development/libexec/helpers/check.sh>`__, and other return
 codes are considered not success. When a non success return code is
 found, the rest of the checks continue running, and no action is
 taken. We might want to give some admin an ability to specify a check,
 a level, and prevent continuation of the build/bootstrap given a fail.
 **Check.sh** The script level, path, and tags should be added to
-`check.sh <https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh>`__ in the following
+`check.sh <https://github.com/sylabs/singularity/blob/development/libexec/helpers/check.sh>`__ in the following
   format:
 
 .. code-block:: none
@@ -122,5 +122,5 @@ How to tell users?
 
 If you add a custom check that you want for your users to use, you
 should tell them about it. Better yet, `tell
-us <https://github.com/singularityware/singularity/issues>`__ about it
+us <https://github.com/sylabs/singularity/issues>`__ about it
 so it can be integrated into the Singularity software for others to use.

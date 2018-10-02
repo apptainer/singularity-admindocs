@@ -18,7 +18,7 @@ document.write('<div class="rst-versions" data-toggle="rst-versions" role="note"
      <dl>\
        <dt>Do you want to contribute? </dt>\
          <dd>\
-           <a href="https://github.com/singularityware/singularity-admindocs">Find us on GitHub!</a>\
+           <a href="https://github.com/sylabs/singularity-admindocs">Find us on GitHub!</a>\
          </dd>\
      </dl>\
 \
