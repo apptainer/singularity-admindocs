@@ -55,8 +55,8 @@
 
 
 \title{Singularity Container Documentation}
-\date{Jun 23, 2018}
-\release{2.5.1}
+\date{Oct 17, 2018}
+\release{2.5}
 \author{Admin Docs}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
 \renewcommand{\releasename}{Release}
@@ -104,7 +104,7 @@ downloading and preparing the latest development code from GitHub:
 
 \PYGZdl{} cd \PYGZti{}/git
 
-\PYGZdl{} git clone https://github.com/singularityware/singularity.git
+\PYGZdl{} git clone https://github.com/sylabs/singularity.git
 
 \PYGZdl{} cd singularity
 
@@ -1041,14 +1041,14 @@ user}.
 Broadly, a check is a script that is run over a mounted filesystem,
 primary with the purpose of checking for some security issue. This
 process is tightly controlled, meaning that the script names in the
-\sphinxhref{https://github.com/singularityware/singularity/tree/development/libexec/helpers/checks}{checks}
+\sphinxhref{https://github.com/sylabs/singularity/tree/development/libexec/helpers/checks}{checks}
 folder are hard coded into the script
-\sphinxhref{https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh}{check.sh}.
+\sphinxhref{https://github.com/sylabs/singularity/blob/development/libexec/helpers/check.sh}{check.sh}.
 The flow of checks is the following:
 \begin{itemize}
 \item {} 
 the user calls \sphinxcode{\sphinxupquote{singularity check container.img}} to invoke
-\sphinxhref{https://github.com/singularityware/singularity/blob/development/libexec/cli/check.exec}{check.exec}
+\sphinxhref{https://github.com/sylabs/singularity/blob/development/libexec/cli/check.exec}{check.exec}
 
 \item {} 
 specification of {\color{red}\bfseries{}{}`{}`}\textendash{}low{}`{}`(3), {\color{red}\bfseries{}{}`{}`}\textendash{}med{}`{}`(2), or {\color{red}\bfseries{}{}`{}`}\textendash{}high{}`{}`(1) sets the level to perform. The
@@ -1060,7 +1060,7 @@ specification of \sphinxcode{\sphinxupquote{-t/-{-}tag}} will allow the user (or
 a kind of check. This is primarily to allow for extending the checks
 to do other types of things. For example, for this initial batch,
 these are all considered \sphinxcode{\sphinxupquote{default}} checks. The
-\sphinxhref{https://github.com/singularityware/singularity/blob/development/libexec/cli/check.help}{check.help}
+\sphinxhref{https://github.com/sylabs/singularity/blob/development/libexec/cli/check.help}{check.help}
 displays examples of how the user specifies a tag:
 
 \end{itemize}
@@ -1115,13 +1115,13 @@ status will be printed, with any relevant information. For more
 thorough checking, you might want to give more verbose output.
 
 \sphinxstylestrong{Return Code} The script return code of “success” is defined in
-\sphinxhref{https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh}{check.sh}, and other return
+\sphinxhref{https://github.com/sylabs/singularity/blob/development/libexec/helpers/check.sh}{check.sh}, and other return
 codes are considered not success. When a non success return code is
 found, the rest of the checks continue running, and no action is
 taken. We might want to give some admin an ability to specify a check,
 a level, and prevent continuation of the build/bootstrap given a fail.
 \sphinxstylestrong{Check.sh} The script level, path, and tags should be added to
-\sphinxhref{https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh}{check.sh} in the following
+\sphinxhref{https://github.com/sylabs/singularity/blob/development/libexec/helpers/check.sh}{check.sh} in the following
 \begin{quote}
 
 format:
@@ -1155,7 +1155,7 @@ and thus perform all checks.
 \section{How to tell users?}
 \label{\detokenize{container_checks:how-to-tell-users}}
 If you add a custom check that you want for your users to use, you
-should tell them about it. Better yet, \sphinxhref{https://github.com/singularityware/singularity/issues}{tell
+should tell them about it. Better yet, \sphinxhref{https://github.com/sylabs/singularity/issues}{tell
 us} about it
 so it can be integrated into the Singularity software for others to use.
 
@@ -1743,7 +1743,7 @@ the version of the libs (installed on the host) into the container.
 This document describes how to use a bind mount, symlinks and ldconfig so that when the host
 libraries are updated the container does not need to be rebuilt.
 
-Note this tutorial is tested with Singularity commit \sphinxhref{https://github.com/singularityware/singularity/commit/945c6ee343a1e6101e22396a90dfdb5944f442b6}{945c6ee343a1e6101e22396a90dfdb5944f442b6},
+Note this tutorial is tested with Singularity commit \sphinxhref{https://github.com/sylabs/singularity/commit/945c6ee343a1e6101e22396a90dfdb5944f442b6}{945c6ee343a1e6101e22396a90dfdb5944f442b6},
 which is part of the (current) development branch, and thus it should work with version 2.3 when
 that is released. The version of OpenMPI used is 2.1.0 (versions above 2.1 should work).
 

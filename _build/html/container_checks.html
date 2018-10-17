@@ -154,7 +154,7 @@
 
 
 
-              <a href="https://github.com/singularityware/singularity-admindocs/blob/master/container_checks.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/sylabs/singularity-admindocs/blob/2.5/container_checks.rst" class="fa fa-github"> Edit on GitHub</a>
 
 
 
@@ -180,13 +180,13 @@ user</a>.</p>
 <p>Broadly, a check is a script that is run over a mounted filesystem,
 primary with the purpose of checking for some security issue. This
 process is tightly controlled, meaning that the script names in the
-<a class="reference external" href="https://github.com/singularityware/singularity/tree/development/libexec/helpers/checks">checks</a>
+<a class="reference external" href="https://github.com/sylabs/singularity/tree/development/libexec/helpers/checks">checks</a>
 folder are hard coded into the script
-<a class="reference external" href="https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh">check.sh</a>.
+<a class="reference external" href="https://github.com/sylabs/singularity/blob/development/libexec/helpers/check.sh">check.sh</a>.
 The flow of checks is the following:</p>
 <ul class="simple">
 <li>the user calls <code class="docutils literal notranslate"><span class="pre">singularity</span> <span class="pre">check</span> <span class="pre">container.img</span></code> to invoke
-<a class="reference external" href="https://github.com/singularityware/singularity/blob/development/libexec/cli/check.exec">check.exec</a></li>
+<a class="reference external" href="https://github.com/sylabs/singularity/blob/development/libexec/cli/check.exec">check.exec</a></li>
 <li>specification of <a href="#id1"><span class="problematic" id="id2">``</span></a>–low``(3), <a href="#id3"><span class="problematic" id="id4">``</span></a>–med``(2), or <a href="#id5"><span class="problematic" id="id6">``</span></a>–high``(1) sets the level to perform. The
 level is a filter, meaning that a level of 3 will include 3,2,1, and
 a level of 1 (high) will only call checks of high priority.</li>
@@ -194,7 +194,7 @@ a level of 1 (high) will only call checks of high priority.</li>
 a kind of check. This is primarily to allow for extending the checks
 to do other types of things. For example, for this initial batch,
 these are all considered <code class="docutils literal notranslate"><span class="pre">default</span></code> checks. The
-<a class="reference external" href="https://github.com/singularityware/singularity/blob/development/libexec/cli/check.help">check.help</a>
+<a class="reference external" href="https://github.com/sylabs/singularity/blob/development/libexec/cli/check.help">check.help</a>
 displays examples of how the user specifies a tag:</li>
 </ul>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Perform all default checks, these are the same
@@ -236,13 +236,13 @@ if the check is found to have failed. If pass, the check’s name and
 status will be printed, with any relevant information. For more
 thorough checking, you might want to give more verbose output.</p>
 <p><strong>Return Code</strong> The script return code of “success” is defined in
-<a class="reference external" href="https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh">check.sh</a>, and other return
+<a class="reference external" href="https://github.com/sylabs/singularity/blob/development/libexec/helpers/check.sh">check.sh</a>, and other return
 codes are considered not success. When a non success return code is
 found, the rest of the checks continue running, and no action is
 taken. We might want to give some admin an ability to specify a check,
 a level, and prevent continuation of the build/bootstrap given a fail.
 <strong>Check.sh</strong> The script level, path, and tags should be added to
-<a class="reference external" href="https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh">check.sh</a> in the following</p>
+<a class="reference external" href="https://github.com/sylabs/singularity/blob/development/libexec/helpers/check.sh">check.sh</a> in the following</p>
 <blockquote>
 <div>format:</div></blockquote>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>##################################################################################
@@ -271,7 +271,7 @@ and thus perform all checks.</p>
 <div class="section" id="how-to-tell-users">
 <h2>How to tell users?<a class="headerlink" href="#how-to-tell-users" title="Permalink to this headline">¶</a></h2>
 <p>If you add a custom check that you want for your users to use, you
-should tell them about it. Better yet, <a class="reference external" href="https://github.com/singularityware/singularity/issues">tell
+should tell them about it. Better yet, <a class="reference external" href="https://github.com/sylabs/singularity/issues">tell
 us</a> about it
 so it can be integrated into the Singularity software for others to use.</p>
 </div>
@@ -311,13 +311,15 @@ so it can be integrated into the Singularity software for others to use.</p>
     </section>
 
   </div>
+
+
 <script type="text/javascript" src="_static/js/footer.js"></script>
 
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.5.1',
+            VERSION:'2.5',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
