@@ -365,8 +365,8 @@ Below is a definition file for a minimal Ubuntu image:
 
     Cleanup
 
-    The following keywords were used in this definition file:
 
+The following keywords were used in this definition file:
 
 -  DistType: DistType specifies the distribution type of your intended operating system. Because we are trying to build an Ubuntu image, the type “debian” was chosen.
 -  MirrorURL: The MirrorURL specifies the download link for your intended operating system. The Ubuntu archive website is a great mirror link to use if you are building an Ubuntu image.
