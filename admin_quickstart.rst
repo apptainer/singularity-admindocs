@@ -15,8 +15,8 @@ Installation
 This section will explain the process of installing ``Singularity`` from 
 source and building your own binary packages.
 
-Install System Packages
------------------------
+Install Build Dependencies
+--------------------------
 
 ``Singularity`` requires several libraries and development tools to be 
 installed before you can build it from source.
@@ -50,8 +50,8 @@ Post installation, you will need to setup your environment for Go.
     $ echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc
     $ source ~/.bashrc
 
-.. note:: You may need to add the path ``/usr/local/go/bin`` to your 
-    ``sudoers`` config.
+.. note:: You may need to add the path ``/usr/local/go/bin`` to the 
+    ``secure_path`` option in your ``sudoers`` config.
 
 Download Source
 ---------------
@@ -64,7 +64,14 @@ download the latest stable tarball or clone our ``git`` repository.
     $ mkdir -p $GOPATH/src/github.com/sylabs
     $ cd $GOPATH/src/github.com/sylabs
     $ git clone https://github.com/sylabs/singularity
-    $ cd singularity
+
+After you clone the ``git`` repository, you can optionally ``checkout`` the 
+``tag`` of a specific version to install (e.g. ``3.0.1``)
+
+.. code-block:: none
+
+    $ git fetch
+    $ git checkout 3.0.1
 
 Configure the Build
 -------------------
@@ -78,8 +85,7 @@ the ``mconfig`` script.
 .. code-block:: none
 
     $ cd $GOPATH/src/github.com/sylabs/singularity
-    $ ./mconfig -h
-    $ ./mconfig --prefix=/opt/singularity --localstatedir=/var/singularity
+    $ ./mconfig --prefix=/usr/local --localstatedir=/var 
 
 Configuration (``localstatedir``)
 ---------------------------------
@@ -117,9 +123,8 @@ source.
 
 .. code-block:: none
 
-    $ cd builddir
-    $ make
-    $ sudo make install
+    $ make -C builddir
+    $ sudo make -C builddir install
 
 .. note:: ``Singularity`` must be installed as ``root`` for full functionality.
 
@@ -128,6 +133,9 @@ source.
 
 Build an RPM from Source
 ------------------------
+
+.. note:: This process was greatly improved in version ``3.0.1`` and we suggest 
+    you use at least that version if you wish to build RPMs.
 
 You will use the ``rpm`` ``Makefile`` target to build a ``Singularity`` RPM.
 
