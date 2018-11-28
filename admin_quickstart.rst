@@ -57,21 +57,20 @@ Download Source
 ---------------
 
 ``Singularity`` source code is available on ``Github``. You can either 
-download the latest stable tarball or clone our ``git`` repository.
+download a versioned tarball from the 
+`releases page <https://github.com/sylabs/singularity/releases>`_ or 
+clone our ``git`` repository.
+
+After you clone the ``git`` repository, you can optionally ``checkout`` the
+``tag`` of a specific version to install (e.g. ``v3.0.1``)
 
 .. code-block:: none
 
     $ mkdir -p $GOPATH/src/github.com/sylabs
     $ cd $GOPATH/src/github.com/sylabs
     $ git clone https://github.com/sylabs/singularity
-
-After you clone the ``git`` repository, you can optionally ``checkout`` the 
-``tag`` of a specific version to install (e.g. ``3.0.1``)
-
-.. code-block:: none
-
-    $ git fetch
-    $ git checkout 3.0.1
+    $ git tag --list
+    $ git checkout v3.0.1
 
 Configure the Build
 -------------------
