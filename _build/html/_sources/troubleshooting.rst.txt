@@ -31,6 +31,7 @@ reporting one of the following error conditions:
     ABORT  : This program must be SUID root
 
     ABORT  : Retval = 255
+    
 
 If one of these errors is reported, it is best to check the installation
 of Singularity and ensure that it was properly installed by the root

@@ -14,6 +14,7 @@ The Configuration file can be found at ``$SYSCONFDIR/singularity/singularity.con
 repository is located at ``etc/singularity.conf``. It is generally self documenting but there
 are several things to pay special attention to:
 
+
 ----------
 Parameters
 ----------

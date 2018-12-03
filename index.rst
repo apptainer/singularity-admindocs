@@ -2,10 +2,11 @@
 Admin Guide
 ===========
 
+
 .. toctree::
    :maxdepth: 5
 
-   Administration Quickstart <admin_quickstart>
+   Admin Quickstart <admin_quickstart>
    Security <security>
    The Singularity Config File <the_singularity_config_file>
    Container Checks <container_checks>

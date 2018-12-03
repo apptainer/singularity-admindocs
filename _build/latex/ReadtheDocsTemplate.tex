@@ -55,8 +55,8 @@
 
 
 \title{Singularity Container Documentation}
-\date{Aug 20, 2018}
-\release{2.6.0}
+\date{Dec 04, 2018}
+\release{3.0}
 \author{Admin Docs}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
 \renewcommand{\releasename}{Release}
@@ -70,125 +70,118 @@
 
 
 
-\chapter{Administration QuickStart}
-\label{\detokenize{admin_quickstart:administration-quickstart}}\label{\detokenize{admin_quickstart::doc}}
+\chapter{Admin Quick Start}
+\label{\detokenize{admin_quickstart:admin-quick-start}}\label{\detokenize{admin_quickstart::doc}}
 This document will cover installation and administration points of
-Singularity for multi-tenant HPC resources and will not cover usage of
-the command line tools, container usage, or example use cases.
+\sphinxcode{\sphinxupquote{Singularity}} on a Linux host. For all other information, see the
+\sphinxhref{https://www.sylabs.io/guides/3.0/user-guide/}{user guide}.
+
+For any additional help or support contact the
+\sphinxhref{https://www.sylabs.io/contact/}{Sylabs team}.
 
 
 \section{Installation}
 \label{\detokenize{admin_quickstart:installation}}
-There are two common ways to install Singularity, from source code and
-via binary packages. This document will explain the process of
-installation from source, and it will depend on your build host to have
-the appropriate development tools and packages installed. For Red Hat
-and derivatives, you should install the following \sphinxcode{\sphinxupquote{yum}} group to ensure you
-have an appropriately setup build server:
+This section will explain the process of installing \sphinxcode{\sphinxupquote{Singularity}} from
+source and building your own binary packages.
+
+
+\subsection{Install Build Dependencies}
+\label{\detokenize{admin_quickstart:install-build-dependencies}}
+\sphinxcode{\sphinxupquote{Singularity}} requires several libraries and development tools to be
+installed before you can build it from source.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYGZdl{} sudo yum groupinstall \PYGZdq{}Development Tools\PYGZdq{}
-\end{sphinxVerbatim}
-
-
-\subsection{Downloading the source}
-\label{\detokenize{admin_quickstart:downloading-the-source}}
-You can download the source code either from the latest stable tarball
-release or via the GitHub master repository. Here is an example
-downloading and preparing the latest development code from GitHub:
-
-\fvset{hllines={, ,}}%
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYGZdl{} mkdir \PYGZti{}/git
-
-\PYGZdl{} cd \PYGZti{}/git
-
-\PYGZdl{} git clone https://github.com/singularityware/singularity.git
-
-\PYGZdl{} cd singularity
-
-\PYGZdl{} ./autogen.sh
-\end{sphinxVerbatim}
-
-Once you have downloaded the source, the following installation
-procedures will assume you are running from the root of the source
-directory.
-
-
-\subsection{Source Installation}
-\label{\detokenize{admin_quickstart:source-installation}}
-The following example demonstrates how to install Singularity into \sphinxcode{\sphinxupquote{/usr/local}}.
-You can install Singularity into any directory of your choosing, but
-you must ensure that the location you select supports programs running
-as \sphinxcode{\sphinxupquote{SUID}}. It is common for people to disable \sphinxcode{\sphinxupquote{SUID}} with the mount option \sphinxcode{\sphinxupquote{nosuid}} for
-various network mounted file systems. To ensure proper support, it is
-easiest to make sure you install Singularity to a local file system.
-
-Assuming that \sphinxcode{\sphinxupquote{/usr/local}} is a local file system:
-
-\fvset{hllines={, ,}}%
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYGZdl{} ./configure \PYGZhy{}\PYGZhy{}prefix=/usr/local \PYGZhy{}\PYGZhy{}sysconfdir=/etc
-
-\PYGZdl{} make
-
-\PYGZdl{} sudo make install
+\PYGZdl{} sudo yum \PYGZhy{}y update
+\PYGZdl{} sudo yum \PYGZhy{}y groupinstall \PYGZdq{}Development Tools\PYGZdq{}
+\PYGZdl{} sudo yum \PYGZhy{}y install git libseccomp\PYGZhy{}devel libuuid\PYGZhy{}devel openssl\PYGZhy{}devel squashfs\PYGZhy{}tools wget
 \end{sphinxVerbatim}
 
 \begin{sphinxadmonition}{note}{Note:}
-\sphinxstylestrong{The} \sphinxcode{\sphinxupquote{make install}} \sphinxstylestrong{above must be run as root to have Singularity properly
-installed. Failure to install as root will cause Singularity to not
-function properly or have limited functionality when run by a non-root
-user.}
+Both \sphinxcode{\sphinxupquote{squashfs-tools}} and \sphinxcode{\sphinxupquote{libseccomp-devel}} are optional
+dependencies but are required for full functionality.
 \end{sphinxadmonition}
 
-Also note that when you configure, \sphinxcode{\sphinxupquote{squashfs-tools}} is \sphinxstylestrong{not} required, however it is
-required for full functionality. You will see this message after the
-configuration:
+
+\subsection{Install Go}
+\label{\detokenize{admin_quickstart:install-go}}
+\sphinxcode{\sphinxupquote{Singularity}} is written primarily in Go, and you will need Go \textgreater{}= 1.11
+installed to build it from source.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-mksquashfs from squash\PYGZhy{}tools is required for full functionality
+\PYGZdl{} export VERSION=1.11 OS=linux ARCH=amd64
+\PYGZdl{} wget https://dl.google.com/go/go\PYGZdl{}VERSION.\PYGZdl{}OS\PYGZhy{}\PYGZdl{}ARCH.tar.gz
+\PYGZdl{} sudo tar \PYGZhy{}C /usr/local \PYGZhy{}xzf go\PYGZdl{}VERSION.\PYGZdl{}OS\PYGZhy{}\PYGZdl{}ARCH.tar.gz
 \end{sphinxVerbatim}
 
-If you choose not to install \sphinxcode{\sphinxupquote{squashfs-tools}}, you will hit an error when your users try
-a pull from Docker Hub, for example.
-
-
-\subsection{Prefix in special places (\textendash{}localstatedir)}
-\label{\detokenize{admin_quickstart:prefix-in-special-places-localstatedir}}
-As with most autotools-based build scripts, you are able to supply the \sphinxcode{\sphinxupquote{-{-}prefix}}
-argument to the configure script to change where Singularity will be
-installed. Care must be taken when this path is not a local filesystem
-or has atypical permissions. The local state directories used by
-Singularity at runtime will also be placed under the supplied \sphinxcode{\sphinxupquote{-{-}prefix}} and this
-will cause malfunction if the tree is read-only. You may also
-experience issues if this directory is shared between several
-hosts/nodes that might run Singularity simultaneously.
-
-In such cases, you should specify the \sphinxcode{\sphinxupquote{-{-}localstatedir}} variable in addition to \sphinxcode{\sphinxupquote{-{-}prefix}}. This
-will override the prefix, instead placing the local state directories
-within the path explicitly provided. Ideally this should be within the
-local filesystem, specific to only a single host or node.
-For example, the Makefile contains this variable by default:
+Post installation, you will need to setup your environment for Go.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-CONTAINER\PYGZus{}OVERLAY = \PYGZdl{}\PYGZob{}prefix\PYGZcb{}/var/singularity/mnt/overlay
+\PYGZdl{} echo \PYGZsq{}export GOPATH=\PYGZdl{}\PYGZob{}HOME\PYGZcb{}/go\PYGZsq{} \PYGZgt{}\PYGZgt{} \PYGZti{}/.bashrc
+\PYGZdl{} echo \PYGZsq{}export PATH=/usr/local/go/bin:\PYGZdl{}\PYGZob{}PATH\PYGZcb{}:\PYGZdl{}\PYGZob{}GOPATH\PYGZcb{}/bin\PYGZsq{} \PYGZgt{}\PYGZgt{} \PYGZti{}/.bashrc
+\PYGZdl{} source \PYGZti{}/.bashrc
 \end{sphinxVerbatim}
 
-By supplying the configure argument \sphinxcode{\sphinxupquote{-{-}localstatedir=/some/other/place}} Singularity will instead be built
-with the following. Note that \sphinxcode{\sphinxupquote{\$\{prefix\}/var}} that has been replaced by the supplied
-value:
+\begin{sphinxadmonition}{note}{Note:}
+You may need to add the path \sphinxcode{\sphinxupquote{/usr/local/go/bin}} to the
+\sphinxcode{\sphinxupquote{secure\_path}} option in your \sphinxcode{\sphinxupquote{sudoers}} config.
+\end{sphinxadmonition}
+
+
+\subsection{Download Source}
+\label{\detokenize{admin_quickstart:download-source}}
+\sphinxcode{\sphinxupquote{Singularity}} source code is available on \sphinxcode{\sphinxupquote{Github}}. You can either
+download a versioned tarball from the
+\sphinxhref{https://github.com/sylabs/singularity/releases}{releases page} or
+clone our \sphinxcode{\sphinxupquote{git}} repository.
+
+After you clone the \sphinxcode{\sphinxupquote{git}} repository, you can optionally \sphinxcode{\sphinxupquote{checkout}} the
+\sphinxcode{\sphinxupquote{tag}} of a specific version to install (e.g. \sphinxcode{\sphinxupquote{v3.0.1}})
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-CONTAINER\PYGZus{}OVERLAY = /some/other/place/singularity/mnt/overlay
+\PYGZdl{} mkdir \PYGZhy{}p \PYGZdl{}GOPATH/src/github.com/sylabs
+\PYGZdl{} cd \PYGZdl{}GOPATH/src/github.com/sylabs
+\PYGZdl{} git clone https://github.com/sylabs/singularity
+\PYGZdl{} git tag \PYGZhy{}\PYGZhy{}list
+\PYGZdl{} git checkout v3.0.1
 \end{sphinxVerbatim}
 
-In the case of cluster nodes, you will need to ensure the following
-directories are created on all nodes, with \sphinxcode{\sphinxupquote{root:root}} ownership and \sphinxcode{\sphinxupquote{0755}} permissions:
+
+\subsection{Configure the Build}
+\label{\detokenize{admin_quickstart:configure-the-build}}
+\sphinxcode{\sphinxupquote{Singularity}} uses a custom build system. You will configure the build using
+the \sphinxcode{\sphinxupquote{mconfig}} script.
+
+\begin{sphinxadmonition}{note}{Note:}
+You can see all of the options for \sphinxcode{\sphinxupquote{mconfig}} by using the \sphinxcode{\sphinxupquote{-h}}
+option.
+\end{sphinxadmonition}
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} cd \PYGZdl{}GOPATH/src/github.com/sylabs/singularity
+\PYGZdl{} ./mconfig \PYGZhy{}\PYGZhy{}prefix=/usr/local \PYGZhy{}\PYGZhy{}localstatedir=/var
+\end{sphinxVerbatim}
+
+
+\subsection{Configuration (\sphinxstyleliteralintitle{\sphinxupquote{localstatedir}})}
+\label{\detokenize{admin_quickstart:configuration-localstatedir}}
+The local state directories used by \sphinxcode{\sphinxupquote{Singularity}} at runtime will be placed
+under the supplied \sphinxcode{\sphinxupquote{prefix}} option. This will cause issues if that directory
+tree is read-only or if it is shared between several hosts or nodes that might
+run \sphinxcode{\sphinxupquote{Singularity}} simultaneously.
+
+In such cases, you should specify the \sphinxcode{\sphinxupquote{localstatedir}} option. This will
+override the \sphinxcode{\sphinxupquote{prefix}} option, instead placing the local state directories
+within the path explicitly provided. Ideally this should be within the local
+filesystem, specific to only a single host or node.
+
+In the case of cluster nodes, you will need to create the following
+directories on all nodes, with \sphinxcode{\sphinxupquote{root:root}} ownership and \sphinxcode{\sphinxupquote{0755}} permissions
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -203,67 +196,56 @@ directories are created on all nodes, with \sphinxcode{\sphinxupquote{root:root}
 \PYGZdl{}\PYGZob{}localstatedir\PYGZcb{}/singularity/mnt/session
 \end{sphinxVerbatim}
 
-Singularity will fail to execute without these directories. They are
-normally created by the install make target; when using a local
-directory for \sphinxcode{\sphinxupquote{-{-}localstatedir}} these will only be created on the node \sphinxcode{\sphinxupquote{make}} is run on.
 
-
-\subsection{Building an RPM directly from the source}
-\label{\detokenize{admin_quickstart:building-an-rpm-directly-from-the-source}}
-Singularity includes all of the necessary bits to properly create an RPM
-package directly from the source tree, and you can create an RPM by
-doing the following:
+\subsection{Build from Source}
+\label{\detokenize{admin_quickstart:build-from-source}}
+After you configure the build you can finish building \sphinxcode{\sphinxupquote{Singularity}} from
+source.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYGZdl{} ./configure
-
-\PYGZdl{} make dist
-
-\PYGZdl{} rpmbuild \PYGZhy{}ta singularity\PYGZhy{}*.tar.gz
-\end{sphinxVerbatim}
-
-Near the bottom of the build output you will see several lines like:
-
-\fvset{hllines={, ,}}%
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-...
-Wrote: /home/gmk/rpmbuild/SRPMS/singularity\PYGZhy{}2.3.el7.centos.src.rpm
-
-Wrote: /home/gmk/rpmbuild/RPMS/x86\PYGZus{}64/singularity\PYGZhy{}2.3.el7.centos.x86\PYGZus{}64.rpm
-
-Wrote: /home/gmk/rpmbuild/RPMS/x86\PYGZus{}64/singularity\PYGZhy{}devel\PYGZhy{}2.3.el7.centos.x86\PYGZus{}64.rpm
-
-Wrote: /home/gmk/rpmbuild/RPMS/x86\PYGZus{}64/singularity\PYGZhy{}debuginfo\PYGZhy{}2.3.el7.centos.x86\PYGZus{}64.rpm
-
-...
-\end{sphinxVerbatim}
-
-You will want to identify the appropriate path to the binary RPM that
-you wish to install, in the above example the package we want to install
-is \sphinxcode{\sphinxupquote{singularity-2.3.el7.centos.x86\_64.rpm}} , and you should install it with the following command:
-
-\fvset{hllines={, ,}}%
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYGZdl{} sudo yum install /home/gmk/rpmbuild/RPMS/x86\PYGZus{}64/singularity\PYGZhy{}2.3.el7.centos.x86\PYGZus{}64.rpm
+\PYGZdl{} make \PYGZhy{}C builddir
+\PYGZdl{} sudo make \PYGZhy{}C builddir install
 \end{sphinxVerbatim}
 
 \begin{sphinxadmonition}{note}{Note:}
-If you want to have the binary RPM install the files to an
-alternative location, you should define the environment variable
-‘PREFIX’ (below) to suit your needs, and use the following command to
-build:
+\sphinxcode{\sphinxupquote{Singularity}} must be installed as \sphinxcode{\sphinxupquote{root}} for full functionality.
 \end{sphinxadmonition}
+
+\begin{sphinxadmonition}{note}{Note:}
+\sphinxcode{\sphinxupquote{Singularity}} must be installed to a file system that allows SUID
+programs for full functionality.
+\end{sphinxadmonition}
+
+
+\subsection{Build an RPM from Source}
+\label{\detokenize{admin_quickstart:build-an-rpm-from-source}}
+\begin{sphinxadmonition}{note}{Note:}
+This process was greatly improved in version \sphinxcode{\sphinxupquote{3.0.1}} and we suggest
+you use at least that version if you wish to build RPMs.
+\end{sphinxadmonition}
+
+You will use the \sphinxcode{\sphinxupquote{rpm}} \sphinxcode{\sphinxupquote{Makefile}} target to build a \sphinxcode{\sphinxupquote{Singularity}} RPM.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYGZdl{} PREFIX=/opt/singularity
-
-\PYGZdl{} rpmbuild \PYGZhy{}ta \PYGZhy{}\PYGZhy{}define=\PYGZdq{}\PYGZus{}prefix \PYGZdl{}PREFIX\PYGZdq{} \PYGZhy{}\PYGZhy{}define \PYGZdq{}\PYGZus{}sysconfdir \PYGZdl{}PREFIX/etc\PYGZdq{} \PYGZhy{}\PYGZhy{}define \PYGZdq{}\PYGZus{}defaultdocdir \PYGZdl{}PREFIX/share\PYGZdq{} singularity\PYGZhy{}*.tar.gz
+\PYGZdl{} ./mconfig
+\PYGZdl{} make \PYGZhy{}C builddir rpm
 \end{sphinxVerbatim}
 
-We recommend you look at our {\hyperref[\detokenize{security:security}]{\sphinxcrossref{\DUrole{std,std-ref}{security admin guide}}}} to get further information about container
-privileges and mounting.
+You will find the \sphinxcode{\sphinxupquote{Singularity}} RPMs built in your home directory,
+at \sphinxcode{\sphinxupquote{\textasciitilde{}/rpmbuild/}}.
+
+If you would like to further customize the \sphinxcode{\sphinxupquote{Singularity}} installation,
+you can instead use the \sphinxcode{\sphinxupquote{dist}} \sphinxcode{\sphinxupquote{Makefile}} target and run \sphinxcode{\sphinxupquote{rpmbuild}}
+yourself.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} ./mconfig
+\PYGZdl{} make \PYGZhy{}C builddir dist
+\PYGZdl{} rpmbuild \PYGZhy{}tb \PYGZhy{}\PYGZhy{}define=\PYGZdq{}\PYGZus{}prefix /opt/singularity\PYGZdq{} singularity\PYGZhy{}*.tar.gz
+\end{sphinxVerbatim}
 
 
 \chapter{Security}
@@ -1051,7 +1033,7 @@ the user calls \sphinxcode{\sphinxupquote{singularity check container.img}} to i
 \sphinxhref{https://github.com/singularityware/singularity/blob/development/libexec/cli/check.exec}{check.exec}
 
 \item {} 
-specification of {\color{red}\bfseries{}{}`{}`}\textendash{}low{}`{}`(3), {\color{red}\bfseries{}{}`{}`}\textendash{}med{}`{}`(2), or {\color{red}\bfseries{}{}`{}`}\textendash{}high{}`{}`(1) sets the level to perform. The
+specification of \sphinxcode{\sphinxupquote{-{-}low}} (3), \sphinxcode{\sphinxupquote{-{-}med}} (2), or \sphinxcode{\sphinxupquote{-{-}high}} (1) sets the level to perform. The
 level is a filter, meaning that a level of 3 will include 3,2,1, and
 a level of 1 (high) will only call checks of high priority.
 
@@ -1121,11 +1103,7 @@ found, the rest of the checks continue running, and no action is
 taken. We might want to give some admin an ability to specify a check,
 a level, and prevent continuation of the build/bootstrap given a fail.
 \sphinxstylestrong{Check.sh} The script level, path, and tags should be added to
-\sphinxhref{https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh}{check.sh} in the following
-\begin{quote}
-
-format:
-\end{quote}
+\sphinxhref{https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh}{check.sh} in the following format:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -2090,9 +2068,9 @@ Bootstrap
 
 
 Cleanup
+\end{sphinxVerbatim}
 
 The following keywords were used in this definition file:
-\end{sphinxVerbatim}
 \begin{itemize}
 \item {} 
 DistType: DistType specifies the distribution type of your intended operating system. Because we are trying to build an Ubuntu image, the type “debian” was chosen.

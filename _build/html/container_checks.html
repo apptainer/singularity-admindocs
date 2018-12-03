@@ -5,70 +5,70 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Container Checks &mdash; Singularity container 3.0 documentation</title>
+  
 
-  <title>Container Checks &mdash; Singularity container 2.6 documentation</title>
-
-
-
-
+  
+  
     <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
 
+  
 
+  
+  
+    
 
-
-
-
-
-
-
-
-
+  
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Troubleshooting" href="troubleshooting.html" />
-    <link rel="prev" title="The Singularity Config File" href="the_singularity_config_file.html" />
+    <link rel="prev" title="The Singularity Config File" href="the_singularity_config_file.html" /> 
 
-
+  
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
 <body class="wy-body-for-nav">
 
-
+   
   <div class="wy-grid-for-nav">
 
-
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search">
+          
 
-
-
+          
             <a href="index.html" class="icon icon-home"> Singularity container
+          
 
-
-
-
+          
+            
             <img src="_static/logo.png" class="logo" alt="Logo"/>
-
+          
           </a>
 
-
-
-
+          
+            
+            
               <div class="version">
-                2.6
+                3.0
               </div>
+            
+          
 
-
-
-
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +77,18 @@
   </form>
 </div>
 
-
+          
         </div>
 
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-
-
-
-
-
-
+          
+            
+            
+              
+            
+            
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="admin_quickstart.html">Administration Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admin_quickstart.html">Admin Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
 <li class="toctree-l1"><a class="reference internal" href="the_singularity_config_file.html">The Singularity Config File</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Container Checks</a><ul>
@@ -104,28 +104,28 @@
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
 </ul>
 
-
-
+            
+          
         </div>
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
-
+      
       <nav class="wy-nav-top" aria-label="top navigation">
-
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Singularity container</a>
-
+        
       </nav>
 
 
       <div class="wy-nav-content">
-
+        
         <div class="rst-content style-external-links">
-
-
+        
+          
 
 
 
@@ -144,30 +144,30 @@
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
-
+    
       <li><a href="index.html">Docs</a> &raquo;</li>
-
+        
       <li>Container Checks</li>
-
-
+    
+    
       <li class="wy-breadcrumbs-aside">
-
-
-
-              <a href="https://github.com/singularityware/singularity-admindocs/blob/master/container_checks.rst" class="fa fa-github"> Edit on GitHub</a>
-
-
-
+        
+            
+            
+              <a href="https://github.com/sylabs/singularity-admindocs/blob/3.0/container_checks.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
       </li>
-
+    
   </ul>
 
-
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-
+            
   <div class="section" id="container-checks">
 <h1>Container Checks<a class="headerlink" href="#container-checks" title="Permalink to this headline">¶</a></h1>
 <p>New to Singularity 2.4 is the ability to, on demand, run container
@@ -187,7 +187,7 @@ The flow of checks is the following:</p>
 <ul class="simple">
 <li>the user calls <code class="docutils literal notranslate"><span class="pre">singularity</span> <span class="pre">check</span> <span class="pre">container.img</span></code> to invoke
 <a class="reference external" href="https://github.com/singularityware/singularity/blob/development/libexec/cli/check.exec">check.exec</a></li>
-<li>specification of <a href="#id1"><span class="problematic" id="id2">``</span></a>–low``(3), <a href="#id3"><span class="problematic" id="id4">``</span></a>–med``(2), or <a href="#id5"><span class="problematic" id="id6">``</span></a>–high``(1) sets the level to perform. The
+<li>specification of <code class="docutils literal notranslate"><span class="pre">--low</span></code> (3), <code class="docutils literal notranslate"><span class="pre">--med</span></code> (2), or <code class="docutils literal notranslate"><span class="pre">--high</span></code> (1) sets the level to perform. The
 level is a filter, meaning that a level of 3 will include 3,2,1, and
 a level of 1 (high) will only call checks of high priority.</li>
 <li>specification of <code class="docutils literal notranslate"><span class="pre">-t/--tag</span></code> will allow the user (or execution script) to specify
@@ -242,9 +242,7 @@ found, the rest of the checks continue running, and no action is
 taken. We might want to give some admin an ability to specify a check,
 a level, and prevent continuation of the build/bootstrap given a fail.
 <strong>Check.sh</strong> The script level, path, and tags should be added to
-<a class="reference external" href="https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh">check.sh</a> in the following</p>
-<blockquote>
-<div>format:</div></blockquote>
+<a class="reference external" href="https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh">check.sh</a> in the following format:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>##################################################################################
 
 # CHECK SCRIPTS
@@ -279,29 +277,29 @@ so it can be integrated into the Singularity software for others to use.</p>
 
 
            </div>
-
+           
           </div>
           <footer>
-
+  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-
+      
         <a href="troubleshooting.html" class="btn btn-neutral float-right" title="Troubleshooting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-
-
+      
+      
         <a href="the_singularity_config_file.html" class="btn btn-neutral" title="The Singularity Config File" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-
+      
     </div>
-
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Singularity.
+        &copy; Copyright 2018, Singularity
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -311,27 +309,30 @@ so it can be integrated into the Singularity software for others to use.</p>
     </section>
 
   </div>
+  
 
 
-<script type="text/javascript" src="_static/js/footer.js"></script>
+  
 
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'3.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'2.6.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-
+  
 
   <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -339,7 +340,7 @@ so it can be integrated into the Singularity software for others to use.</p>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
+  </script> 
 
 </body>
 </html>

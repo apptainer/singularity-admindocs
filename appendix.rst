@@ -9,7 +9,9 @@ Appendix
 Using Host libraries: GPU drivers and OpenMPI BTLs
 --------------------------------------------------
 
+
 .. _sec:tutorial-gpu-drivers-and-openmpi:
+
 
 .. note:: **Much of the GPU portion of this tutorial is deprecated by the** ``--nv`` **option
     that automatically binds host system driver libraries into your container at

@@ -2,23 +2,23 @@ Admin Quick Start
 =================
 
 This document will cover installation and administration points of
-``Singularity`` on a Linux host. For all other information, see the 
+``Singularity`` on a Linux host. For all other information, see the
 `user guide <https://www.sylabs.io/guides/3.0/user-guide/>`_.
 
-For any additional help or support contact the 
+For any additional help or support contact the
 `Sylabs team <https://www.sylabs.io/contact/>`_.
 
 ------------
 Installation
 ------------
 
-This section will explain the process of installing ``Singularity`` from 
+This section will explain the process of installing ``Singularity`` from
 source and building your own binary packages.
 
 Install Build Dependencies
 --------------------------
 
-``Singularity`` requires several libraries and development tools to be 
+``Singularity`` requires several libraries and development tools to be
 installed before you can build it from source.
 
 .. code-block:: none
@@ -27,13 +27,13 @@ installed before you can build it from source.
     $ sudo yum -y groupinstall "Development Tools"
     $ sudo yum -y install git libseccomp-devel libuuid-devel openssl-devel squashfs-tools wget
 
-.. note:: Both ``squashfs-tools`` and ``libseccomp-devel`` are optional 
+.. note:: Both ``squashfs-tools`` and ``libseccomp-devel`` are optional
     dependencies but are required for full functionality.
 
 Install Go
 ----------
 
-``Singularity`` is written primarily in Go, and you will need Go >= 1.11 
+``Singularity`` is written primarily in Go, and you will need Go >= 1.11
 installed to build it from source.
 
 .. code-block:: none
@@ -50,15 +50,15 @@ Post installation, you will need to setup your environment for Go.
     $ echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc
     $ source ~/.bashrc
 
-.. note:: You may need to add the path ``/usr/local/go/bin`` to the 
+.. note:: You may need to add the path ``/usr/local/go/bin`` to the
     ``secure_path`` option in your ``sudoers`` config.
 
 Download Source
 ---------------
 
-``Singularity`` source code is available on ``Github``. You can either 
-download a versioned tarball from the 
-`releases page <https://github.com/sylabs/singularity/releases>`_ or 
+``Singularity`` source code is available on ``Github``. You can either
+download a versioned tarball from the
+`releases page <https://github.com/sylabs/singularity/releases>`_ or
 clone our ``git`` repository.
 
 After you clone the ``git`` repository, you can optionally ``checkout`` the
@@ -75,31 +75,31 @@ After you clone the ``git`` repository, you can optionally ``checkout`` the
 Configure the Build
 -------------------
 
-``Singularity`` uses a custom build system. You will configure the build using 
+``Singularity`` uses a custom build system. You will configure the build using
 the ``mconfig`` script.
 
-.. note:: You can see all of the options for ``mconfig`` by using the ``-h`` 
+.. note:: You can see all of the options for ``mconfig`` by using the ``-h``
     option.
 
 .. code-block:: none
 
     $ cd $GOPATH/src/github.com/sylabs/singularity
-    $ ./mconfig --prefix=/usr/local --localstatedir=/var 
+    $ ./mconfig --prefix=/usr/local --localstatedir=/var
 
 Configuration (``localstatedir``)
 ---------------------------------
 
-The local state directories used by ``Singularity`` at runtime will be placed 
-under the supplied ``prefix`` option. This will cause issues if that directory 
-tree is read-only or if it is shared between several hosts or nodes that might 
+The local state directories used by ``Singularity`` at runtime will be placed
+under the supplied ``prefix`` option. This will cause issues if that directory
+tree is read-only or if it is shared between several hosts or nodes that might
 run ``Singularity`` simultaneously.
 
-In such cases, you should specify the ``localstatedir`` option. This will 
+In such cases, you should specify the ``localstatedir`` option. This will
 override the ``prefix`` option, instead placing the local state directories
-within the path explicitly provided. Ideally this should be within the local 
+within the path explicitly provided. Ideally this should be within the local
 filesystem, specific to only a single host or node.
 
-In the case of cluster nodes, you will need to create the following 
+In the case of cluster nodes, you will need to create the following
 directories on all nodes, with ``root:root`` ownership and ``0755`` permissions
 
 .. code-block:: none
@@ -117,7 +117,7 @@ directories on all nodes, with ``root:root`` ownership and ``0755`` permissions
 Build from Source
 -----------------
 
-After you configure the build you can finish building ``Singularity`` from 
+After you configure the build you can finish building ``Singularity`` from
 source.
 
 .. code-block:: none
@@ -133,7 +133,7 @@ source.
 Build an RPM from Source
 ------------------------
 
-.. note:: This process was greatly improved in version ``3.0.1`` and we suggest 
+.. note:: This process was greatly improved in version ``3.0.1`` and we suggest
     you use at least that version if you wish to build RPMs.
 
 You will use the ``rpm`` ``Makefile`` target to build a ``Singularity`` RPM.
@@ -143,11 +143,11 @@ You will use the ``rpm`` ``Makefile`` target to build a ``Singularity`` RPM.
     $ ./mconfig
     $ make -C builddir rpm
 
-You will find the ``Singularity`` RPMs built in your home directory, 
+You will find the ``Singularity`` RPMs built in your home directory,
 at ``~/rpmbuild/``.
 
-If you would like to further customize the ``Singularity`` installation, 
-you can instead use the ``dist`` ``Makefile`` target and run ``rpmbuild`` 
+If you would like to further customize the ``Singularity`` installation,
+you can instead use the ``dist`` ``Makefile`` target and run ``rpmbuild``
 yourself.
 
 .. code-block:: none

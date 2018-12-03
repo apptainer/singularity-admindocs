@@ -1,118 +1,106 @@
-=========================
-Administration QuickStart
-=========================
+Admin Quick Start
+=================
 
 This document will cover installation and administration points of
-Singularity for multi-tenant HPC resources and will not cover usage of
-the command line tools, container usage, or example use cases.
+``Singularity`` on a Linux host. For all other information, see the
+`user guide <https://www.sylabs.io/guides/3.0/user-guide/>`_.
+
+For any additional help or support contact the
+`Sylabs team <https://www.sylabs.io/contact/>`_.
 
 ------------
 Installation
 ------------
 
-There are two common ways to install Singularity, from source code and
-via binary packages. This document will explain the process of
-installation from source, and it will depend on your build host to have
-the appropriate development tools and packages installed. For Red Hat
-and derivatives, you should install the following ``yum`` group to ensure you
-have an appropriately setup build server:
+This section will explain the process of installing ``Singularity`` from
+source and building your own binary packages.
+
+Install Build Dependencies
+--------------------------
+
+``Singularity`` requires several libraries and development tools to be
+installed before you can build it from source.
 
 .. code-block:: none
 
-    $ sudo yum groupinstall "Development Tools"
+    $ sudo yum -y update
+    $ sudo yum -y groupinstall "Development Tools"
+    $ sudo yum -y install git libseccomp-devel libuuid-devel openssl-devel squashfs-tools wget
 
-Downloading the source
-======================
+.. note:: Both ``squashfs-tools`` and ``libseccomp-devel`` are optional
+    dependencies but are required for full functionality.
 
-You can download the source code either from the latest stable tarball
-release or via the GitHub master repository. Here is an example
-downloading and preparing the latest development code from GitHub:
+Install Go
+----------
 
-.. code-block:: none
-
-    $ mkdir ~/git
-
-    $ cd ~/git
-
-    $ git clone https://github.com/singularityware/singularity.git
-
-    $ cd singularity
-
-    $ ./autogen.sh
-
-Once you have downloaded the source, the following installation
-procedures will assume you are running from the root of the source
-directory.
-
-Source Installation
-===================
-
-The following example demonstrates how to install Singularity into ``/usr/local``.
-You can install Singularity into any directory of your choosing, but
-you must ensure that the location you select supports programs running
-as ``SUID``. It is common for people to disable ``SUID`` with the mount option ``nosuid`` for
-various network mounted file systems. To ensure proper support, it is
-easiest to make sure you install Singularity to a local file system.
-
-Assuming that ``/usr/local`` is a local file system:
+``Singularity`` is written primarily in Go, and you will need Go >= 1.11
+installed to build it from source.
 
 .. code-block:: none
 
-    $ ./configure --prefix=/usr/local --sysconfdir=/etc
+    $ export VERSION=1.11 OS=linux ARCH=amd64
+    $ wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz
+    $ sudo tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
 
-    $ make
-
-    $ sudo make install
-
-
-.. note:: **The** ``make install`` **above must be run as root to have Singularity properly
-    installed. Failure to install as root will cause Singularity to not
-    function properly or have limited functionality when run by a non-root
-    user.**
-
-Also note that when you configure, ``squashfs-tools`` is **not** required, however it is
-required for full functionality. You will see this message after the
-configuration:
+Post installation, you will need to setup your environment for Go.
 
 .. code-block:: none
 
-    mksquashfs from squash-tools is required for full functionality
+    $ echo 'export GOPATH=${HOME}/go' >> ~/.bashrc
+    $ echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc
+    $ source ~/.bashrc
 
-If you choose not to install ``squashfs-tools``, you will hit an error when your users try
-a pull from Docker Hub, for example.
+.. note:: You may need to add the path ``/usr/local/go/bin`` to the
+    ``secure_path`` option in your ``sudoers`` config.
 
-Prefix in special places (--localstatedir)
-==========================================
+Download Source
+---------------
 
-As with most autotools-based build scripts, you are able to supply the ``--prefix``
-argument to the configure script to change where Singularity will be
-installed. Care must be taken when this path is not a local filesystem
-or has atypical permissions. The local state directories used by
-Singularity at runtime will also be placed under the supplied ``--prefix`` and this
-will cause malfunction if the tree is read-only. You may also
-experience issues if this directory is shared between several
-hosts/nodes that might run Singularity simultaneously.
+``Singularity`` source code is available on ``Github``. You can either
+download a versioned tarball from the
+`releases page <https://github.com/sylabs/singularity/releases>`_ or
+clone our ``git`` repository.
 
-In such cases, you should specify the ``--localstatedir`` variable in addition to ``--prefix``. This
-will override the prefix, instead placing the local state directories
-within the path explicitly provided. Ideally this should be within the
-local filesystem, specific to only a single host or node.
-For example, the Makefile contains this variable by default:
+After you clone the ``git`` repository, you can optionally ``checkout`` the
+``tag`` of a specific version to install (e.g. ``v3.0.1``)
 
 .. code-block:: none
 
-    CONTAINER_OVERLAY = ${prefix}/var/singularity/mnt/overlay
+    $ mkdir -p $GOPATH/src/github.com/sylabs
+    $ cd $GOPATH/src/github.com/sylabs
+    $ git clone https://github.com/sylabs/singularity
+    $ git tag --list
+    $ git checkout v3.0.1
 
-By supplying the configure argument ``--localstatedir=/some/other/place`` Singularity will instead be built
-with the following. Note that ``${prefix}/var`` that has been replaced by the supplied
-value:
+Configure the Build
+-------------------
+
+``Singularity`` uses a custom build system. You will configure the build using
+the ``mconfig`` script.
+
+.. note:: You can see all of the options for ``mconfig`` by using the ``-h``
+    option.
 
 .. code-block:: none
 
-    CONTAINER_OVERLAY = /some/other/place/singularity/mnt/overlay
+    $ cd $GOPATH/src/github.com/sylabs/singularity
+    $ ./mconfig --prefix=/usr/local --localstatedir=/var
 
-In the case of cluster nodes, you will need to ensure the following
-directories are created on all nodes, with ``root:root`` ownership and ``0755`` permissions:
+Configuration (``localstatedir``)
+---------------------------------
+
+The local state directories used by ``Singularity`` at runtime will be placed
+under the supplied ``prefix`` option. This will cause issues if that directory
+tree is read-only or if it is shared between several hosts or nodes that might
+run ``Singularity`` simultaneously.
+
+In such cases, you should specify the ``localstatedir`` option. This will
+override the ``prefix`` option, instead placing the local state directories
+within the path explicitly provided. Ideally this should be within the local
+filesystem, specific to only a single host or node.
+
+In the case of cluster nodes, you will need to create the following
+directories on all nodes, with ``root:root`` ownership and ``0755`` permissions
 
 .. code-block:: none
 
@@ -126,60 +114,44 @@ directories are created on all nodes, with ``root:root`` ownership and ``0755`` 
 
     ${localstatedir}/singularity/mnt/session
 
+Build from Source
+-----------------
 
-Singularity will fail to execute without these directories. They are
-normally created by the install make target; when using a local
-directory for ``--localstatedir`` these will only be created on the node ``make`` is run on.
-
-Building an RPM directly from the source
-========================================
-
-Singularity includes all of the necessary bits to properly create an RPM
-package directly from the source tree, and you can create an RPM by
-doing the following:
+After you configure the build you can finish building ``Singularity`` from
+source.
 
 .. code-block:: none
 
-    $ ./configure
+    $ make -C builddir
+    $ sudo make -C builddir install
 
-    $ make dist
+.. note:: ``Singularity`` must be installed as ``root`` for full functionality.
 
-    $ rpmbuild -ta singularity-*.tar.gz
+.. note:: ``Singularity`` must be installed to a file system that allows SUID
+    programs for full functionality.
 
+Build an RPM from Source
+------------------------
 
-Near the bottom of the build output you will see several lines like:
+.. note:: This process was greatly improved in version ``3.0.1`` and we suggest
+    you use at least that version if you wish to build RPMs.
 
-.. code-block:: none
-
-    ...
-    Wrote: /home/gmk/rpmbuild/SRPMS/singularity-2.3.el7.centos.src.rpm
-
-    Wrote: /home/gmk/rpmbuild/RPMS/x86_64/singularity-2.3.el7.centos.x86_64.rpm
-
-    Wrote: /home/gmk/rpmbuild/RPMS/x86_64/singularity-devel-2.3.el7.centos.x86_64.rpm
-
-    Wrote: /home/gmk/rpmbuild/RPMS/x86_64/singularity-debuginfo-2.3.el7.centos.x86_64.rpm
-
-    ...
-
-You will want to identify the appropriate path to the binary RPM that
-you wish to install, in the above example the package we want to install
-is ``singularity-2.3.el7.centos.x86_64.rpm`` , and you should install it with the following command:
+You will use the ``rpm`` ``Makefile`` target to build a ``Singularity`` RPM.
 
 .. code-block:: none
 
-    $ sudo yum install /home/gmk/rpmbuild/RPMS/x86_64/singularity-2.3.el7.centos.x86_64.rpm
+    $ ./mconfig
+    $ make -C builddir rpm
 
-.. note:: If you want to have the binary RPM install the files to an
-    alternative location, you should define the environment variable
-    ‘PREFIX’ (below) to suit your needs, and use the following command to
-    build:
+You will find the ``Singularity`` RPMs built in your home directory,
+at ``~/rpmbuild/``.
+
+If you would like to further customize the ``Singularity`` installation,
+you can instead use the ``dist`` ``Makefile`` target and run ``rpmbuild``
+yourself.
 
 .. code-block:: none
 
-    $ PREFIX=/opt/singularity
-
-    $ rpmbuild -ta --define="_prefix $PREFIX" --define "_sysconfdir $PREFIX/etc" --define "_defaultdocdir $PREFIX/share" singularity-*.tar.gz
-
-We recommend you look at our :ref:`security admin guide <security>` to get further information about container
-privileges and mounting.
+    $ ./mconfig
+    $ make -C builddir dist
+    $ rpmbuild -tb --define="_prefix /opt/singularity" singularity-*.tar.gz
