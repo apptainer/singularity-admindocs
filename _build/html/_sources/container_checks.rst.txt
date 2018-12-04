@@ -8,6 +8,7 @@ to an analysis of content on the filesystem. Checks are installed with
 Singularity, managed by the administrator, and `available to the
 user <https://singularity-userdoc.readthedocs.io/en/latest/container_checks.html>`__.
 
+
 ----------------
 What is a check?
 ----------------
@@ -20,10 +21,11 @@ folder are hard coded into the script
 `check.sh <https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh>`__.
 The flow of checks is the following:
 
+
 -  the user calls ``singularity check container.img`` to invoke
    `check.exec <https://github.com/singularityware/singularity/blob/development/libexec/cli/check.exec>`__
 
--  specification of ``--low``(3), ``--med``(2), or ``--high``(1) sets the level to perform. The
+-  specification of ``--low`` (3), ``--med`` (2), or ``--high`` (1) sets the level to perform. The
    level is a filter, meaning that a level of 3 will include 3,2,1, and
    a level of 1 (high) will only call checks of high priority.
 
@@ -89,8 +91,7 @@ found, the rest of the checks continue running, and no action is
 taken. We might want to give some admin an ability to specify a check,
 a level, and prevent continuation of the build/bootstrap given a fail.
 **Check.sh** The script level, path, and tags should be added to
-`check.sh <https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh>`__ in the following
-  format:
+`check.sh <https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh>`__ in the following format:
 
 .. code-block:: none
 

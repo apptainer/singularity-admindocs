@@ -5,70 +5,69 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Admin Quick Start &mdash; Singularity container 3.0 documentation</title>
+  
 
-  <title>Administration QuickStart &mdash; Singularity container 2.6 documentation</title>
-
-
-
-
+  
+  
     <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
 
+  
 
+  
+  
+    
 
-
-
-
-
-
-
-
-
+  
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Security" href="security.html" />
-    <link rel="prev" title="Admin Guide" href="index.html" />
+    <link rel="prev" title="Admin Guide" href="index.html" /> 
 
-
+  
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
 <body class="wy-body-for-nav">
 
-
+   
   <div class="wy-grid-for-nav">
 
-
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search">
+          
 
-
-
+          
             <a href="index.html" class="icon icon-home"> Singularity container
+          
 
-
-
-
+          
+            
             <img src="_static/logo.png" class="logo" alt="Logo"/>
-
+          
           </a>
 
-
-
-
+          
+            
+            
               <div class="version">
-                2.6
+                3.0
               </div>
+            
+          
 
-
-
-
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,57 +76,54 @@
   </form>
 </div>
 
-
+          
         </div>
 
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-
-
-
-
-
-
+          
+            
+            
+              
+            
+            
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Administration Quickstart</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Admin Quickstart</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#downloading-the-source">Downloading the source</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#source-installation">Source Installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#prefix-in-special-places-localstatedir">Prefix in special places (–localstatedir)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#building-an-rpm-directly-from-the-source">Building an RPM directly from the source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-build-dependencies">Install Build Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-go">Install Go</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#download-source">Download Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-the-build">Configure the Build</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-localstatedir">Configuration (<code class="docutils literal notranslate"><span class="pre">localstatedir</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-from-source">Build from Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-an-rpm-from-source">Build an RPM from Source</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="the_singularity_config_file.html">The Singularity Config File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="container_checks.html">Container Checks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation_environments.html">Installation Environments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
 </ul>
 
-
-
+            
+          
         </div>
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
-
+      
       <nav class="wy-nav-top" aria-label="top navigation">
-
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Singularity container</a>
-
+        
       </nav>
 
 
       <div class="wy-nav-content">
-
+        
         <div class="rst-content style-external-links">
-
-
+        
+          
 
 
 
@@ -146,124 +142,119 @@
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
-
+    
       <li><a href="index.html">Docs</a> &raquo;</li>
-
-      <li>Administration QuickStart</li>
-
-
+        
+      <li>Admin Quick Start</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
-
-
-
-              <a href="https://github.com/singularityware/singularity-admindocs/blob/master/admin_quickstart.rst" class="fa fa-github"> Edit on GitHub</a>
-
-
-
+        
+            
+            
+              <a href="https://github.com/sylabs/singularity-admindocs/blob/master/admin_quickstart.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
       </li>
-
+    
   </ul>
 
-
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-
-  <div class="section" id="administration-quickstart">
-<h1>Administration QuickStart<a class="headerlink" href="#administration-quickstart" title="Permalink to this headline">¶</a></h1>
+            
+  <div class="section" id="admin-quick-start">
+<h1>Admin Quick Start<a class="headerlink" href="#admin-quick-start" title="Permalink to this headline">¶</a></h1>
 <p>This document will cover installation and administration points of
-Singularity for multi-tenant HPC resources and will not cover usage of
-the command line tools, container usage, or example use cases.</p>
+<code class="docutils literal notranslate"><span class="pre">Singularity</span></code> on a Linux host. For all other information, see the
+<a class="reference external" href="https://www.sylabs.io/guides/3.0/user-guide/">user guide</a>.</p>
+<p>For any additional help or support contact the
+<a class="reference external" href="https://www.sylabs.io/contact/">Sylabs team</a>.</p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>There are two common ways to install Singularity, from source code and
-via binary packages. This document will explain the process of
-installation from source, and it will depend on your build host to have
-the appropriate development tools and packages installed. For Red Hat
-and derivatives, you should install the following <code class="docutils literal notranslate"><span class="pre">yum</span></code> group to ensure you
-have an appropriately setup build server:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo yum groupinstall &quot;Development Tools&quot;
-</pre></div>
-</div>
-<div class="section" id="downloading-the-source">
-<h3>Downloading the source<a class="headerlink" href="#downloading-the-source" title="Permalink to this headline">¶</a></h3>
-<p>You can download the source code either from the latest stable tarball
-release or via the GitHub master repository. Here is an example
-downloading and preparing the latest development code from GitHub:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mkdir ~/git
-
-$ cd ~/git
-
-$ git clone https://github.com/singularityware/singularity.git
-
-$ cd singularity
-
-$ ./autogen.sh
-</pre></div>
-</div>
-<p>Once you have downloaded the source, the following installation
-procedures will assume you are running from the root of the source
-directory.</p>
-</div>
-<div class="section" id="source-installation">
-<h3>Source Installation<a class="headerlink" href="#source-installation" title="Permalink to this headline">¶</a></h3>
-<p>The following example demonstrates how to install Singularity into <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>.
-You can install Singularity into any directory of your choosing, but
-you must ensure that the location you select supports programs running
-as <code class="docutils literal notranslate"><span class="pre">SUID</span></code>. It is common for people to disable <code class="docutils literal notranslate"><span class="pre">SUID</span></code> with the mount option <code class="docutils literal notranslate"><span class="pre">nosuid</span></code> for
-various network mounted file systems. To ensure proper support, it is
-easiest to make sure you install Singularity to a local file system.</p>
-<p>Assuming that <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code> is a local file system:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ./configure --prefix=/usr/local --sysconfdir=/etc
-
-$ make
-
-$ sudo make install
+<p>This section will explain the process of installing <code class="docutils literal notranslate"><span class="pre">Singularity</span></code> from
+source and building your own binary packages.</p>
+<div class="section" id="install-build-dependencies">
+<h3>Install Build Dependencies<a class="headerlink" href="#install-build-dependencies" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Singularity</span></code> requires several libraries and development tools to be
+installed before you can build it from source.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo yum -y update
+$ sudo yum -y groupinstall &quot;Development Tools&quot;
+$ sudo yum -y install git libseccomp-devel libuuid-devel openssl-devel squashfs-tools wget
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><strong>The</strong> <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> <strong>above must be run as root to have Singularity properly
-installed. Failure to install as root will cause Singularity to not
-function properly or have limited functionality when run by a non-root
-user.</strong></p>
+<p class="last">Both <code class="docutils literal notranslate"><span class="pre">squashfs-tools</span></code> and <code class="docutils literal notranslate"><span class="pre">libseccomp-devel</span></code> are optional
+dependencies but are required for full functionality.</p>
 </div>
-<p>Also note that when you configure, <code class="docutils literal notranslate"><span class="pre">squashfs-tools</span></code> is <strong>not</strong> required, however it is
-required for full functionality. You will see this message after the
-configuration:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mksquashfs from squash-tools is required for full functionality
+</div>
+<div class="section" id="install-go">
+<h3>Install Go<a class="headerlink" href="#install-go" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Singularity</span></code> is written primarily in Go, and you will need Go &gt;= 1.11
+installed to build it from source.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ export VERSION=1.11 OS=linux ARCH=amd64
+$ wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz
+$ sudo tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
 </pre></div>
 </div>
-<p>If you choose not to install <code class="docutils literal notranslate"><span class="pre">squashfs-tools</span></code>, you will hit an error when your users try
-a pull from Docker Hub, for example.</p>
-</div>
-<div class="section" id="prefix-in-special-places-localstatedir">
-<h3>Prefix in special places (–localstatedir)<a class="headerlink" href="#prefix-in-special-places-localstatedir" title="Permalink to this headline">¶</a></h3>
-<p>As with most autotools-based build scripts, you are able to supply the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code>
-argument to the configure script to change where Singularity will be
-installed. Care must be taken when this path is not a local filesystem
-or has atypical permissions. The local state directories used by
-Singularity at runtime will also be placed under the supplied <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> and this
-will cause malfunction if the tree is read-only. You may also
-experience issues if this directory is shared between several
-hosts/nodes that might run Singularity simultaneously.</p>
-<p>In such cases, you should specify the <code class="docutils literal notranslate"><span class="pre">--localstatedir</span></code> variable in addition to <code class="docutils literal notranslate"><span class="pre">--prefix</span></code>. This
-will override the prefix, instead placing the local state directories
-within the path explicitly provided. Ideally this should be within the
-local filesystem, specific to only a single host or node.
-For example, the Makefile contains this variable by default:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CONTAINER_OVERLAY = ${prefix}/var/singularity/mnt/overlay
+<p>Post installation, you will need to setup your environment for Go.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo &#39;export GOPATH=${HOME}/go&#39; &gt;&gt; ~/.bashrc
+$ echo &#39;export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin&#39; &gt;&gt; ~/.bashrc
+$ source ~/.bashrc
 </pre></div>
 </div>
-<p>By supplying the configure argument <code class="docutils literal notranslate"><span class="pre">--localstatedir=/some/other/place</span></code> Singularity will instead be built
-with the following. Note that <code class="docutils literal notranslate"><span class="pre">${prefix}/var</span></code> that has been replaced by the supplied
-value:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CONTAINER_OVERLAY = /some/other/place/singularity/mnt/overlay
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You may need to add the path <code class="docutils literal notranslate"><span class="pre">/usr/local/go/bin</span></code> to the
+<code class="docutils literal notranslate"><span class="pre">secure_path</span></code> option in your <code class="docutils literal notranslate"><span class="pre">sudoers</span></code> config.</p>
+</div>
+</div>
+<div class="section" id="download-source">
+<h3>Download Source<a class="headerlink" href="#download-source" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Singularity</span></code> source code is available on <code class="docutils literal notranslate"><span class="pre">Github</span></code>. You can either
+download a versioned tarball from the
+<a class="reference external" href="https://github.com/sylabs/singularity/releases">releases page</a> or
+clone our <code class="docutils literal notranslate"><span class="pre">git</span></code> repository.</p>
+<p>After you clone the <code class="docutils literal notranslate"><span class="pre">git</span></code> repository, you can optionally <code class="docutils literal notranslate"><span class="pre">checkout</span></code> the
+<code class="docutils literal notranslate"><span class="pre">tag</span></code> of a specific version to install (e.g. <code class="docutils literal notranslate"><span class="pre">v3.0.1</span></code>)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mkdir -p $GOPATH/src/github.com/sylabs
+$ cd $GOPATH/src/github.com/sylabs
+$ git clone https://github.com/sylabs/singularity
+$ git tag --list
+$ git checkout v3.0.1
 </pre></div>
 </div>
-<p>In the case of cluster nodes, you will need to ensure the following
-directories are created on all nodes, with <code class="docutils literal notranslate"><span class="pre">root:root</span></code> ownership and <code class="docutils literal notranslate"><span class="pre">0755</span></code> permissions:</p>
+</div>
+<div class="section" id="configure-the-build">
+<h3>Configure the Build<a class="headerlink" href="#configure-the-build" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Singularity</span></code> uses a custom build system. You will configure the build using
+the <code class="docutils literal notranslate"><span class="pre">mconfig</span></code> script.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can see all of the options for <code class="docutils literal notranslate"><span class="pre">mconfig</span></code> by using the <code class="docutils literal notranslate"><span class="pre">-h</span></code>
+option.</p>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ cd $GOPATH/src/github.com/sylabs/singularity
+$ ./mconfig --prefix=/usr/local --localstatedir=/var
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuration-localstatedir">
+<h3>Configuration (<code class="docutils literal notranslate"><span class="pre">localstatedir</span></code>)<a class="headerlink" href="#configuration-localstatedir" title="Permalink to this headline">¶</a></h3>
+<p>The local state directories used by <code class="docutils literal notranslate"><span class="pre">Singularity</span></code> at runtime will be placed
+under the supplied <code class="docutils literal notranslate"><span class="pre">prefix</span></code> option. This will cause issues if that directory
+tree is read-only or if it is shared between several hosts or nodes that might
+run <code class="docutils literal notranslate"><span class="pre">Singularity</span></code> simultaneously.</p>
+<p>In such cases, you should specify the <code class="docutils literal notranslate"><span class="pre">localstatedir</span></code> option. This will
+override the <code class="docutils literal notranslate"><span class="pre">prefix</span></code> option, instead placing the local state directories
+within the path explicitly provided. Ideally this should be within the local
+filesystem, specific to only a single host or node.</p>
+<p>In the case of cluster nodes, you will need to create the following
+directories on all nodes, with <code class="docutils literal notranslate"><span class="pre">root:root</span></code> ownership and <code class="docutils literal notranslate"><span class="pre">0755</span></code> permissions</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>${localstatedir}/singularity/mnt
 
 ${localstatedir}/singularity/mnt/container
@@ -275,84 +266,74 @@ ${localstatedir}/singularity/mnt/overlay
 ${localstatedir}/singularity/mnt/session
 </pre></div>
 </div>
-<p>Singularity will fail to execute without these directories. They are
-normally created by the install make target; when using a local
-directory for <code class="docutils literal notranslate"><span class="pre">--localstatedir</span></code> these will only be created on the node <code class="docutils literal notranslate"><span class="pre">make</span></code> is run on.</p>
 </div>
-<div class="section" id="building-an-rpm-directly-from-the-source">
-<h3>Building an RPM directly from the source<a class="headerlink" href="#building-an-rpm-directly-from-the-source" title="Permalink to this headline">¶</a></h3>
-<p>Singularity includes all of the necessary bits to properly create an RPM
-package directly from the source tree, and you can create an RPM by
-doing the following:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ./configure
-
-$ make dist
-
-$ rpmbuild -ta singularity-*.tar.gz
-</pre></div>
-</div>
-<p>Near the bottom of the build output you will see several lines like:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>...
-Wrote: /home/gmk/rpmbuild/SRPMS/singularity-2.3.el7.centos.src.rpm
-
-Wrote: /home/gmk/rpmbuild/RPMS/x86_64/singularity-2.3.el7.centos.x86_64.rpm
-
-Wrote: /home/gmk/rpmbuild/RPMS/x86_64/singularity-devel-2.3.el7.centos.x86_64.rpm
-
-Wrote: /home/gmk/rpmbuild/RPMS/x86_64/singularity-debuginfo-2.3.el7.centos.x86_64.rpm
-
-...
-</pre></div>
-</div>
-<p>You will want to identify the appropriate path to the binary RPM that
-you wish to install, in the above example the package we want to install
-is <code class="docutils literal notranslate"><span class="pre">singularity-2.3.el7.centos.x86_64.rpm</span></code> , and you should install it with the following command:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo yum install /home/gmk/rpmbuild/RPMS/x86_64/singularity-2.3.el7.centos.x86_64.rpm
+<div class="section" id="build-from-source">
+<h3>Build from Source<a class="headerlink" href="#build-from-source" title="Permalink to this headline">¶</a></h3>
+<p>After you configure the build you can finish building <code class="docutils literal notranslate"><span class="pre">Singularity</span></code> from
+source.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ make -C builddir
+$ sudo make -C builddir install
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you want to have the binary RPM install the files to an
-alternative location, you should define the environment variable
-‘PREFIX’ (below) to suit your needs, and use the following command to
-build:</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">Singularity</span></code> must be installed as <code class="docutils literal notranslate"><span class="pre">root</span></code> for full functionality.</p>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ PREFIX=/opt/singularity
-
-$ rpmbuild -ta --define=&quot;_prefix $PREFIX&quot; --define &quot;_sysconfdir $PREFIX/etc&quot; --define &quot;_defaultdocdir $PREFIX/share&quot; singularity-*.tar.gz
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">Singularity</span></code> must be installed to a file system that allows SUID
+programs for full functionality.</p>
+</div>
+</div>
+<div class="section" id="build-an-rpm-from-source">
+<h3>Build an RPM from Source<a class="headerlink" href="#build-an-rpm-from-source" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This process was greatly improved in version <code class="docutils literal notranslate"><span class="pre">3.0.1</span></code> and we suggest
+you use at least that version if you wish to build RPMs.</p>
+</div>
+<p>You will use the <code class="docutils literal notranslate"><span class="pre">rpm</span></code> <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> target to build a <code class="docutils literal notranslate"><span class="pre">Singularity</span></code> RPM.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ./mconfig
+$ make -C builddir rpm
 </pre></div>
 </div>
-<p>We recommend you look at our <a class="reference internal" href="security.html#security"><span class="std std-ref">security admin guide</span></a> to get further information about container
-privileges and mounting.</p>
+<p>You will find the <code class="docutils literal notranslate"><span class="pre">Singularity</span></code> RPMs built in your home directory,
+at <code class="docutils literal notranslate"><span class="pre">~/rpmbuild/</span></code>.</p>
+<p>If you would like to further customize the <code class="docutils literal notranslate"><span class="pre">Singularity</span></code> installation,
+you can instead use the <code class="docutils literal notranslate"><span class="pre">dist</span></code> <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> target and run <code class="docutils literal notranslate"><span class="pre">rpmbuild</span></code>
+yourself.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ./mconfig
+$ make -C builddir dist
+$ rpmbuild -tb --define=&quot;_prefix /opt/singularity&quot; singularity-*.tar.gz
+</pre></div>
+</div>
 </div>
 </div>
 </div>
 
 
            </div>
-
+           
           </div>
           <footer>
-
+  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-
-        <a href="security.html" class="btn btn-neutral float-right" title="Security" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-
-
+      
+      
         <a href="index.html" class="btn btn-neutral" title="Admin Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-
+      
     </div>
-
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Singularity.
+        &copy; Copyright 2018, Singularity
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -362,27 +343,30 @@ privileges and mounting.</p>
     </section>
 
   </div>
+  
 
 
-<script type="text/javascript" src="_static/js/footer.js"></script>
+  
 
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'3.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'2.6.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-
+  
 
   <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -390,7 +374,7 @@ privileges and mounting.</p>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
+  </script> 
 
 </body>
 </html>
