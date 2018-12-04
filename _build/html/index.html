@@ -88,12 +88,6 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="admin_quickstart.html">Admin Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="the_singularity_config_file.html">The Singularity Config File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="container_checks.html">Container Checks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation_environments.html">Installation Environments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
 </ul>
 
             
@@ -173,105 +167,6 @@
 <li class="toctree-l3"><a class="reference internal" href="admin_quickstart.html#configuration-localstatedir">Configuration (<code class="docutils literal notranslate"><span class="pre">localstatedir</span></code>)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="admin_quickstart.html#build-from-source">Build from Source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="admin_quickstart.html#build-an-rpm-from-source">Build an RPM from Source</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="security.html#container-security-paradigms">Container security paradigms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#untrusted-users-running-untrusted-containers">Untrusted users running untrusted containers!</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="security.html#privilege-escalation-is-necessary-for-containerization">Privilege escalation is necessary for containerization!</a></li>
-<li class="toctree-l3"><a class="reference internal" href="security.html#how-does-singularity-do-it">How does Singularity do it?</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#where-are-the-singularity-priviledged-components">Where are the Singularity priviledged components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#can-i-install-singularity-as-a-user">Can I install Singularity as a user?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#container-permissions-and-usage-strategy">Container permissions and usage strategy</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="security.html#controlling-what-kind-of-containers-are-allowed">controlling what kind of containers are allowed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="security.html#limiting-usage-to-specific-container-file-owners">limiting usage to specific container file owners</a></li>
-<li class="toctree-l3"><a class="reference internal" href="security.html#limiting-usage-to-specific-paths">limiting usage to specific paths</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#logging">Logging</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="security.html#a-peek-into-the-setuid-program-flow">A peek into the SetUID program flow</a></li>
-<li class="toctree-l3"><a class="reference internal" href="security.html#a-peek-into-the-rootless-program-flow">A peek into the “rootless” program flow</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="security.html#summary">Summary</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="the_singularity_config_file.html">The Singularity Config File</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="the_singularity_config_file.html#parameters">Parameters</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="the_singularity_config_file.html#allow-setuid-boolean-default-yes">ALLOW SETUID (boolean, default=’yes’)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="the_singularity_config_file.html#allow-pid-ns-boolean-default-yes">ALLOW PID NS (boolean, default=’yes’)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="the_singularity_config_file.html#enable-overlay-boolean-default-no">ENABLE OVERLAY (boolean, default=’no’)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="the_singularity_config_file.html#config-passwd-group-resolv-conf-boolean-default-yes">CONFIG PASSWD, GROUP, RESOLV_CONF (boolean, default=’yes’)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="the_singularity_config_file.html#mount-proc-sys-dev-home-tmp-boolean-default-yes">MOUNT PROC,SYS,DEV,HOME,TMP (boolean, default=’yes’)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="the_singularity_config_file.html#mount-hostfs-boolean-default-no">MOUNT HOSTFS (boolean, default=’no’)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="the_singularity_config_file.html#bind-path-string">BIND PATH (string)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="the_singularity_config_file.html#user-bind-control-boolean-default-yes">USER BIND CONTROL (boolean, default=’yes’)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="the_singularity_config_file.html#autofs-bug-path-string">AUTOFS BUG PATH (string)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="the_singularity_config_file.html#logging">Logging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="the_singularity_config_file.html#loop-devices">Loop Devices</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="container_checks.html">Container Checks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="container_checks.html#what-is-a-check">What is a check?</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="container_checks.html#adding-a-check">Adding a Check</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="container_checks.html#how-to-tell-users">How to tell users?</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#not-installed-correctly-or-installed-to-a-non-compatible-location">Not installed correctly, or installed to a non-compatible location</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="installation_environments.html">Installation Environments</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation_environments.html#singularity-on-hpc">Singularity on HPC</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="installation_environments.html#workflows">Workflows</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="installation_environments.html#integration-with-mpi">Integration with MPI</a></li>
-<li class="toctree-l4"><a class="reference internal" href="installation_environments.html#tutorials">Tutorials</a></li>
-<li class="toctree-l4"><a class="reference internal" href="installation_environments.html#mpi-development-example">MPI Development Example</a></li>
-<li class="toctree-l4"><a class="reference internal" href="installation_environments.html#code-example-using-open-mpi-2-1-0-stable">Code Example using Open MPI 2.1.0 Stable</a></li>
-<li class="toctree-l4"><a class="reference internal" href="installation_environments.html#code-example-using-open-mpi-git-master">Code Example using Open MPI git master</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="installation_environments.html#image-environment">Image Environment</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="installation_environments.html#directory-access">Directory access</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="installation_environments.html#current-working-directory">Current Working Directory</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="installation_environments.html#standard-io-and-pipes">Standard IO and pipes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="installation_environments.html#containing-the-container">Containing the container</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="installation_environments.html#license">License</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="installation_environments.html#in-layman-terms">In layman terms…</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="appendix.html#using-host-libraries-gpu-drivers-and-openmpi-btls">Using Host libraries: GPU drivers and OpenMPI BTLs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="appendix.html#what-we-will-learn-today">What We will learn today</a></li>
-<li class="toctree-l3"><a class="reference internal" href="appendix.html#environment">Environment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="appendix.html#creating-your-image">Creating your image</a></li>
-<li class="toctree-l3"><a class="reference internal" href="appendix.html#executing-your-image">Executing your image</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="appendix.html#building-an-ubuntu-image-on-a-rhel-host">Building an Ubuntu image on a RHEL host</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="appendix.html#preparation">Preparation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="appendix.html#creating-the-definition-file">Creating the Definition File</a></li>
-<li class="toctree-l4"><a class="reference internal" href="appendix.html#id2">Creating your image</a></li>
-<li class="toctree-l4"><a class="reference internal" href="appendix.html#use-here-documents-with-runcmd">Use here documents with RunCmd</a></li>
-<li class="toctree-l4"><a class="reference internal" href="appendix.html#use-installpkgs-with-multiple-packages">Use InstallPkgs with multiple packages</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
