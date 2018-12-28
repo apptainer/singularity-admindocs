@@ -117,7 +117,7 @@ html_context = {
     'display_github': True,
     'github_user': 'sylabs',
     'github_repo': 'singularity-admindocs',
-    'github_version': '3.0',
+    'github_version': 'master',
     'conf_py_path': '/',
 }
 
