@@ -17,7 +17,7 @@ Install Build Dependencies
 
 Singularity requires several libraries and development tools to be installed before you can build the RPM.
 
-.. code-block:: none
+.. code-block:: bash
 
     $ sudo yum update -y && \
         sudo yum groupinstall -y 'Development Tools' && \
@@ -33,7 +33,7 @@ Install Go
 
 Singularity is primarily written in Go, so we will need Go >= 1.11 to build Singularity from RPM.
 
-.. code-block:: none
+.. code-block:: bash
 
     $ export VERSION=1.11.4 OS=linux ARCH=amd64
 
@@ -42,7 +42,7 @@ Singularity is primarily written in Go, so we will need Go >= 1.11 to build Sing
 
 Post installation, you will need to setup your environment for Go.
 
-.. code-block:: none
+.. code-block:: bash
 
     $ echo 'export GOPATH=${HOME}/go' >> ~/.bashrc && \
         echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
@@ -53,9 +53,10 @@ Download and Build the RPM
 
 Singularity RPM is available on `the Github relese page <https://github.com/sylabs/singularity/releases>`_.
 
-.. code-block:: none
+.. code-block:: bash
 
     $ export VERSION=3.0.1  # this is the singularity version, change as you need
+
     $ wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
         rpmbuild -tb singularity-${VERSION}.tar.gz
 
@@ -68,9 +69,9 @@ The config file
 
 The config file ... bla, blab...
 
-The config file must be owned by root, becouse...
+The config file must be owned by root, because...
 
-For full infoation on the config file, check out this `config tutarial <http://localhost:8080>`_.
+For full infoation on the config file, check out this :ref:`config tutarial <singularity-config-file>`.
 
 Configuration (``localstatedir``)
 ---------------------------------
@@ -81,7 +82,7 @@ In such cases, you should specify the ``localstatedir`` option. This will overri
 
 In the case of cluster nodes, you will need to create the following directories on all nodes, with ``root:root`` ownership and ``0755`` permissions
 
-.. code-block:: none
+.. code-block:: bash
 
     ${localstatedir}/singularity/mnt
 
