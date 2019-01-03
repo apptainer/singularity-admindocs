@@ -7,4 +7,4 @@ Admin Guide
 
    Admin Quickstart <admin_quickstart>
    Config file <config_file>
-   Singularity Architecture <singularity-architecture>
+   Singularity Architecture <singularity_architecture>
