@@ -1,10 +1,10 @@
 Admin Quick Start
 =================
 
-This document will cover installation and administration points of Singularity on a Linux host. For all other information, see the `user guide <https://www.sylabs.io/guides/3.0/user-guide/>`_.
+This document will cover installation and administration points of Singularity on a Linux host. For all other information, and installation for other OS(s), see the `user guide <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
 
 For any additional help or support contact the
-`Sylabs team <https://www.sylabs.io/contact/>`_.
+`Sylabs team <https://www.sylabs.io/contact/>`_, or send a email to `support@sylabs.io <mailto:support@sylabs.io>`_.
 
 ------------
 Installation
@@ -31,11 +31,11 @@ Singularity requires several libraries and development tools to be installed bef
 Install Go
 ----------
 
-Singularity is primarily written in Go, so we will need Go >= 1.11 to build Singularity from RPM.
+Singularity is primarily written in Go, so we will need Go 1.11 or greater build Singularity.
 
 .. code-block:: bash
 
-    $ export VERSION=1.11.4 OS=linux ARCH=amd64
+    $ export VERSION=1.11.4 OS=linux ARCH=amd64  # change this as you need.
 
     $ wget https://dl.google.com/go/go${VERSION}.${OS}-${ARCH}.tar.gz && \
         sudo tar -C /usr/local -xzf go${VERSION}.${OS}-${ARCH}.tar.gz
@@ -95,9 +95,21 @@ In the case of cluster nodes, you will need to create the following directories 
     ${localstatedir}/singularity/mnt/session
 
 
+.. singularity-architecture:
+
 ------------------------
 Singularity Architecture
 ------------------------
 
+A quick description of Singularity architecture (no daemon, security context, default namespaces, why architecture works with batch schedulers) with links to appropriate sections.
 
+
+.. singularity-security:
+
+--------------------
+Singularity Security
+--------------------
+
+
+Description
 
