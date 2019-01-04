@@ -64,14 +64,20 @@ Singularity RPM is available on `the Github relese page <https://github.com/syla
 Configuing
 ----------
 
+Here are some ways to configure Singularity.
+
 The config file
 ---------------
 
-The config file ... bla, blab...
+For full infoation on the config file, check out this :ref:`config tutarial <singularity-config-file>`. (Comming Soon!)
 
-The config file must be owned by root, because...
+Here are some thinks you can configure:
 
-For full infoation on the config file, check out this :ref:`config tutarial <singularity-config-file>`.
+congifure 1.
+    this lets you change...
+
+congifure 2.
+    this lets you change...
 
 Configuration (``localstatedir``)
 ---------------------------------
