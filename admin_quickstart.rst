@@ -33,6 +33,9 @@ Install Go
 
 Singularity is primarily written in Go, so we will need Go 1.11 or greater build Singularity.
 
+If your updating from a previous go version, click `here for uninstall instructions <https://golang.org/doc/install#uninstall>`_.
+After uninstalling go, you can install it by following the instructions below.
+
 .. code-block:: bash
 
     $ export VERSION=1.11.4 OS=linux ARCH=amd64  # change this as you need.
