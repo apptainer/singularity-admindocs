@@ -1,7 +1,10 @@
+.. _admin-quick-start:
+
 Admin Quick Start
 =================
 
-This document will cover installation and administration points of Singularity on a Linux host. For all other information, and installation for other OS(s), see the `user guide <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
+This document will cover installation and administration points of Singularity on a Linux host. For all other information,
+and installation for other OS(s), see the `user installation guide <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
 
 For any additional help or support contact the
 `Sylabs team <https://www.sylabs.io/contact/>`_, or send a email to `support@sylabs.io <mailto:support@sylabs.io>`_.
@@ -58,7 +61,7 @@ Singularity RPM is available on `the Github relese page <https://github.com/syla
 
 .. code-block:: bash
 
-    $ export VERSION=3.0.1  # this is the singularity version, change as you need
+    $ export VERSION=3.0.2  # this is the singularity version, change as you need
 
     $ wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
         rpmbuild -tb singularity-${VERSION}.tar.gz
@@ -67,20 +70,24 @@ Singularity RPM is available on `the Github relese page <https://github.com/syla
 Configuing
 ----------
 
-Here are some ways to configure Singularity.
+There are sevral ways to configuing Singularity. The :ref:`config file <singularity-config-file>` is were most of the config are.
+But there is also :ref:`localstatedir <localstatedir-configure>`.
 
-The config file
----------------
+The config file (``singularity.conf``)
+--------------------------------------
+
+Here are some things you can configure:
+
+``ALLOW SETUID``:
+    This lets you change users to utilize the ``setuid`` program flow within Singularity.    
+
+``MAX LOOP DEVICES``:
+    This lets you change the maximum number of loop devices that Singularity should ever attempt to utilize.
+
+``ALLOW PID NAMESPACE``:
+    This lets you allow users to request the ``PID`` namespace.
 
 For full infoation on the config file, check out this :ref:`config tutarial <singularity-config-file>`. (Comming Soon!)
-
-Here are some thinks you can configure:
-
-congifure 1.
-    this lets you change...
-
-congifure 2.
-    this lets you change...
 
 Configuration (``localstatedir``)
 ---------------------------------
@@ -112,13 +119,10 @@ Singularity Architecture
 
 A quick description of Singularity architecture (no daemon, security context, default namespaces, why architecture works with batch schedulers) with links to appropriate sections.
 
-
 .. singularity-security:
 
 --------------------
 Singularity Security
 --------------------
 
-
 Description
-
