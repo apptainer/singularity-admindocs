@@ -3,8 +3,16 @@
 Admin Quick Start
 =================
 
-This document will cover installation and administration points of Singularity on a Linux host. For all other information,
-and installation for other OS(s), see the `user installation guide <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
+This document will cover installation of Singularity, and all the dependencies. This will also cover an
+overview of :ref:`configuing <configuing_overview>`, :ref:`Singularity architecture <singularity-architecture>`,
+and :ref:`Singularity security <singularity-security>`.
+
+.. This document will cover installation and administration points of Singularity on a Linux host. This will also cover an
+.. overview of :ref:`configuing <configuing_overview>`, :ref:`Singularity architecture <singularity-architecture>`,
+.. and :ref:`Singularity security <singularity-security>`.
+
+For all other information, and installation for other OS(s), see
+the `user installation guide <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
 
 For any additional help or support contact the
 `Sylabs team <https://www.sylabs.io/contact/>`_, or send a email to `support@sylabs.io <mailto:support@sylabs.io>`_.
@@ -13,7 +21,8 @@ For any additional help or support contact the
 Installation
 ------------
 
-This section will explain how to install Singularity from a RPM.
+This section will explain how to install Singularity from a RPM. If you want more information on installation,
+check out our other `instalation page <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
 
 Install Build Dependencies
 --------------------------
@@ -36,7 +45,7 @@ Install Go
 
 Singularity is primarily written in Go, so we will need Go 1.11 or greater build Singularity.
 
-If your updating from a previous go version, click `here for uninstall instructions <https://golang.org/doc/install#uninstall>`_.
+If your updating from a previous go version, make sure you completely `uninstall go <https://golang.org/doc/install#uninstall>`_.
 After uninstalling go, you can install it by following the instructions below.
 
 .. code-block:: bash
@@ -66,11 +75,13 @@ Singularity RPM is available on `the Github relese page <https://github.com/syla
     $ wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
         rpmbuild -tb singularity-${VERSION}.tar.gz
 
+.. _configuing_overview:
+
 ----------
 Configuing
 ----------
 
-There are sevral ways to configuing Singularity. The :ref:`config file <singularity-config-file>` is were most of the config are.
+There are sevral ways to configuing Singularity. The :ref:`main config file <singularity-config-file>` is were most of the config are.
 But there is also :ref:`localstatedir <localstatedir-configure>`.
 
 The config file (``singularity.conf``)
@@ -92,11 +103,18 @@ For full infoation on the config file, check out this :ref:`config tutarial <sin
 Configuration (``localstatedir``)
 ---------------------------------
 
-The local state directories used by ``singularity`` at runtime will be placed under the supplied ``prefix`` option. This will cause issues if that directory tree is read-only or if it is shared between several hosts or nodes that might run ``singularity`` simultaneously.
+This should be shorter...
 
-In such cases, you should specify the ``localstatedir`` option. This will override the ``prefix`` option, instead placing the local state directories within the path explicitly provided. Ideally this should be within the local filesystem, specific to only a single host or node.
+The local state directories used by ``singularity`` at runtime will be placed under the supplied ``prefix`` option.
+This will cause issues if that directory tree is read-only or if it is shared between several hosts or nodes that might
+run ``singularity`` simultaneously.
 
-In the case of cluster nodes, you will need to create the following directories on all nodes, with ``root:root`` ownership and ``0755`` permissions
+In such cases, you should specify the ``localstatedir`` option. This will override the ``prefix`` option, instead placing
+the local state directories within the path explicitly provided. Ideally this should be within the local filesystem, specific
+to only a single host or node.
+
+In the case of cluster nodes, you will need to create the following directories on all nodes, with ``root:root`` ownership
+and ``0755`` permissions
 
 .. code-block:: bash
 
@@ -111,18 +129,25 @@ In the case of cluster nodes, you will need to create the following directories 
     ${localstatedir}/singularity/mnt/session
 
 
-.. singularity-architecture:
+.. _singularity-architecture:
 
 ------------------------
 Singularity Architecture
 ------------------------
 
-A quick description of Singularity architecture (no daemon, security context, default namespaces, why architecture works with batch schedulers) with links to appropriate sections.
+Singularity architecture allows the container to be executed as if they were native programs or scripts on a host system.
 
-.. singularity-security:
+As a result, integration with schedulers such as Univa Grid Engine, Torque, SLURM, SGE, and many others is as simple as running
+any other command. All standard input, output, errors, pipes, IPC, and other communication pathways used by locally running
+programs are synchronized with the applications running locally within the container.
+
+.. _singularity-security:
 
 --------------------
 Singularity Security
 --------------------
 
-Description
+Description... Namespace...
+Same host inside the container.
+
+Singularity containers can be signed/verified (via PGP key) ensuring a bit-for-bit reproduction of the original container as the author intended it.
