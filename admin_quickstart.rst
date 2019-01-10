@@ -70,6 +70,7 @@ After you clone the ``git`` repository, you can optionally ``checkout`` the
     $ mkdir -p $GOPATH/src/github.com/sylabs
     $ cd $GOPATH/src/github.com/sylabs
     $ git clone https://github.com/sylabs/singularity
+    $ cd singularity
     $ git tag --list
     $ git checkout v3.0.1
 
