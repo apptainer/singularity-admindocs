@@ -81,8 +81,8 @@ Golang, and all other build dependencies will be downloaded automatically just t
 
     $ wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
         rpmbuild -tb singularity-${VERSION}.tar.gz && \
-        sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/singularity-$VERSION-1.el7.x86_64.rpm && \
-        rm -rf ~/rpmbuild singularity-$VERSION*.tar.gz
+        sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/singularity-${VERSION}-1.el7.x86_64.rpm && \
+        rm -rf ~/rpmbuild singularity-${VERSION}*.tar.gz
 
 .. _configuing_overview:
 
