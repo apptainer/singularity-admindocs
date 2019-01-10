@@ -24,10 +24,14 @@ Installation
 This section will explain how to install Singularity from a RPM. If you want more information on installation,
 check out our other `instalation page <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
 
-Install Build Dependencies
---------------------------
+Install Dependencies
+--------------------
 
-Singularity requires several libraries and development tools to be installed before you can build the RPM.
+Singularity requires several libraries in order to function propley. Because we will be installing Singularity from a RPM,
+you don't have to install build dependencies.
+
+.. Singularity requires several libraries and development tools to be installed before you can build the RPM. So update,
+.. then install all the dependencies:
 
 .. code-block:: bash
 
@@ -40,40 +44,45 @@ Singularity requires several libraries and development tools to be installed bef
         wget \
         squashfs-tools
 
-Install Go
-----------
-
-Singularity is primarily written in Go, so we will need Go 1.11 or greater build Singularity.
-
-If your updating from a previous go version, make sure you completely `uninstall go <https://golang.org/doc/install#uninstall>`_.
-After uninstalling go, you can install it by following the instructions below.
-
-.. code-block:: bash
-
-    $ export VERSION=1.11.4 OS=linux ARCH=amd64  # change this as you need.
-
-    $ wget https://dl.google.com/go/go${VERSION}.${OS}-${ARCH}.tar.gz && \
-        sudo tar -C /usr/local -xzf go${VERSION}.${OS}-${ARCH}.tar.gz
-
-Post installation, you will need to setup your environment for Go.
-
-.. code-block:: bash
-
-    $ echo 'export GOPATH=${HOME}/go' >> ~/.bashrc && \
-        echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
-        source ~/.bashrc
+.. Install Go
+.. ----------
+.. 
+.. Singularity is primarily written in Go, so we will need Go 1.11 or greater build Singularity.
+.. 
+.. If your updating from a previous go version, make sure you completely `uninstall go <https://golang.org/doc/install#uninstall>`_.
+.. After uninstalling go, you can install it by following the instructions below.
+.. 
+.. .. code-block:: bash
+.. 
+..     $ export VERSION=1.11.4 OS=linux ARCH=amd64  # change this as you need.
+.. 
+..     $ wget https://dl.google.com/go/go${VERSION}.${OS}-${ARCH}.tar.gz && \
+..         sudo tar -C /usr/local -xzf go${VERSION}.${OS}-${ARCH}.tar.gz
+.. 
+.. Post installation, you will need to setup your environment for Go.
+.. 
+.. .. code-block:: bash
+.. 
+..     $ echo 'export GOPATH=${HOME}/go' >> ~/.bashrc && \
+..         echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
+..         source ~/.bashrc
+.. 
 
 Download and Build the RPM
 --------------------------
 
 Singularity RPM is available on `the Github relese page <https://github.com/sylabs/singularity/releases>`_.
 
+Golang, and all other build dependencies will be downloaded automatically just to build the RPM, then will magically disappear.
+
 .. code-block:: bash
 
     $ export VERSION=3.0.2  # this is the singularity version, change as you need
 
     $ wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
-        rpmbuild -tb singularity-${VERSION}.tar.gz
+        rpmbuild -tb singularity-${VERSION}.tar.gz && \
+        sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/singularity-$VERSION-1.el7.x86_64.rpm && \
+        rm -rf ~/rpmbuild singularity-$VERSION*.tar.gz
 
 .. _configuing_overview:
 
