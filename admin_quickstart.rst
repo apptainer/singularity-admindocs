@@ -116,7 +116,7 @@ Same host inside the container.
 
 Singularity containers can be signed/verified (via PGP key) ensuring a bit-for-bit reproduction of the original container as the author intended it.
 
-.. _updateing_singularity:
+.. _updating_singularity:
 
 --------------------
 Updating Singularity
