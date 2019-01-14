@@ -4,7 +4,7 @@ Admin Quick Start
 =================
 
 This document will cover installation of Singularity, and all the dependencies. This will also cover an
-overview of :ref:`configuing <configuing_overview>`, :ref:`Singularity architecture <singularity-architecture>`,
+overview of :ref:`configuing <configuring_overview>`, :ref:`Singularity architecture <singularity-architecture>`,
 and :ref:`Singularity security <singularity-security>`.
 
 .. This document will cover installation and administration points of Singularity on a Linux host. This will also cover an
@@ -40,13 +40,13 @@ Golang, and all other build dependencies will be downloaded automatically just t
         sudo rpm --install -vh ~/rpmbuild/RPMS/x86_64/singularity-${VERSION}-1.el7.x86_64.rpm && \
         rm -rf ~/rpmbuild singularity-${VERSION}*.tar.gz
 
-.. _configuing_overview:
+.. _configuring_overview:
 
-----------
-Configuing
-----------
+-----------
+Configuring
+-----------
 
-There are sevral ways to configuing Singularity. The :ref:`main config file <singularity-config-file>` is were most of the config are.
+There are several ways to configuring Singularity. The :ref:`main config file <singularity-config-file>` is where most of the config is.
 But there is also :ref:`localstatedir <localstatedir-configure>`.
 
 The config file (``singularity.conf``)
@@ -63,7 +63,7 @@ Here are some things you can configure:
 ``ALLOW PID NAMESPACE``:
     This lets you allow users to request the ``PID`` namespace.
 
-For full infoation on the config file, check out this :ref:`config tutarial <singularity-config-file>`. (Comming Soon!)
+For full information on the config file, check out this :ref:`config tutarial <singularity-config-file>`. (Coming Soon!)
 
 Configuration (``localstatedir``)
 ---------------------------------
