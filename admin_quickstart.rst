@@ -7,10 +7,6 @@ This document will cover installation of Singularity, and all the dependencies. 
 overview of :ref:`configuing <configuring_overview>`, :ref:`Singularity architecture <singularity-architecture>`,
 and :ref:`Singularity security <singularity-security>`.
 
-.. This document will cover installation and administration points of Singularity on a Linux host. This will also cover an
-.. overview of :ref:`configuing <configuing_overview>`, :ref:`Singularity architecture <singularity-architecture>`,
-.. and :ref:`Singularity security <singularity-security>`.
-
 For all other information, and installation for other OS(s), see
 the `user installation guide <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
 
@@ -46,7 +42,7 @@ Golang, and all other build dependencies will be downloaded automatically just t
 Configuring
 -----------
 
-There are several ways to configuring Singularity. The :ref:`main config file <singularity-config-file>` is where most of the config is.
+There are several ways to configure Singularity. The :ref:`main config file <singularity-config-file>` is where most of the config is.
 But there is also :ref:`localstatedir <localstatedir-configure>`.
 
 The config file (``singularity.conf``)
