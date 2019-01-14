@@ -118,9 +118,9 @@ Singularity containers can be signed/verified (via PGP key) ensuring a bit-for-b
 
 .. _updateing_singularity:
 
----------------------
-Updateing Singularity
----------------------
+--------------------
+Updating Singularity
+--------------------
 
 Updating Singularity is just line installing it, but with the ``--upgrade`` flag instead of ``--install``. Make sure you pick the latest
 tarball from the `Github relese page <https://github.com/sylabs/singularity/releases>`_.
