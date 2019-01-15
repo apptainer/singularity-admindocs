@@ -3,33 +3,32 @@
 Admin Quick Start
 =================
 
-This document will cover installation of Singularity, and all the dependencies. This will also cover an
-overview of :ref:`configuing <configuing_overview>`, :ref:`Singularity architecture <singularity-architecture>`,
-and :ref:`Singularity security <singularity-security>`.
-
-.. This document will cover installation and administration points of Singularity on a Linux host. This will also cover an
-.. overview of :ref:`configuing <configuing_overview>`, :ref:`Singularity architecture <singularity-architecture>`,
-.. and :ref:`Singularity security <singularity-security>`.
-
-For all other information, and installation for other OS(s), see
-the `user installation guide <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
+This document will cover installation and administration points of Singularity 
+on a Linux host. This will also cover an overview of :ref:`configuing 
+Singularity <configuing_overview>`, :ref:`Singularity architecture 
+<singularity-architecture>`,
+and :ref:`the Singularity security model <singularity-security>`.
 
 For any additional help or support contact the
-`Sylabs team <https://www.sylabs.io/contact/>`_, or send a email to `support@sylabs.io <mailto:support@sylabs.io>`_.
+`Sylabs team <https://www.sylabs.io/contact/>`_, or send a email to 
+`support@sylabs.io <mailto:support@sylabs.io>`_.
 
 ------------
 Installation
 ------------
 
-This section will explain how to install Singularity from a RPM. If you want more information on installation,
-check out our other `instalation page <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
+This section will explain how to install Singularity from an RPM. If you want 
+more information on installation, including althernate installation procedures 
+and options for other operating systems, see the `user guide instalation page 
+<https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
 
 Install Build Dependencies
 --------------------------
 
-Singularity requires several libraries and development tools to be installed before you can build the RPM.
+Singularity requires several libraries and development tools to be installed 
+before you can build the RPM.
 
-.. code-block:: bash
+.. code-block:: none
 
     $ sudo yum update -y && \
         sudo yum groupinstall -y 'Development Tools' && \
@@ -40,13 +39,19 @@ Singularity requires several libraries and development tools to be installed bef
         wget \
         squashfs-tools
 
+.. ^ I'm not actually sure if all of these are needed when one installs the RPM
+.. or not.  I think that RPM may resolve these dependencies for the user.  
+.. Perhaps some testing is in order.  
+
 Install Go
 ----------
 
-Singularity is primarily written in Go, so we will need Go 1.11 or greater build Singularity.
+Singularity is primarily written in Go, so we will need Go 1.11 or greater build 
+Singularity.
 
-If your updating from a previous go version, make sure you completely `uninstall go <https://golang.org/doc/install#uninstall>`_.
-After uninstalling go, you can install it by following the instructions below.
+If your updating from a previous go version, make sure you completely `uninstall 
+go <https://golang.org/doc/install#uninstall>`_. After uninstalling go, you can 
+install it by following the instructions below.
 
 .. code-block:: bash
 
@@ -81,40 +86,69 @@ Singularity RPM is available on `the Github relese page <https://github.com/syla
 Configuing
 ----------
 
-There are sevral ways to configuing Singularity. The :ref:`main config file <singularity-config-file>` is were most of the config are.
+There are several ways to configure Singularity. The :ref:`main config file 
+<singularity-config-file>` is where most of the config are.
 But there is also :ref:`localstatedir <localstatedir-configure>`.
+
+.. localstatedir is really a config option at build time. It's not part of the 
+.. config in the same way that the singularity.conf file is part of the config.
+
 
 The config file (``singularity.conf``)
 --------------------------------------
 
-Here are some things you can configure:
+The ``singularity.conf`` file defines the global configuration for Singularity 
+across the entire system.  By default, it is installed in the following location
+(though its location will obviously differ pass options to install Singularity 
+or its components in a custom location).
+
+.. code-block:: none
+
+    /usr/local/etc/singularity/singularity.conf
+
+As a security measure, it must be owned by root and must not be writable by 
+users or Singularity will refuse to run.  
+
+Here's an example of some of the configurable options:
 
 ``ALLOW SETUID``:
-    This lets you change users to utilize the ``setuid`` program flow within Singularity.    
+    This allows admins to enable/disable users ability to utilize the ``setuid`` 
+    program flow within Singularity.    
 
 ``MAX LOOP DEVICES``:
-    This lets you change the maximum number of loop devices that Singularity should ever attempt to utilize.
+    This allows a admins to change the maximum number of loop devices that 
+    Singularity can attempt to utilize when mounting containers.
 
 ``ALLOW PID NAMESPACE``:
-    This lets you allow users to request the ``PID`` namespace.
+    Allows admins to enable or disable the ``PID`` namespace allowing or
+    preventing containerized processes from making entries in the host systems
+    pid table.
 
-For full infoation on the config file, check out this :ref:`config tutarial <singularity-config-file>`. (Comming Soon!)
+The ``singularity.conf`` file is well documented and most information can be 
+gleaned by consulting it directly. For more information, see the 
+:ref:`configuration pages <singularity-config-file>`.
 
 Configuration (``localstatedir``)
 ---------------------------------
 
+.. please move the section about the localstatedir to be within the installation
+.. section above.  See the user docs installation page for an idea of how to do 
+.. this.
+
 This should be shorter...
 
-The local state directories used by ``singularity`` at runtime will be placed under the supplied ``prefix`` option.
-This will cause issues if that directory tree is read-only or if it is shared between several hosts or nodes that might
+The local state directories used by ``singularity`` at runtime will be placed 
+under the supplied ``prefix`` option. This will cause issues if that directory 
+tree is read-only or if it is shared between several hosts or nodes that might
 run ``singularity`` simultaneously.
 
-In such cases, you should specify the ``localstatedir`` option. This will override the ``prefix`` option, instead placing
-the local state directories within the path explicitly provided. Ideally this should be within the local filesystem, specific
-to only a single host or node.
+In such cases, you should specify the ``localstatedir`` option. This will 
+override the ``prefix`` option, instead placing the local state directories 
+within the path explicitly provided. Ideally this should be within the local 
+filesystem, specific to only a single host or node.
 
-In the case of cluster nodes, you will need to create the following directories on all nodes, with ``root:root`` ownership
-and ``0755`` permissions
+In the case of a cluster, admins must ensure that the localstatedir exists on 
+all nodes with ``root:root`` ownership and ``0755`` permissions
 
 .. code-block:: bash
 
