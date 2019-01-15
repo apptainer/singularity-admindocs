@@ -3,11 +3,20 @@
 Admin Quick Start
 =================
 
+<<<<<<< HEAD
 This document will cover installation and administration points of Singularity 
 on a Linux host. This will also cover an overview of :ref:`configuing 
 Singularity <configuing_overview>`, :ref:`Singularity architecture 
 <singularity-architecture>`,
 and :ref:`the Singularity security model <singularity-security>`.
+=======
+This document will cover installation of Singularity, and all the dependencies. This will also cover an
+overview of :ref:`configuing <configuring_overview>`, :ref:`Singularity architecture <singularity-architecture>`,
+and :ref:`Singularity security <singularity-security>`.
+
+For all other information, and installation for other OS(s), see
+the `user installation guide <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
+>>>>>>> ecfa48feca2b3f2b5a7e32f237e1e10213d921db
 
 For any additional help or support contact the
 `Sylabs team <https://www.sylabs.io/contact/>`_, or send a email to 
@@ -22,6 +31,7 @@ more information on installation, including althernate installation procedures
 and options for other operating systems, see the `user guide instalation page 
 <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
 
+<<<<<<< HEAD
 Install Build Dependencies
 --------------------------
 
@@ -68,26 +78,36 @@ Post installation, you will need to setup your environment for Go.
         echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
         source ~/.bashrc
 
+=======
+>>>>>>> ecfa48feca2b3f2b5a7e32f237e1e10213d921db
 Download and Build the RPM
 --------------------------
 
 Singularity RPM is available on `the Github relese page <https://github.com/sylabs/singularity/releases>`_.
+
+Golang, and all other build dependencies will be downloaded automatically just to build the RPM, then will magically disappear.
 
 .. code-block:: bash
 
     $ export VERSION=3.0.2  # this is the singularity version, change as you need
 
     $ wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
-        rpmbuild -tb singularity-${VERSION}.tar.gz
+        rpmbuild -tb singularity-${VERSION}.tar.gz && \
+        sudo rpm --install -vh ~/rpmbuild/RPMS/x86_64/singularity-${VERSION}-1.el7.x86_64.rpm && \
+        rm -rf ~/rpmbuild singularity-${VERSION}*.tar.gz
 
-.. _configuing_overview:
+.. _configuring_overview:
 
-----------
-Configuing
-----------
+-----------
+Configuring
+-----------
 
+<<<<<<< HEAD
 There are several ways to configure Singularity. The :ref:`main config file 
 <singularity-config-file>` is where most of the config are.
+=======
+There are several ways to configure Singularity. The :ref:`main config file <singularity-config-file>` is where most of the config is.
+>>>>>>> ecfa48feca2b3f2b5a7e32f237e1e10213d921db
 But there is also :ref:`localstatedir <localstatedir-configure>`.
 
 .. localstatedir is really a config option at build time. It's not part of the 
@@ -124,9 +144,13 @@ Here's an example of some of the configurable options:
     preventing containerized processes from making entries in the host systems
     pid table.
 
+<<<<<<< HEAD
 The ``singularity.conf`` file is well documented and most information can be 
 gleaned by consulting it directly. For more information, see the 
 :ref:`configuration pages <singularity-config-file>`.
+=======
+For full information on the config file, check out this :ref:`config tutarial <singularity-config-file>`. (Coming Soon!)
+>>>>>>> ecfa48feca2b3f2b5a7e32f237e1e10213d921db
 
 Configuration (``localstatedir``)
 ---------------------------------
@@ -162,7 +186,6 @@ all nodes with ``root:root`` ownership and ``0755`` permissions
 
     ${localstatedir}/singularity/mnt/session
 
-
 .. _singularity-architecture:
 
 ------------------------
@@ -185,3 +208,34 @@ Description... Namespace...
 Same host inside the container.
 
 Singularity containers can be signed/verified (via PGP key) ensuring a bit-for-bit reproduction of the original container as the author intended it.
+
+.. _updating_singularity:
+
+--------------------
+Updating Singularity
+--------------------
+
+Updating Singularity is just line installing it, but with the ``--upgrade`` flag instead of ``--install``. Make sure you pick the latest
+tarball from the `Github relese page <https://github.com/sylabs/singularity/releases>`_.
+
+.. code-block:: bash
+
+    $ export VERSION=3.0.2  # the newest singularity version, change as you need
+
+    $ wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
+        rpmbuild -tb singularity-${VERSION}.tar.gz && \
+        sudo rpm --upgrade -vh ~/rpmbuild/RPMS/x86_64/singularity-${VERSION}-1.el7.x86_64.rpm && \
+        rm -rf ~/rpmbuild singularity-${VERSION}*.tar.gz
+
+.. _uninstalling_singularity:
+
+------------------------
+Uninstalling Singularity
+------------------------
+
+Uninstalling Singularity is just a one-command: (Just use ``sudo``, or do this as root)
+
+.. code-block:: bash
+
+    $ sudo rpm --erase singularity
+
