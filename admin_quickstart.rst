@@ -3,20 +3,11 @@
 Admin Quick Start
 =================
 
-<<<<<<< HEAD
 This document will cover installation and administration points of Singularity 
 on a Linux host. This will also cover an overview of :ref:`configuing 
 Singularity <configuing_overview>`, :ref:`Singularity architecture 
 <singularity-architecture>`,
 and :ref:`the Singularity security model <singularity-security>`.
-=======
-This document will cover installation of Singularity, and all the dependencies. This will also cover an
-overview of :ref:`configuing <configuring_overview>`, :ref:`Singularity architecture <singularity-architecture>`,
-and :ref:`Singularity security <singularity-security>`.
-
-For all other information, and installation for other OS(s), see
-the `user installation guide <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
->>>>>>> ecfa48feca2b3f2b5a7e32f237e1e10213d921db
 
 For any additional help or support contact the
 `Sylabs team <https://www.sylabs.io/contact/>`_, or send a email to 
@@ -27,11 +18,10 @@ Installation
 ------------
 
 This section will explain how to install Singularity from an RPM. If you want 
-more information on installation, including althernate installation procedures 
+more information on installation, including alternate installation procedures 
 and options for other operating systems, see the `user guide instalation page 
 <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
 
-<<<<<<< HEAD
 Install Build Dependencies
 --------------------------
 
@@ -40,46 +30,16 @@ before you can build the RPM.
 
 .. code-block:: none
 
-    $ sudo yum update -y && \
-        sudo yum groupinstall -y 'Development Tools' && \
-        sudo yum install -y \
-        openssl-devel \
-        libuuid-devel \
-        libseccomp-devel \
+    $ sudo yum -y update && sudo yum -y install \
         wget \
+        rpm-build \
+        git \
+        gcc \
+        libuuid-devel \
+        openssl-devel \
+        libseccomp-devel \
         squashfs-tools
 
-.. ^ I'm not actually sure if all of these are needed when one installs the RPM
-.. or not.  I think that RPM may resolve these dependencies for the user.  
-.. Perhaps some testing is in order.  
-
-Install Go
-----------
-
-Singularity is primarily written in Go, so we will need Go 1.11 or greater build 
-Singularity.
-
-If your updating from a previous go version, make sure you completely `uninstall 
-go <https://golang.org/doc/install#uninstall>`_. After uninstalling go, you can 
-install it by following the instructions below.
-
-.. code-block:: bash
-
-    $ export VERSION=1.11.4 OS=linux ARCH=amd64  # change this as you need.
-
-    $ wget https://dl.google.com/go/go${VERSION}.${OS}-${ARCH}.tar.gz && \
-        sudo tar -C /usr/local -xzf go${VERSION}.${OS}-${ARCH}.tar.gz
-
-Post installation, you will need to setup your environment for Go.
-
-.. code-block:: bash
-
-    $ echo 'export GOPATH=${HOME}/go' >> ~/.bashrc && \
-        echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
-        source ~/.bashrc
-
-=======
->>>>>>> ecfa48feca2b3f2b5a7e32f237e1e10213d921db
 Download and Build the RPM
 --------------------------
 
@@ -102,13 +62,8 @@ Golang, and all other build dependencies will be downloaded automatically just t
 Configuring
 -----------
 
-<<<<<<< HEAD
 There are several ways to configure Singularity. The :ref:`main config file 
 <singularity-config-file>` is where most of the config are.
-=======
-There are several ways to configure Singularity. The :ref:`main config file <singularity-config-file>` is where most of the config is.
->>>>>>> ecfa48feca2b3f2b5a7e32f237e1e10213d921db
-But there is also :ref:`localstatedir <localstatedir-configure>`.
 
 .. localstatedir is really a config option at build time. It's not part of the 
 .. config in the same way that the singularity.conf file is part of the config.
@@ -144,13 +99,9 @@ Here's an example of some of the configurable options:
     preventing containerized processes from making entries in the host systems
     pid table.
 
-<<<<<<< HEAD
 The ``singularity.conf`` file is well documented and most information can be 
 gleaned by consulting it directly. For more information, see the 
 :ref:`configuration pages <singularity-config-file>`.
-=======
-For full information on the config file, check out this :ref:`config tutarial <singularity-config-file>`. (Coming Soon!)
->>>>>>> ecfa48feca2b3f2b5a7e32f237e1e10213d921db
 
 Configuration (``localstatedir``)
 ---------------------------------
