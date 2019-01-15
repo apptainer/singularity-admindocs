@@ -47,7 +47,7 @@ Singularity RPM is available on `the Github relese page <https://github.com/syla
 
 Golang, and all other build dependencies will be downloaded automatically just to build the RPM, then will magically disappear.
 
-.. code-block:: bash
+.. code-block:: none
 
     $ export VERSION=3.0.2  # this is the singularity version, change as you need
 
@@ -125,7 +125,7 @@ filesystem, specific to only a single host or node.
 In the case of a cluster, admins must ensure that the localstatedir exists on 
 all nodes with ``root:root`` ownership and ``0755`` permissions
 
-.. code-block:: bash
+.. code-block:: none
 
     ${localstatedir}/singularity/mnt
 
@@ -155,10 +155,46 @@ programs are synchronized with the applications running locally within the conta
 Singularity Security
 --------------------
 
-Description... Namespace...
-Same host inside the container.
+Security of the container runtime
+---------------------------------
 
-Singularity containers can be signed/verified (via PGP key) ensuring a bit-for-bit reproduction of the original container as the author intended it.
+The Singularity security model is unique among container platforms. The bottom 
+line? **Untrusted users** (those who don't have root access and aren't getting 
+it) can run **untrusted containers** (those have not been vetted by admins) 
+**safely**. There are a few pieces of the model to consider.
+
+First, Singularity's design forces a user to have the same UID and GID context
+inside and outside of the container. This is accomplished by dynamically writing
+entries to ``/etc/passwd`` and ``/etc/groups`` at runtime. This design makes it
+trivially easy for a user inside the container to safely read and write data to 
+the host system with correct ownership, and it's also a cornerstone of the 
+Singularity security context.
+
+Second, Singularity mounts the container file system with the ``nosuid`` flag
+and executes processes within the container with the ``PR_SET_NO_NEW_PRIVS``
+bit set. Combined with the fact that the user is the same inside and outside of
+the container, this prevents a user from escalating priviledges. 
+
+Taken together, this design means your users can run whatever containers they 
+want, and you don't have to worry about them damaging your precious system.  
+
+Security of the container itself
+--------------------------------
+
+A malicious container may not be able to damage your system, but it could still 
+do harm in the user's space without escalating priviledges. 
+
+Starting in Singularity 3.0, containers may be cryptographically signed when
+they are built and verified at runtime (via PGP keys). This allows a user to 
+ensure that a container is a bit-for-bit reproduction of the container produced 
+by the original author before they run it. As long as the user trusts the 
+individual or company that created the container, they can run the container 
+without worrying.
+
+Key signing and verification is made easy using the the `Sylabs Keystore 
+infrastructure <https://cloud.sylabs.io/keystore>`_. Join the party! And get 
+more information about signing and verifying in the `Singularity user guide 
+<https://www.sylabs.io/guides/3.0/user-guide/signNverify.html>`_.
 
 .. _updating_singularity:
 
@@ -169,7 +205,7 @@ Updating Singularity
 Updating Singularity is just line installing it, but with the ``--upgrade`` flag instead of ``--install``. Make sure you pick the latest
 tarball from the `Github relese page <https://github.com/sylabs/singularity/releases>`_.
 
-.. code-block:: bash
+.. code-block:: none
 
     $ export VERSION=3.0.2  # the newest singularity version, change as you need
 
@@ -184,9 +220,10 @@ tarball from the `Github relese page <https://github.com/sylabs/singularity/rele
 Uninstalling Singularity
 ------------------------
 
-Uninstalling Singularity is just a one-command: (Just use ``sudo``, or do this as root)
+If you install Singularity using RPM, you can uninstall it again in just a one 
+command: (Just use ``sudo``, or do this as root)
 
-.. code-block:: bash
+.. code-block:: none
 
     $ sudo rpm --erase singularity
 
