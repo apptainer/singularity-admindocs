@@ -20,6 +20,23 @@ Installation
 This section will explain how to install Singularity from a RPM. If you want more information on installation,
 check out our other `instalation page <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
 
+Install dependencies
+--------------------
+
+Before we build the RPM, we need to install some dependencies:
+
+.. code-block:: bash
+
+    $ sudo yum -y update && sudo yum -y install \
+        wget \
+        rpm-build \
+        git \
+        gcc \
+        libuuid-devel \
+        openssl-devel \
+        libseccomp-devel \
+        squashfs-tools
+
 Download and Build the RPM
 --------------------------
 
