@@ -82,9 +82,6 @@ Configuring
 There are several ways to configure Singularity. The :ref:`main config file 
 <singularity-config-file>` is where most of the config are.
 
-.. localstatedir is really a config option at build time. It's not part of the 
-.. config in the same way that the singularity.conf file is part of the config.
-
 
 The config file (``singularity.conf``)
 --------------------------------------
@@ -122,10 +119,6 @@ gleaned by consulting it directly. For more information, see the
 
 Configuration (``localstatedir``)
 ---------------------------------
-
-.. please move the section about the localstatedir to be within the installation
-.. section above.  See the user docs installation page for an idea of how to do 
-.. this.
 
 This should be shorter...
 
