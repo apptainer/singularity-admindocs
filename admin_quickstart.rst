@@ -40,6 +40,23 @@ before you can build the RPM.
         libseccomp-devel \
         squashfs-tools
 
+Install dependencies
+--------------------
+
+Before we build the RPM, we need to install some dependencies:
+
+.. code-block:: bash
+
+    $ sudo yum -y update && sudo yum -y install \
+        wget \
+        rpm-build \
+        git \
+        gcc \
+        libuuid-devel \
+        openssl-devel \
+        libseccomp-devel \
+        squashfs-tools
+
 Download and Build the RPM
 --------------------------
 
