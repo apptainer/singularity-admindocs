@@ -56,6 +56,26 @@ Golang, and all other build dependencies will be downloaded automatically just t
         sudo rpm --install -vh ~/rpmbuild/RPMS/x86_64/singularity-${VERSION}-1.el7.x86_64.rpm && \
         rm -rf ~/rpmbuild singularity-${VERSION}*.tar.gz
 
+Setting ``localstatedir``
+-------------------------
+
+The local state directories used by ``singularity`` at runtime will be placed 
+under the supplied ``prefix`` option. This will cause issues if that directory 
+tree is read-only or if it is shared between several hosts or nodes that might
+run ``singularity`` simultaneously.
+
+In such cases, you should specify the ``localstatedir`` option. This will 
+override the ``prefix`` option, instead placing the local state directories 
+within the path explicitly provided. Ideally this should be within the local 
+filesystem, specific to only a single host or node.
+
+In the case of a cluster, admins must ensure that the localstatedir exists on 
+all nodes with ``root:root`` ownership and ``0755`` permissions
+
+.. code-block:: none
+
+    rpmbuild -tb --define='_localstatedir /mnt' singularity-${VERSION}.tar.gz
+
 .. _configuring_overview:
 
 -----------
@@ -99,36 +119,6 @@ Here's an example of some of the configurable options:
 The ``singularity.conf`` file is well documented and most information can be 
 gleaned by consulting it directly. For more information, see the 
 :ref:`configuration pages <singularity-config-file>`.
-
-Configuration (``localstatedir``)
----------------------------------
-
-This should be shorter...
-
-The local state directories used by ``singularity`` at runtime will be placed 
-under the supplied ``prefix`` option. This will cause issues if that directory 
-tree is read-only or if it is shared between several hosts or nodes that might
-run ``singularity`` simultaneously.
-
-In such cases, you should specify the ``localstatedir`` option. This will 
-override the ``prefix`` option, instead placing the local state directories 
-within the path explicitly provided. Ideally this should be within the local 
-filesystem, specific to only a single host or node.
-
-In the case of a cluster, admins must ensure that the localstatedir exists on 
-all nodes with ``root:root`` ownership and ``0755`` permissions
-
-.. code-block:: none
-
-    ${localstatedir}/singularity/mnt
-
-    ${localstatedir}/singularity/mnt/container
-
-    ${localstatedir}/singularity/mnt/final
-
-    ${localstatedir}/singularity/mnt/overlay
-
-    ${localstatedir}/singularity/mnt/session
 
 .. _singularity-architecture:
 
