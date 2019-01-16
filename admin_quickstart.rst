@@ -22,11 +22,10 @@ more information on installation, including alternate installation procedures
 and options for other operating systems, see the `user guide instalation page 
 <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
 
-Install Build Dependencies
---------------------------
+Install dependencies
+--------------------
 
-Singularity requires several libraries and development tools to be installed 
-before you can build the RPM.
+Before we build the RPM, we need to install some dependencies:
 
 .. code-block:: none
 
@@ -40,22 +39,6 @@ before you can build the RPM.
         libseccomp-devel \
         squashfs-tools
 
-Install dependencies
---------------------
-
-Before we build the RPM, we need to install some dependencies:
-
-.. code-block:: bash
-
-    $ sudo yum -y update && sudo yum -y install \
-        wget \
-        rpm-build \
-        git \
-        gcc \
-        libuuid-devel \
-        openssl-devel \
-        libseccomp-devel \
-        squashfs-tools
 
 Download and Build the RPM
 --------------------------
