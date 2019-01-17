@@ -22,7 +22,7 @@ more information on installation, including alternate installation procedures
 and options for other operating systems, see the `user guide instalation page 
 <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
 
-Install dependencies
+Install Dependencies
 --------------------
 
 Before we build the RPM, we need to install some dependencies:
@@ -45,7 +45,7 @@ Download and Build the RPM
 
 Singularity RPM is available on `the Github relese page <https://github.com/sylabs/singularity/releases>`_.
 
-Golang, and all other build dependencies will be downloaded automatically just to build the RPM, then will magically disappear.
+Golang and all other build dependencies will be downloaded automatically just to build the RPM, and then will magically disappear.
 
 .. code-block:: none
 
@@ -69,7 +69,7 @@ override the ``prefix`` option, instead placing the local state directories
 within the path explicitly provided. Ideally this should be within the local 
 filesystem, specific to only a single host or node.
 
-In the case of a cluster, admins must ensure that the localstatedir exists on 
+In the case of a cluster, admins must ensure that the ``localstatedir`` exists on 
 all nodes with ``root:root`` ownership and ``0755`` permissions
 
 .. code-block:: none
@@ -86,7 +86,7 @@ There are several ways to configure Singularity. The :ref:`main config file
 <singularity-config-file>` is where most of the config are.
 
 
-The config file (``singularity.conf``)
+The Config File (``singularity.conf``)
 --------------------------------------
 
 The ``singularity.conf`` file defines the global configuration for Singularity 
@@ -108,12 +108,12 @@ Here's an example of some of the configurable options:
     program flow within Singularity.    
 
 ``MAX LOOP DEVICES``:
-    This allows a admins to change the maximum number of loop devices that 
+    This allows admins to change the maximum number of loop devices that 
     Singularity can attempt to utilize when mounting containers.
 
 ``ALLOW PID NAMESPACE``:
     Allows admins to enable or disable the ``PID`` namespace allowing or
-    preventing containerized processes from making entries in the host systems
+    preventing containerized processes from making entries in the host system's
     pid table.
 
 The ``singularity.conf`` file is well documented and most information can be 
@@ -138,7 +138,7 @@ programs are synchronized with the applications running locally within the conta
 Singularity Security
 --------------------
 
-Security of the container runtime
+Security of the Container Runtime
 ---------------------------------
 
 The Singularity security model is unique among container platforms. The bottom 
@@ -161,7 +161,7 @@ the container, this prevents a user from escalating priviledges.
 Taken together, this design means your users can run whatever containers they 
 want, and you don't have to worry about them damaging your precious system.  
 
-Security of the container itself
+Security of the Container Itself
 --------------------------------
 
 A malicious container may not be able to damage your system, but it could still 
