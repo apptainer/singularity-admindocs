@@ -43,9 +43,11 @@ Before we build the RPM, we need to install some dependencies:
 Download and Build the RPM
 --------------------------
 
-Singularity RPM is available on `the Github relese page <https://github.com/sylabs/singularity/releases>`_.
+The Singularity tarball for building the RPM is available on `the Github release 
+page <https://github.com/sylabs/singularity/releases>`_.
 
-Golang and all other build dependencies will be downloaded automatically just to build the RPM, and then will magically disappear.
+Go and all other build dependencies will be downloaded automatically just to 
+build the RPM, and will then be automatically removed.
 
 .. code-block:: none
 
@@ -69,8 +71,8 @@ override the ``prefix`` option, instead placing the local state directories
 within the path explicitly provided. Ideally this should be within the local 
 filesystem, specific to only a single host or node.
 
-In the case of a cluster, admins must ensure that the ``localstatedir`` exists on 
-all nodes with ``root:root`` ownership and ``0755`` permissions
+In the case of a cluster, admins must ensure that the ``localstatedir`` exists 
+on all nodes with ``root:root`` ownership and ``0755`` permissions
 
 .. code-block:: none
 
@@ -83,7 +85,7 @@ Configuring
 -----------
 
 There are several ways to configure Singularity. The :ref:`main config file 
-<singularity-config-file>` is where most of the config are.
+<singularity-config-file>` is where most of the configuration options are set.
 
 
 The Config File (``singularity.conf``)
@@ -91,8 +93,8 @@ The Config File (``singularity.conf``)
 
 The ``singularity.conf`` file defines the global configuration for Singularity 
 across the entire system.  By default, it is installed in the following location
-(though its location will obviously differ pass options to install Singularity 
-or its components in a custom location).
+(though its location will obviously differ based on options passed by the user
+during the Singularity installation).
 
 .. code-block:: none
 
@@ -126,11 +128,14 @@ gleaned by consulting it directly. For more information, see the
 Singularity Architecture
 ------------------------
 
-Singularity architecture allows the container to be executed as if they were native programs or scripts on a host system.
+The architecture of Singularity allows containers to be executed as if they were 
+native programs or scripts on a host system.
 
-As a result, integration with schedulers such as Univa Grid Engine, Torque, SLURM, SGE, and many others is as simple as running
-any other command. All standard input, output, errors, pipes, IPC, and other communication pathways used by locally running
-programs are synchronized with the applications running locally within the container.
+As a result, integration with schedulers such as Univa Grid Engine, Torque, 
+SLURM, SGE, and many others is as simple as running any other command. All 
+standard input, output, errors, pipes, IPC, and other communication pathways 
+used by locally running programs are synchronized with the applications running 
+locally within the container.
 
 .. _singularity-security:
 
@@ -143,7 +148,7 @@ Security of the Container Runtime
 
 The Singularity security model is unique among container platforms. The bottom 
 line? **Untrusted users** (those who don't have root access and aren't getting 
-it) can run **untrusted containers** (those have not been vetted by admins) 
+it) can run **untrusted containers** (those that have not been vetted by admins) 
 **safely**. There are a few pieces of the model to consider.
 
 First, Singularity's design forces a user to have the same UID and GID context
@@ -156,7 +161,7 @@ Singularity security context.
 Second, Singularity mounts the container file system with the ``nosuid`` flag
 and executes processes within the container with the ``PR_SET_NO_NEW_PRIVS``
 bit set. Combined with the fact that the user is the same inside and outside of
-the container, this prevents a user from escalating priviledges. 
+the container, this prevents a user from escalating privileges. 
 
 Taken together, this design means your users can run whatever containers they 
 want, and you don't have to worry about them damaging your precious system.  
@@ -165,16 +170,16 @@ Security of the Container Itself
 --------------------------------
 
 A malicious container may not be able to damage your system, but it could still 
-do harm in the user's space without escalating priviledges. 
+do harm in the user's space without escalating privileges. 
 
 Starting in Singularity 3.0, containers may be cryptographically signed when
-they are built and verified at runtime (via PGP keys). This allows a user to 
+they are built and verified at runtime via PGP keys. This allows a user to 
 ensure that a container is a bit-for-bit reproduction of the container produced 
 by the original author before they run it. As long as the user trusts the 
 individual or company that created the container, they can run the container 
 without worrying.
 
-Key signing and verification is made easy using the the `Sylabs Keystore 
+Key signing and verification is made easy using the `Sylabs Keystore 
 infrastructure <https://cloud.sylabs.io/keystore>`_. Join the party! And get 
 more information about signing and verifying in the `Singularity user guide 
 <https://www.sylabs.io/guides/3.0/user-guide/signNverify.html>`_.
@@ -185,8 +190,9 @@ more information about signing and verifying in the `Singularity user guide
 Updating Singularity
 --------------------
 
-Updating Singularity is just line installing it, but with the ``--upgrade`` flag instead of ``--install``. Make sure you pick the latest
-tarball from the `Github relese page <https://github.com/sylabs/singularity/releases>`_.
+Updating Singularity is just like installing it, but with the ``--upgrade`` flag 
+instead of ``--install``. Make sure you pick the latest tarball from the `Github 
+relese page <https://github.com/sylabs/singularity/releases>`_.
 
 .. code-block:: none
 
