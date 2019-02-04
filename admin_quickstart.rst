@@ -190,7 +190,7 @@ Administrator Control of Users' Containers
 Singularity provides several ways for administrators to control the specific 
 containers that users can run.  
 
-* Admins can set directives in the `singularity.conf` file to limit container access.
+* Admins can set directives in the ``singularity.conf`` file to limit container access.
 
 	* `limit container owners`: Only allow containers to be used when they are owned by a given user (default empty)
 	* `limit container groups`: Only allow containers to be used when they are owned by a given group (default empty)
@@ -199,7 +199,7 @@ containers that users can run.
 	* `allow container extfs`: Limit usage of image containing ext3 filesystem (default yes)
 	* `allow container dir`: Limit usage of directory image (default yes)
 
-* Admins can also whitelist or blacklist containers through the ECL (Execution Control List) located in `ecl.toml`. This method is available in >=3.0:
+* Admins can also whitelist or blacklist containers through the ECL (Execution Control List) located in ``ecl.toml``. This method is available in >=3.0:
 
     This file describes execution groups in which SIF (default format since 3.0) images are checked for authorized loading/execution. The decision is made by validating both the location of the SIF file and by checking against a list of signing entities.
 
