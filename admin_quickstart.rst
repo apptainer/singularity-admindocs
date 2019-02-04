@@ -184,7 +184,7 @@ infrastructure <https://cloud.sylabs.io/keystore>`_. Join the party! And get
 more information about signing and verifying in the `Singularity user guide 
 <https://www.sylabs.io/guides/3.0/user-guide/signNverify.html>`_.
 
-Administrator control of users' containers
+Administrator Control of Users' Containers
 ------------------------------------------
 
 Singularity provides several ways for administrators to control the specific 
