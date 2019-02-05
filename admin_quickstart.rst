@@ -184,6 +184,25 @@ infrastructure <https://cloud.sylabs.io/keystore>`_. Join the party! And get
 more information about signing and verifying in the `Singularity user guide 
 <https://www.sylabs.io/guides/3.0/user-guide/signNverify.html>`_.
 
+Administrator Control of Users' Containers
+------------------------------------------
+
+Singularity provides several ways for administrators to control the specific 
+containers that users can run.  
+
+* Admins can set directives in the ``singularity.conf`` file to limit container access.
+
+	* `limit container owners`: Only allow containers to be used when they are owned by a given user (default empty)
+	* `limit container groups`: Only allow containers to be used when they are owned by a given group (default empty)
+	* `limit container paths`: Only allow containers to be used that are located within an allowed path prefix (default empty)
+	* `allow container squashfs`: Limit usage of image containing squashfs filesystem (default yes)
+	* `allow container extfs`: Limit usage of image containing ext3 filesystem (default yes)
+	* `allow container dir`: Limit usage of directory image (default yes)
+
+* Admins can also whitelist or blacklist containers through the ECL (Execution Control List) located in ``ecl.toml``. This method is available in >=3.0:
+
+    This file describes execution groups in which SIF (default format since 3.0) images are checked for authorized loading/execution. The decision is made by validating both the location of the SIF file and by checking against a list of signing entities.
+
 .. _updating_singularity:
 
 --------------------
