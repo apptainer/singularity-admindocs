@@ -7,18 +7,18 @@ document.write('<div class="rst-versions" data-toggle="rst-versions" role="note"
    <div class="rst-other-versions">\
      <dl>\
        <dt>Versions</dt>\
-         <dd><a href="https://www.sylabs.io/guides/2.6/admin-guide/">v2.6</a></dd>\
+         <dd><a href="https://www.sylabs.io/guides/3.0/admin-guide/">v3.0</a></dd>\
      </dl>\
      <dl>\
        <dt>Downloads</dt>\
        <dd>\
-         <a href="https://www.sylabs.io/guides/2.6/admin-guide.pdf">v2.6 PDF</a>\
+         <a href="https://www.sylabs.io/guides/3.0/admin-guide.pdf">v3.0 PDF</a>\
        </dd>\
      </dl>\
      <dl>\
        <dt>Do you want to contribute? </dt>\
          <dd>\
-           <a href="https://github.com/singularityware/singularity-admindocs">Find us on GitHub!</a>\
+           <a href="https://github.com/sylabs/singularity-admindocs/tree/master">Find us on GitHub!</a>\
          </dd>\
      </dl>\
 \

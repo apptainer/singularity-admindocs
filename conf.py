@@ -106,7 +106,6 @@ html_theme = 'sphinx_rtd_theme'
 #html_theme_options = {}
 html_theme_options = {
     'sticky_navigation': True,
-    'collapsiblesidebar':True,
     'includehidden': True,
     'navigation_depth': 5,
     'prev_next_buttons_location': 'bottom',
@@ -143,7 +142,7 @@ html_favicon = 'favicon.png'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ['html/_static']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -249,7 +248,7 @@ man_pages = [
 ]
 
 # If true, show URL addresses after external links.
-#man_show_urls = False
+man_show_urls = True
 
 
 # -- Options for Texinfo output -------------------------------------------
@@ -317,3 +316,12 @@ epub_uid = epub_title
 
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = []
+
+# -- Custom lexer ---------------------------------------------------------
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '.'))
+from sphinx.highlighting import lexers
+from pygments_singularity import SingularityLexer
+
+# lexer for Singularity definition files (added here until it is upstreamed into Pygments).
+lexers['singularity'] = SingularityLexer(startinline=True)
