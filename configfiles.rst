@@ -289,5 +289,5 @@ For GPU and CUDA support this is how it works:
   $ singularity exec --nv ubuntu.sif gpu_program.exec
   $ singularity run --nv docker://tensorflow/tensorflow:gpu_latest
 
-  You can also mention libraries/binaries and they will be mounted into the
-  container when the --nv option is passed.
+You can also mention libraries/binaries and they will be mounted into the
+container when the --nv option is passed.
