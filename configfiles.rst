@@ -58,7 +58,7 @@ You can specify different source and destination locations using:
   bind path = /etc/singularity/default-nsswitch.conf:/etc/nsswitch.conf
 
 ``MOUNT DEV``:
-Should be set to "YES", if you want to automaically bind mount `/dev`
+Should be set to "YES", if you want to automatically bind mount `/dev`
 within the container. If set to 'minimal', then only 'null', 'zero',
 'random', 'urandom', and 'shm' will be included.
 
@@ -69,7 +69,7 @@ attempt to mount it's base path into the container.
 Limiting containers
 ====================
 
-Ther are several ways in which you can limit the running of containers in your
+There are several ways in which you can limit the running of containers in your
 system:
 
  ``LIMIT CONTAINER OWNERS``: Only allow containers to be used that are owned by a
@@ -83,7 +83,7 @@ system:
 
 .. note::
 
-  These feaures will only apply when Singularity is running in SUID mode and the
+  These features will only apply when Singularity is running in SUID mode and the
   user is non-root. By default they all are set to `NULL`.
 
 
@@ -119,24 +119,24 @@ To limit the amount of memory that your container uses to 500MB (524288000 bytes
 
 .. code-block:: none
 
-    [memory]
-        limit = 524288000
+  [memory]
+      limit = 524288000
 
 Start your container like so:
 
 .. code-block:: none
 
-    $ sudo singularity instance start --apply-cgroups path/to/cgroups.toml my_container.sif instance1
+  $ sudo singularity instance start --apply-cgroups path/to/cgroups.toml my_container.sif instance1
 
 After that, you can verify that the container is only using 500MB of memory.
 (This example assumes that ``instance1`` is the only running instance.)
 
 .. code-block:: none
 
-    $ cat /sys/fs/cgroup/memory/singularity/*/memory.limit_in_bytes
+  $ cat /sys/fs/cgroup/memory/singularity/*/memory.limit_in_bytes
     524288000
 
-Do not forget to stop your instances afer configuring the options.
+Do not forget to stop your instances after configuring the options.
 
 Similarly, the remaining examples can be tested by starting instances and
 examining the contents of the appropriate subdirectories of ``/sys/fs/cgroup/``.
@@ -155,8 +155,8 @@ single CPU, you will set ``512`` as value.
 
 .. code-block:: none
 
-    [cpu]
-        shares = 512
+  [cpu]
+      shares = 512
 
 A cgroup can get more than its share of CPU if there are enough idle CPU cycles
 available in the system, due to the work conserving nature of the scheduler, so
@@ -174,9 +174,9 @@ amount of CPU time to 20ms during period of 100ms:
 
 .. code-block:: none
 
-    [cpu]
-        period = 100000
-        quota = 20000
+  [cpu]
+      period = 100000
+      quota = 20000
 
 **cpus/mems**
 
@@ -185,15 +185,15 @@ using ``cpus/mems`` fields:
 
 .. code-block:: none
 
-    [cpu]
-        cpus = "0-1"
-        mems = "0-1"
+  [cpu]
+      cpus = "0-1"
+      mems = "0-1"
 
 Where container has limited access to CPU 0 and CPU 1.
 
 .. note::
 
-    It's important to set identical values for both ``cpus`` and ``mems``.
+  It's important to set identical values for both ``cpus`` and ``mems``.
 
 
 Limiting IO
@@ -204,9 +204,9 @@ You can limit and monitor access to I/O for block devices.  Use the
 
 .. code-block:: none
 
-    [blockIO]
-        weight = 1000
-        leafWeight = 1000
+  [blockIO]
+      weight = 1000
+      leafWeight = 1000
 
 ``weight`` and ``leafWeight`` accept values between ``10`` and ``1000``.
 
@@ -221,17 +221,17 @@ devices you would do something like this:
 
 .. code-block:: none
 
-    [blockIO]
-        [[blockIO.weightDevice]]
-            major = 7
-            minor = 0
-            weight = 100
-            leafWeight = 50
-        [[blockIO.weightDevice]]
-            major = 7
-            minor = 1
-            weight = 100
-            leafWeight = 50
+  [blockIO]
+      [[blockIO.weightDevice]]
+          major = 7
+          minor = 0
+          weight = 100
+          leafWeight = 50
+      [[blockIO.weightDevice]]
+          major = 7
+          minor = 1
+          weight = 100
+          leafWeight = 50
 
 You could limit the IO read/write rate to 16MB per second for the ``/dev/loop0``
 block device with the following configuration.  The rate is specified in bytes
@@ -239,22 +239,22 @@ per second.
 
 .. code-block:: none
 
-    [blockIO]
-        [[blockIO.throttleReadBpsDevice]]
-            major = 7
-            minor = 0
-            rate = 16777216
-        [[blockIO.throttleWriteBpsDevice]]
-            major = 7
-            minor = 0
-            rate = 16777216
+  [blockIO]
+      [[blockIO.throttleReadBpsDevice]]
+          major = 7
+          minor = 0
+          rate = 16777216
+      [[blockIO.throttleWriteBpsDevice]]
+          major = 7
+          minor = 0
+          rate = 16777216
 
 --------
 ecl.toml
 --------
 
-The execution control list is defined here. The auhorizing of a conainer is made
-by validating both the location of the SIF file in the file system and by
+The execution control list is defined here. You can authorize the containers by
+validating both the location of the SIF file in the file system and by
 checking against a list of signing entities.
 
 .. code-block:: none
@@ -268,16 +268,26 @@ checking against a list of signing entities.
 Only the containers running from and signed with above-mentioned path and keys
 will be authorized to run.
 
+Three possible list modes you can choose from:
+
+**Whitestrict**: The SIF must be signed by *ALL* of the keys mentioned.
+
+**Whitelist**: As long as the SIF is signed by one or more of the keys, the
+container is allowed to run.
+
+**Blacklist**: Only the containers whose keys are not mentioned in the group
+are allowed to run.
+
 --------------
 nvliblist.conf
 --------------
 
 When a container includes a GPU enabled application and libraries, Singularity
-(with the --nv option) can properly inject he required Nvidia GPU driver
-libraries into the container, to match he host's kernel, i.e., Singularity can
+(with the ``--nv`` option) can properly inject the required Nvidia GPU driver
+libraries into the container, to match the host's kernel, i.e., Singularity can
 figure out the compatible versions required by some processes running inside the
-container. This config file is the place where searches for NVIDIA libraries in
-your host system.
+container. This config file is the place where it searches for NVIDIA libraries
+in your host system.
 
 Examples
 --------
@@ -290,4 +300,85 @@ For GPU and CUDA support this is how it works:
   $ singularity run --nv docker://tensorflow/tensorflow:gpu_latest
 
 You can also mention libraries/binaries and they will be mounted into the
-container when the --nv option is passed.
+container when the ``--nv`` option is passed.
+
+---------------
+Capability.json
+---------------
+
+Singularity provides full support for granting and revoking Linux capabilities
+on a user or group basis. By default, all Linux capabilities are dropped when a
+user enters the container system. When you decide to add/revoke some capabilities,
+you can do so using the ``Singularity capability`` options: ``Add``, ``Drop``
+and ``List``.
+
+For example, if you do:
+
+.. code-block:: none
+
+  $ sudo singularity capability add --user david CAP_SYS_RAWIO
+
+You've let the user David to perform I/O port operations, perform a range of
+device-specific operations on other devices etc.
+To perform the same for a group of users do:
+
+.. code-block:: none
+
+  $ sudo singularity capability add --group mygroup audit_write
+
+Use ``drop`` in the same format for revoking their capabilities.
+
+To see a list of all users and their capabilities, simply do:
+
+.. code-block:: none
+
+  $ sudo singularity capability list --all
+
+Alternatively, you can view the *capability.json* file where all these changes
+will be reflected.
+
+To know more about the capabilities do:
+
+.. code-block:: none
+
+  $ singularity capability add --help
+
+.. note::
+
+  The above commands can only be issued by root user(admin).
+
+The `--add-caps<https://www.sylabs.io/guides/3.0/user-guide/security_options.html?highlight=seccomp#security-related-action-options>`_ and
+related options will let the user request the capability when executing a container.
+
+----------------
+seccomp-profiles
+----------------
+
+Secure Computing Mode (seccomp) is a kernel feature that allows a user to filter
+system calls being made to the kernel from a container. The combination of
+restricted and allowed calls are arranged in profiles, and you can pass
+different profiles to different containers. *Seccomp* provides more fine-grained
+control than *capabilities*, giving an attacker a limited number of syscalls
+from the container.
+You can set the default action with ``defaultAction`` for a non-listed system
+call.
+Example: ``SCMP_ACT_ALLOW`` filter will allow all the system calls if it matches
+the filter rule and you can set it to ``SCMP_ACT_ERRNO`` which will have the
+thread receive a return value of *errno* if it calls a system call that matches
+the filter rule.
+
+The file is formatted in a way that it can take a list of additional system calls
+for different architecture and Singularity will automatically take syscalls
+related to the current architecture where it's been executed.
+The ``include``/``exclude``->``caps`` section will include/exclude the listed
+system calls if the user has the associated capability.
+
+Use the ``--security`` option to invoke the container like:
+
+.. code-block:: none
+
+  $ sudo singularity shell --security seccomp:/home/david/my.json my_container.sif
+
+For more insight into security options, network options, cgroups, capabilities,
+etc, please check the `Userdocs<https://www.sylabs.io/guides/3.0/user-guide/>`_
+and it's `Appendix<https://www.sylabs.io/guides/3.0/user-guide/appendix.html>`_.
