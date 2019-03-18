@@ -7,7 +7,7 @@ Singularity Configuration Files
 As a Singularity Administrator, you will have access to various configuration
 files, that will let you manage container resources, set security restrictions
 and configure network options etc, when installing Singularity across the system.
-All these files can be found in `/usr/local/etc/singularity` by default (though
+All these files can be found in ``/usr/local/etc/singularity`` by default (though
 its location will obviously differ based on options passed during the
 installation). This page will describe the following configuration files and
 the various parameters contained by them. They are usually self documented
@@ -25,8 +25,8 @@ and must not be writable by users or Singularity will refuse to run.
 The following are some of the configurable options:
 
 ``ALLOW SETUID``:
-To use containers your users will have to have access to some privileged system
-calls. One way singularity achieves this is by using `Setuid` component in the
+To use containers, your users will have to have access to some privileged system
+calls. One way singularity achieves this is by using ``Setuid`` component in the
 workflow. This variable lets you enable/disable users ability to utilize this
 component within Singularity. By default, it is set to "Yes", but when disabled,
 various Singularity features will not function (e.g. mounting of the Singularity
@@ -285,9 +285,9 @@ nvliblist.conf
 When a container includes a GPU enabled application and libraries, Singularity
 (with the ``--nv`` option) can properly inject the required Nvidia GPU driver
 libraries into the container, to match the host's kernel, i.e., Singularity can
-figure out the compatible versions required by some processes running inside the
-container. This config file is the place where it searches for NVIDIA libraries
-in your host system.
+figure out the compatible versions that might be required by some processes
+running inside the container. This config file is the place where it searches
+for NVIDIA libraries in your host system.
 
 Examples
 --------
@@ -303,7 +303,7 @@ You can also mention libraries/binaries and they will be mounted into the
 container when the ``--nv`` option is passed.
 
 ---------------
-Capability.json
+capability.json
 ---------------
 
 Singularity provides full support for granting and revoking Linux capabilities
@@ -337,7 +337,7 @@ To see a list of all users and their capabilities, simply do:
 Alternatively, you can view the *capability.json* file where all these changes
 will be reflected.
 
-To know more about the capabilities do:
+To know more about the capabilities you can add do:
 
 .. code-block:: none
 
@@ -347,30 +347,29 @@ To know more about the capabilities do:
 
   The above commands can only be issued by root user(admin).
 
-The `--add-caps<https://www.sylabs.io/guides/3.0/user-guide/security_options.html?highlight=seccomp#security-related-action-options>`_ and
+The `--add-caps <https://www.sylabs.io/guides/3.0/user-guide/security_options.html?highlight=seccomp#security-related-action-options>`_ and
 related options will let the user request the capability when executing a container.
 
 ----------------
 seccomp-profiles
 ----------------
 
-Secure Computing Mode (seccomp) is a kernel feature that allows a user to filter
-system calls being made to the kernel from a container. The combination of
-restricted and allowed calls are arranged in profiles, and you can pass
-different profiles to different containers. *Seccomp* provides more fine-grained
-control than *capabilities*, giving an attacker a limited number of syscalls
-from the container.
-You can set the default action with ``defaultAction`` for a non-listed system
-call.
-Example: ``SCMP_ACT_ALLOW`` filter will allow all the system calls if it matches
-the filter rule and you can set it to ``SCMP_ACT_ERRNO`` which will have the
-thread receive a return value of *errno* if it calls a system call that matches
-the filter rule.
+Secure Computing Mode (`seccomp <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_atomic_host/7/html/container_security_guide/linux_capabilities_and_seccomp>`_)
+is a kernel feature that allows a user to filter system calls being made to the
+kernel from a container. The combination of restricted and allowed calls are
+arranged in profiles, and you can pass different profiles to different containers.
+*Seccomp* provides more fine-grained control than *capabilities*, giving an
+attacker a limited number of syscalls from the container.
 
+You can set the default action with ``defaultAction`` for a non-listed system
+call. Example: ``SCMP_ACT_ALLOW`` filter will allow all the system calls if it
+matches the filter rule and you can set it to ``SCMP_ACT_ERRNO`` which will have
+the thread receive a return value of *errno* if it calls a system call that matches
+the filter rule.
 The file is formatted in a way that it can take a list of additional system calls
 for different architecture and Singularity will automatically take syscalls
 related to the current architecture where it's been executed.
-The ``include``/``exclude``->``caps`` section will include/exclude the listed
+The ``include``/``exclude``-> ``caps`` section will include/exclude the listed
 system calls if the user has the associated capability.
 
 Use the ``--security`` option to invoke the container like:
@@ -380,5 +379,5 @@ Use the ``--security`` option to invoke the container like:
   $ sudo singularity shell --security seccomp:/home/david/my.json my_container.sif
 
 For more insight into security options, network options, cgroups, capabilities,
-etc, please check the `Userdocs<https://www.sylabs.io/guides/3.0/user-guide/>`_
-and it's `Appendix<https://www.sylabs.io/guides/3.0/user-guide/appendix.html>`_.
+etc, please check the `Userdocs <https://www.sylabs.io/guides/3.0/user-guide/>`_
+and it's `Appendix <https://www.sylabs.io/guides/3.0/user-guide/appendix.html>`_.
