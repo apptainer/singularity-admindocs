@@ -354,12 +354,11 @@ related options will let the user request the capability when executing a contai
 seccomp-profiles
 ----------------
 
-Secure Computing Mode (`seccomp <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_atomic_host/7/html/container_security_guide/linux_capabilities_and_seccomp>`_)
-is a kernel feature that allows a user to filter system calls being made to the
-kernel from a container. The combination of restricted and allowed calls are
-arranged in profiles, and you can pass different profiles to different containers.
-*Seccomp* provides more fine-grained control than *capabilities*, giving an
-attacker a limited number of syscalls from the container.
+Secure Computing (seccomp) Mode is a feature of the Linux kernel that allows an
+administrator to filter system calls being made from a container. Profiles made
+up of allowed and restricted calls can be passed to different containers.
+*Seccomp* provides more control than *capabilities* alone, giving a smaller
+attack surface for an attacker to work from within a container.
 
 You can set the default action with ``defaultAction`` for a non-listed system
 call. Example: ``SCMP_ACT_ALLOW`` filter will allow all the system calls if it
