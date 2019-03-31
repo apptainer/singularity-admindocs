@@ -10,7 +10,7 @@ and configure network options etc, when installing Singularity across the system
 All these files can be found in ``/usr/local/etc/singularity`` by default (though
 its location will obviously differ based on options passed during the
 installation). This page will describe the following configuration files and
-the various parameters contained by them. They are usually self documented
+the various parameters contained by them. They are usually self documenting
 but here are several things to pay special attention to:
 
 -----------------
@@ -18,28 +18,24 @@ singularity.conf
 -----------------
 Most of the configuration options are set using the file ``singularity.conf``
 that defines the global configuration for Singularity across the entire system.
-System administrators can have direct say as to what functions the users can
-utilize when running as root. As a security measure, it must be owned by root
-and must not be writable by users or Singularity will refuse to run.
+Using this file, system administrators can have direct say as to what functions
+the users can utilize. As a security measure, it must be owned by root and must
+not be writable by users or Singularity will refuse to run.
 
 The following are some of the configurable options:
 
 ``ALLOW SETUID``:
 To use containers, your users will have to have access to some privileged system
-calls. One way singularity achieves this is by using ``Setuid`` component in the
-workflow. This variable lets you enable/disable users ability to utilize this
-component within Singularity. By default, it is set to "Yes", but when disabled,
-various Singularity features will not function (e.g. mounting of the Singularity
-image file format).
+calls. One way singularity achieves this is by using binaries with the `setuid`
+bit enabled. This variable lets you enable/disable users ability to utilize
+these binaries within Singularity. By default, it is set to "Yes", but when
+disabled, various Singularity features will not function (e.g. mounting of the
+Singularity image file format).
 
 ``USER BIND CONTROL``:
 This allows admins to enable/disable users to define bind points at runtime.
 By Default, its "YES", which means users can specify bind points, scratch and
 tmp locations.
-
-.. note::
-
-  User bind control is only allowed if the host also supports `PR_SET_NO_NEW_PRIVS`
 
 ``BIND PATH``:
 Used for setting of  automatic `bind points` entries. You can define a list
@@ -284,15 +280,16 @@ nvliblist.conf
 
 When a container includes a GPU enabled application and libraries, Singularity
 (with the ``--nv`` option) can properly inject the required Nvidia GPU driver
-libraries into the container, to match the host's kernel, i.e., Singularity can
-figure out the compatible versions that might be required by some processes
-running inside the container. This config file is the place where it searches
-for NVIDIA libraries in your host system.
+libraries into the container, to match the host's kernel. This config file is
+the place where it searches for NVIDIA libraries in your host system.
+However, ``nvliblist.conf`` will be ignored in case of having `nvidia-container-cli <https://github.com/NVIDIA/libnvidia-container>`_
+installed, which will be used to locate any nvidia libraries and binaries on
+the host system.
 
 Examples
 --------
 
-For GPU and CUDA support this is how it works:
+For GPU and CUDA support --nv option works like:
 
 .. code-block:: none
 
@@ -334,8 +331,9 @@ To see a list of all users and their capabilities, simply do:
 
   $ sudo singularity capability list --all
 
-Alternatively, you can view the *capability.json* file where all these changes
-will be reflected.
+*capability.json* is the file maintained by Singularity where the ``capability``
+commands create/delete entries accordingly.
+
 
 To know more about the capabilities you can add do:
 
