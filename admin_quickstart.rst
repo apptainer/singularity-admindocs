@@ -1,13 +1,11 @@
-.. _admin-quick-start:
-
+=================
 Admin Quick Start
 =================
 
 This document will cover installation and administration points of Singularity
-on a Linux host. This will also cover an overview of :ref:`configuing
-Singularity <configuing_overview>`, :ref:`Singularity architecture
-<singularity-architecture>`,
-and :ref:`the Singularity security model <singularity-security>`.
+on a Linux host. This will also cover an overview of :ref:`configuring
+Singularity <configuring_overview>`, :ref:`Singularity architecture
+<singularity-architecture>`, and :ref:`the Singularity security model <singularity-security>`.
 
 For any additional help or support contact the
 `Sylabs team <https://www.sylabs.io/contact/>`_, or send a email to
@@ -46,6 +44,9 @@ Download and Build the RPM
 The Singularity tarball for building the RPM is available on `the Github release
 page <https://github.com/sylabs/singularity/releases>`_.
 
+Go and all other build dependencies will be downloaded automatically just to
+build the RPM, and will then be automatically removed.
+
 .. code-block:: none
 
     $ export VERSION=3.0.2  # this is the singularity version, change as you need
@@ -77,47 +78,13 @@ on all nodes with ``root:root`` ownership and ``0755`` permissions
 
 .. _configuring_overview:
 
------------
-Configuring
------------
+-------------
+Configuration
+-------------
 
-There are several ways to configure Singularity. The :ref:`main config file
-<singularity-config-file>` is where most of the configuration options are set.
-
-
-The Config File (``singularity.conf``)
---------------------------------------
-
-The ``singularity.conf`` file defines the global configuration for Singularity
-across the entire system.  By default, it is installed in the following location
-(though its location will obviously differ based on options passed by the user
-during the Singularity installation).
-
-.. code-block:: none
-
-    /usr/local/etc/singularity/singularity.conf
-
-As a security measure, it must be owned by root and must not be writable by
-users or Singularity will refuse to run.
-
-Here's an example of some of the configurable options:
-
-``ALLOW SETUID``:
-    This allows admins to enable/disable users ability to utilize the ``setuid``
-    program flow within Singularity.
-
-``MAX LOOP DEVICES``:
-    This allows admins to change the maximum number of loop devices that
-    Singularity can attempt to utilize when mounting containers.
-
-``ALLOW PID NAMESPACE``:
-    Allows admins to enable or disable the ``PID`` namespace allowing or
-    preventing containerized processes from making entries in the host system's
-    pid table.
-
-The ``singularity.conf`` file is well documented and most information can be
-gleaned by consulting it directly. For more information, see the
-:ref:`configuration pages <singularity-config-file>`.
+There are several ways to configuring Singularity. Head over to the
+:ref:`Configuration files <singularity_configfiles>` section where most of the
+conf files and setting of configuration options are discussed.
 
 .. _singularity-architecture:
 
