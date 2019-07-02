@@ -170,7 +170,7 @@ containers that users can run.
 Fakeroot feature
 ----------------
 
-Fakeroot (or commonly referred as rootless mode) allow an unprivileged user to run a container
+Fakeroot (or commonly referred as rootless mode) allows an unprivileged user to run a container
 as a **"fake root"** user by leveraging `user namespace UID/GID mapping <http://man7.org/linux/man-pages/man7/user_namespaces.7.html>`_.
 
 .. note:: 
@@ -208,7 +208,7 @@ Basics
 ======
 
 If you add ``fakeroot allowed users = foo, bar``, Singularity will allocate each
-users a dedicated range of 65536 UID/GID starting from ``fakeroot base id = 131072``
+user a dedicated range of 65536 UID/GID starting from ``fakeroot base id = 131072``
 value and resulting in the following allocation:
 
 +------+----------+----------------------+
@@ -224,13 +224,14 @@ value and resulting in the following allocation:
   It's important to ensure that ``fakeroot base id`` doesn't overlap with existing UID/GID on your system
 
 It allows unprivileged users to change current UID/GID to any UID/GID between 0 and 65536 inside container.
-It also impact files and directories ownership depending of UID/GID set in container during file/directory
+It also impacts files and directories ownership depending of UID/GID set in container during file/directory
 creation.
 
 Filesystem consideration
 ========================
 
-Based on above range, here what happens when the user ``foo`` create files with ``--fakeroot`` feature:
+Based on the above range, here we can see what happens when the user ``foo`` create files with ``--fakeroot``
+feature:
 
 +--------------------------------+----------------------------------+
 | Create file with container UID | Created host file owned by UID   |
