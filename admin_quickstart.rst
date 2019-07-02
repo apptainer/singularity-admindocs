@@ -167,6 +167,88 @@ containers that users can run.
 
     This file describes execution groups in which SIF (default format since 3.0) images are checked for authorized loading/execution. The decision is made by validating both the location of the SIF file and by checking against a list of signing entities.
 
+Fakeroot feature
+----------------
+
+Fakeroot (or commonly referred as rootless mode) allow an unprivileged user to run a container
+as a **"fake root"** user by leveraging `user namespace UID/GID mapping <http://man7.org/linux/man-pages/man7/user_namespaces.7.html>`_.
+
+.. note:: 
+
+	This feature requires a Linux kernel >= 3.8, but the recommended version is >= 3.18
+
+
+Some distributions doesn't enable user namespace by default, so you will need to enable
+it to use fakeroot:
+
+.. code-block:: none
+
+  $ sudo sysctl -w user.max_user_namespaces=10000
+
+.. note::
+
+  If the above command doesn't work, please refer to the documentation of your
+  distribution documentation to figure out how to enable user namespace
+
+
+``singularity.conf`` contains two directives to configure fakeroot and list users
+allowed to use this feature:
+
+.. code-block:: none
+
+  fakeroot base id = 4227858432
+  fakeroot allowed users =
+
+``fakeroot base id`` is the start of allocatable UID/GID ranges in container for
+fakeroot allowed users.
+
+``fakeroot allowed users`` is the list of users allowed to use the fakeroot feature.
+
+Basics
+======
+
+If you add ``fakeroot allowed users = foo, bar``, Singularity will allocate each
+users a dedicated range of 65536 UID/GID starting from ``fakeroot base id = 131072``
+value and resulting in the following allocation:
+
++------+----------+----------------------+
+| User | Host UID | UID/GID range        |
++======+==========+======================+
+| foo  | 1000     | 131072 to 196607     |
++------+----------+----------------------+
+| bar  | 1001     | 196608 to 262143     |
++------+----------+----------------------+
+
+.. note::
+
+  It's important to ensure that ``fakeroot base id`` doesn't overlap with existing UID/GID on your system
+
+It allows unprivileged users to change current UID/GID to any UID/GID between 0 and 65536 inside container.
+It also impact files and directories ownership depending of UID/GID set in container during file/directory
+creation.
+
+Filesystem consideration
+========================
+
+Based on above range, here what happens when the user ``foo`` create files with ``--fakeroot`` feature:
+
++--------------------------------+----------------------------------+
+| Create file with container UID | Created host file owned by UID   |
++================================+==================================+
+| 0 (default)                    | 1000                             |
++--------------------------------+----------------------------------+
+| 1 (daemon)                     | 131072                           |
++--------------------------------+----------------------------------+
+| 2 (bin)                        | 131073                           |
++--------------------------------+----------------------------------+
+
+Network consideration
+=====================
+
+With fakeroot, users can request a container network named ``fakeroot``, other networks are restricted and
+can only be used by root user. This network is configured to use a network veth pair, it's strongly advised
+to not change the network type in ``network/40_fakeroot.conflist`` file for security reasons.
+
 .. _updating_singularity:
 
 --------------------
