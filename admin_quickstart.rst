@@ -190,38 +190,70 @@ it to use fakeroot:
   If the above command doesn't work, please refer to the documentation of your
   distribution documentation to figure out how to enable user namespace
 
+For unprivileged installation of Singularity or if ``allow setuid = no`` is set in ``singularity.conf``,
+Singularity attempts to use external **setuid binaries** ``newuidmap`` and ``newgidmap``, so you need to
+install those binaries on your system.
 
-``singularity.conf`` contains two directives to configure fakeroot and list users
-allowed to use this feature:
+.. note::
 
-.. code-block:: none
+  CentOS/RHEL 7 doesn't provide package for ``newuidmap`` and ``newgidmap``, so you will need to
+  compile/install **shadow-utils** by yourself.
+  
+  Singularity expect to find those binaries in one of those standard paths:
+  ``/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin``
 
-  fakeroot base id = 4227858432
-  fakeroot allowed users =
-
-``fakeroot base id`` is the start of allocatable UID/GID ranges in container for
-fakeroot allowed users.
-
-``fakeroot allowed users`` is the list of users allowed to use the fakeroot feature.
 
 Basics
 ======
 
-If you add ``fakeroot allowed users = foo, bar``, Singularity will allocate each
-user a dedicated range of 65536 UID/GID starting from ``fakeroot base id = 131072``
-value and resulting in the following allocation:
+Fakeroot relies on ``/etc/subuid`` and ``/etc/subgid`` to find the use fakeroot mappings, which
+means that users added in those files could use the fakeroot feature, user mappings must be added
+in files ``/etc/subuid`` and ``/etc/subgid``, here a valid entry for user ``foo``:
+
+For ``/etc/subuid``:
+
+.. code-block:: none
+
+  foo:100000:65536
+
+where ``foo`` is the username, ``100000`` is the start of UID range and ``65536`` the range count.
+
+Same for ``/etc/subgid``:
+
+.. code-block:: none
+
+  foo:100000:65536
+
+where ``foo`` is the username, ``100000`` is the start of GID range and ``65536`` the range count.
+
+.. note::
+
+  Some distributions already adds the main user by default in those files.
+
+.. warning::
+
+  All entries with a range count different from 65536 are not considered valid
+  by Singularity.
+
+  It's also important to ensure that the start range doesn't overlap with existing
+  UID/GID on your system.
+
+So if you want to add another user ``bar``, ``/etc/subuid`` and ``/etc/subgid`` will look like:
+
+.. code-block:: none
+
+  foo:100000:65536
+  bar:165536:65536
+
+Resulting in the following allocation:
 
 +------+----------+----------------------+
 | User | Host UID | UID/GID range        |
 +======+==========+======================+
-| foo  | 1000     | 131072 to 196607     |
+| foo  | 1000     | 100000 to 165535     |
 +------+----------+----------------------+
-| bar  | 1001     | 196608 to 262143     |
+| bar  | 1001     | 165536 to 231071     |
 +------+----------+----------------------+
-
-.. note::
-
-  It's important to ensure that ``fakeroot base id`` doesn't overlap with existing UID/GID on your system
 
 It allows unprivileged users to change current UID/GID to any UID/GID between 0 and 65536 inside container.
 It also impacts files and directories ownership depending of UID/GID set in container during file/directory
@@ -238,9 +270,9 @@ feature:
 +================================+==================================+
 | 0 (default)                    | 1000                             |
 +--------------------------------+----------------------------------+
-| 1 (daemon)                     | 131072                           |
+| 1 (daemon)                     | 100000                           |
 +--------------------------------+----------------------------------+
-| 2 (bin)                        | 131073                           |
+| 2 (bin)                        | 100001                           |
 +--------------------------------+----------------------------------+
 
 Network consideration
@@ -249,6 +281,10 @@ Network consideration
 With fakeroot, users can request a container network named ``fakeroot``, other networks are restricted and
 can only be used by root user. This network is configured to use a network veth pair, it's strongly advised
 to not change the network type in ``network/40_fakeroot.conflist`` file for security reasons.
+
+.. warning::
+
+  Unprivileged installation could not use ``fakeroot`` network as it requires privileges to setup the network.
 
 .. _updating_singularity:
 
