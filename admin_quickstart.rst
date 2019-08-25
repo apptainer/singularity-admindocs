@@ -17,7 +17,7 @@ Installation
 
 This section will explain how to install Singularity from an RPM. If you want
 more information on installation, including alternate installation procedures
-and options for other operating systems, see the `user guide instalation page
+and options for other operating systems, see the `user guide installation page
 <https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
 
 Install Dependencies
@@ -294,7 +294,7 @@ Updating Singularity
 
 Updating Singularity is just like installing it, but with the ``--upgrade`` flag
 instead of ``--install``. Make sure you pick the latest tarball from the `Github
-relese page <https://github.com/sylabs/singularity/releases>`_.
+release page <https://github.com/sylabs/singularity/releases>`_.
 
 .. code-block:: none
 
