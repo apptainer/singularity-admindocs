@@ -94,7 +94,7 @@ container requires elevated privileges that most of the commercial environments 
 aims to help this challenge by allowing unprivileged users a service that can be used to build containers targeting one or more CPU 
 architectures. System administrators can use the system to monitor which users are building containers, and the contents of those 
 containers. Starting with Singularity 3.0, the CLI has native integration with the Build Service from version 3.0 onwards. In 
-addition, a browser interface to the Build Service also exists, which allows users to build containers using only a web browser.
+addition, a web GUI interface to the Build Service also exists, which allows users to build containers using only a web browser.
 
 .. note::
 
