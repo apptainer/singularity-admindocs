@@ -51,7 +51,7 @@ container files. Since it is all encrypted, it can defend against intruders mani
 
 Unlike other container platforms where the build step requires a number of layers to be read and written into another layer 
 involving the creation of intermediate containers, Singularity executes it in a single step resulting in a ``.sif`` file thereby
-reducing the attack surface and eliminating any chances of creeping in malicious content during building and running of containers.
+reducing the attack surface and eliminating any chances of injecting malicious content during building and running of containers.
 
 
 Admin Configurable Files
