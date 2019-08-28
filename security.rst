@@ -57,7 +57,7 @@ reducing the attack surface and eliminating any chances of injecting malicious c
 Admin Configurable Files
 #########################
 
-Singularity Administrators will have the ability to access various configuration files, that will let them set security 
+Singularity Administrators have the ability to access various configuration files, that will let them set security 
 restrictions, grant or revoke a user’s capabilities, manage resources and authorize containers etc. One such file interesting in this context is `ecl.toml <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#ecl-toml>`_ 
 which allows blacklisting and whitelisting of containers. However, you should find all the configuration files and their parameters
 documented `here <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html>`_. 
