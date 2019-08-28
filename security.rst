@@ -33,7 +33,7 @@ These measures allow users to interact with the host system from within the cont
 Singularity Image Format (SIF)
 ##############################
 
-Sylabs addresses Container Security as a continuous process. It attempts to provide container integrity throughout the distribution
+Sylabs addresses container security as a continuous process. It attempts to provide container integrity throughout the distribution
 pipeline.. i.e., at rest, in transit and while running. Hence, the SIF has been designed to achieve these goals. 
 
 A SIF file is an immutable container runtime image. It is a physical representation of the container environment itself. An 
