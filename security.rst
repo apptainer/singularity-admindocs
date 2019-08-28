@@ -8,7 +8,7 @@ Containers are all the rage today for many good reasons. They are light weight, 
 
 Singularity, which is a container paradigm created by necessity for scientific and application driven workloads, addresses some 
 core missions of containers : Mobility of Compute, Reproducibility, HPC support, and **Security**. This document intends to inform
-users of different security features supported by Singularity.
+admins of different security features supported by Singularity.
 
 Singularity Runtime
 ###################
