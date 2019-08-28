@@ -45,7 +45,7 @@ later can be verified (``singularity verify``) while pulling or downloading the 
 protects collaboration within and between systems and teams. 
 
 With a new development to SIF, the root file system that resides in the squashFS partition of SIF can be encrypted, rendering it's contents
-which everything inside the container becomes inaccessible without a key. This feature will make it necessary for the users to 
+inaccessible without a secret. This feature will make it necessary for users to 
 have a password in order to run the containers. It also ensures that no other user on the system will be able to look at your
 container files. Since it is all encrypted, it can defend from intruders manipulating the image while in transit.
 
