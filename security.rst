@@ -90,7 +90,7 @@ Remote Builder
 **************
 
 As mentioned earlier, the Singularity runtime prevents executing code with root-level permissions on the host system. But building a 
-container requires elevated privileges that most of the commercial environments do not grant its users. `Build Service <https://cloud.sylabs.io/builder>`_ 
+container requires elevated privileges that most production environments do not grant to users. `The Remote Builder <https://cloud.sylabs.io/builder>`_ 
 solves this challenge by allowing unprivileged users a service that can be used to build containers targeting one or more CPU 
 architectures. System administrators can use the system to monitor which users are building containers, and the contents of those 
 containers. Starting with Singularity 3.0, the CLI has native integration with the Build Service from version 3.0 onwards. In 
