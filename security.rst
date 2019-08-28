@@ -15,7 +15,7 @@ Singularity Runtime
 
 The Singularity runtime enforces a unique security model that makes it appropriate for *untrusted users* to run *untrusted containers* 
 safely on multi-tenant resources. Because the Singularity runtime dynamically writes UID and GID information to the appropriate files 
-within the container at runtime, the user remains the same *inside* and *outside* the container, i.e., if you're an unprivileged 
+within the container, the user remains the same *inside* and *outside* the container, i.e., if you're an unprivileged 
 user while entering the container you'll remain an unprivileged user inside the container. A privilege separation model is in place
 to prevent users from escalating privileges once they are inside of a container. The container file system is mounted using the 
 ``nosuid`` option, and processes are spawned with the ``PR_NO_NEW_PRIVS`` flag. Taken together, this approach provides a secure way 
