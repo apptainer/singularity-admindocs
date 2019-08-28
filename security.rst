@@ -47,7 +47,7 @@ protects collaboration within and between systems and teams.
 With a new development to SIF, the root file system that resides in the squashFS partition of SIF can be encrypted, rendering it's contents
 inaccessible without a secret. This feature will make it necessary for users to 
 provide a password or key file to run the container. It also ensures that no other user on the system will be able to look at your
-container files. Since it is all encrypted, it can defend from intruders manipulating the image while in transit.
+container files. Since it is all encrypted, it can defend against intruders manipulating the image while in transit.
 
 Unlike other container platforms where the build step requires a number of layers to be read and written into another layer 
 involving the creation of intermediate containers, Singularity executes it in a single step resulting in a ``.sif`` file thereby
