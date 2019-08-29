@@ -35,7 +35,9 @@ Before we build the RPM, we need to install some dependencies:
         libuuid-devel \
         openssl-devel \
         libseccomp-devel \
-        squashfs-tools
+        squashfs-tools \
+        epel-release
+    $ sudo yum -y install golang
 
 
 Download and Build the RPM
@@ -43,9 +45,6 @@ Download and Build the RPM
 
 The Singularity tarball for building the RPM is available on `the Github release
 page <https://github.com/sylabs/singularity/releases>`_.
-
-Go and all other build dependencies will be downloaded automatically just to
-build the RPM, and will then be automatically removed.
 
 .. code-block:: none
 
