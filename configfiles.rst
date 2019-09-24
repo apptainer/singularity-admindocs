@@ -287,7 +287,7 @@ installed, which will be used to locate any nvidia libraries and binaries on
 the host system.
 
 Examples
---------
+========
 
 For GPU and CUDA support --nv option works like:
 
