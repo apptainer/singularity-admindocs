@@ -63,6 +63,7 @@ jobs:
       - run:
           name: Install TeXlive
           command: |
+            apt-get update
             apt-get install -f -y texlive-latex-extra latexmk
       - run:
           name: make pdf
@@ -77,7 +78,7 @@ jobs:
             make epub
       - store_artifacts:
           path: _build/epub
-          destination: epu
+          destination: epub
 
 workflows:
   version: 2
