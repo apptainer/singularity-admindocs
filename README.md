@@ -1,28 +1,31 @@
 # Singularity Admin Docs
 
-This project uses <a href="http://docutils.sourceforge.net/rst.html"> reStructured Text (RST)</a> and <a href="https://readthedocs.org/">ReadTheDocs </a> . As a library for the current theme,  <a href="https://pypi.org/project/Sphinx/" alt="PyPI">Sphinx Python library </a> was used, using Python v. 2.7.
-**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
-## I want to contribute, how can I set up my environment?
+This project uses <a href="http://docutils.sourceforge.net/rst.html">
+reStructured Text (RST)</a> and <a href="https://readthedocs.org/">ReadTheDocs
+</a> . As a library for the current theme, <a
+href="https://pypi.org/project/Sphinx/" alt="PyPI">Sphinx Python library </a>
+was used, using Python v. 2.7.
 
+## Setting up an environment to contribute
 
 First things first, you will need to install the following tools:
 
 - <a href="https://www.python.org/download/releases/2.7/">Install Python 2.7</a>
 - After that then you will need to install Sphinx:
 
-```
+```sh
 pip install -U Sphinx
 ```
 
 You're all set! after this you will only need to use your favorite editor for
 RST files.
 
-## How to do stuff on RST?
+## How to do stuff in RST
 
 First of all, it is good to have an idea of some files and their functionality
 in the project:
 
-### **Structure of the project**
+### Structure of the project
 
 This project maintains the following structure:
 
@@ -66,7 +69,7 @@ notations/underlining for titles and subtitles, very similar to Markup Language.
 surrounded text (above and below) of ``=`` characters. Like in the following
 example:
 
-```
+```sh
 ================
 New Main Section
 ================
@@ -75,7 +78,7 @@ New Main Section
 - To create a sub-section: A sub section title is described as a surrounded text
 (above and below) of ``-`` characters. Like in the following example:
 
-```
+```sh
 ---------------
 New Sub section
 ---------------
@@ -84,8 +87,7 @@ New Sub section
 - To create a sub-sub-section: A sub-sub section title is described as a text
 underlined by ``=`` characters. Like in the following example:
 
-
-```
+```sh
 New sub-sub section
 ===================
 ```
@@ -94,12 +96,12 @@ New sub-sub section
 section, in that case the title is described as a text underlined by ``-``
 characters. Like in the following example:
 
-```
+```sh
 New sub-sub-sub section
 -----------------------
 ```
 
-#### **2. Reference sections**
+#### 2. Reference sections
 
 You might need to reference sections, for that aim you will need to first create
 the reference above the title you need to reference and second to reference it
@@ -108,14 +110,14 @@ different than that of hyperlinks, because at the moment of compilation, the
 latex document generated will have the reference to the page in which that title
 was referenced. Very cool, huh? Let's see how it works...
 
-##### **Step 1: Create the reference**
+##### Step 1: Create the reference
 
 To create the reference on the section you need to link, you will need to
 specify a tag, allowed characters contain also ``-`` characters but they need to
 be unique name tags. So for example, in the build-docker-module section we can
 have something like:  
 
-```
+```sh
 .. _build-docker-module:
 
 -------------------
@@ -126,7 +128,7 @@ build-docker-module
 Note that it might not be necessarily that the section is called just as the
 same as the tag-name.
 
-##### **Step 2: Reference it!**
+##### Step 2: Reference it
 
 You can do so by following the next syntax:
 
@@ -134,45 +136,47 @@ The name after the ref tag could also be different, the important thing is that
 the tag between the ``<`` and ``>`` is the one that belongs to the previous
 given tag name. Like in the following example:
 
-```
+```sh
 :ref:`quickstart <quick-start>`
 ```
 
-You can find a lot of information about RST on <a href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html">this site</a>
+You can find a lot of information about RST on <a
+href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html">this
+site</a>
 
-
-## How can I generate the html files once I have edited the RST files?
+## Generating HTML files from RST
 
 This is pretty straightforward by going to the root of the project on the
 command line and then do:
 
-```
+```sh
 make html
 ```
 
 This will generate a folder called **_build** within which you'll see a folder
 called **html** that contains all the html files you need.
 
-## How to generate PDF files then?
+## Generating PDF files from RST
 
 This is very similar to the previous step, you will need to execute on command
 line:
 
-```
+```sh
 make latexpdf
 ```
+
 With this, a new folder **latex** will be generated inside **_build**,
 that will contain all `pdf` files generated from `RST`
 (by default it is called "ReadTheDocsTemplate.pdf").
 
 (Additional latex files are also generated if needed.)
 
-## How to generate the EPUB files?
+## Generating EPUB files from RST
 
 Very similar to the previous command, you will just need to execute on a command
 line:
 
-```
+```sh
 make epub
 ```
 
