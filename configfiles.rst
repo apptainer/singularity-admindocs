@@ -395,9 +395,12 @@ configure Singularity to use an API compatable container service such as
 a local installation of Singularity Enterprise, which provides an on-premise
 private Container Library, Remote Builder and Key Store.
 
-System-wide remote endpoints can be managed by administrators with the
-``remote`` command group with the ``--global`` flag so that they
-are easily available for users.
+
+System-wide remote endpoints are defined in a configuration file typically
+located at ``/usr/local/etc/singularity/remote.yaml`` (this location may
+vary depending on installation parameters) and can be managed by
+administrators with the ``remote`` command group with the ``--global``
+flag so that they are easily available for users.
 
 .. note::
 
@@ -414,7 +417,7 @@ system-wide remote endpoint:
 .. code-block:: none
 
     $ sudo singularity remote add --global company-remote https://enterprise.example.com
-    [sudo] password for dave: 
+    [sudo] password for dave:
     INFO:    Remote "company-remote" added.
     INFO:    Global option detected. Will not automatically log into remote.
 
@@ -423,7 +426,7 @@ Conversely, to remove a system-wide endpoint:
 .. code-block:: none
 
     $ sudo singularity remote remove --global company-remote
-    [sudo] password for dave: 
+    [sudo] password for dave:
     INFO:    Remote "company-remote" removed.
 
 .. note::
