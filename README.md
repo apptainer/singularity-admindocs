@@ -1,16 +1,15 @@
 # Singularity Admin Docs
 
-This project uses <a href="http://docutils.sourceforge.net/rst.html">
-reStructured Text (RST)</a> and <a href="https://readthedocs.org/">ReadTheDocs
-</a> . As a library for the current theme, <a
-href="https://pypi.org/project/Sphinx/" alt="PyPI">Sphinx Python library </a>
-was used, using Python v. 2.7.
+This project uses [reStructured Text (RST)](http://docutils.sourceforge.net/rst.html)
+and [ReadTheDocs](https://readthedocs.org/). As a library for the current theme,
+[Sphinx Python library](https://pypi.org/project/Sphinx/lt="PyPI") was used,
+using Python v. 2.7.
 
 ## Setting up an environment to contribute
 
 First things first, you will need to install the following tools:
 
-- <a href="https://www.python.org/download/releases/2.7/">Install Python 2.7</a>
+- [Install Python 2.7](https://www.python.org/download/releases/2.7/)
 - After that then you will need to install Sphinx:
 
 ```sh
@@ -140,9 +139,8 @@ given tag name. Like in the following example:
 :ref:`quickstart <quick-start>`
 ```
 
-You can find a lot of information about RST on <a
-href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html">this
-site</a>
+You can find a lot of information about RST on
+[this site](http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html)
 
 ## Generating HTML files from RST
 
