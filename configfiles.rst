@@ -378,3 +378,62 @@ Use the ``--security`` option to invoke the container like:
 For more insight into security options, network options, cgroups, capabilities,
 etc, please check the `Userdocs <https://www.sylabs.io/guides/3.0/user-guide/>`_
 and it's `Appendix <https://www.sylabs.io/guides/3.0/user-guide/appendix.html>`_.
+
+------------
+remote.yaml
+------------
+
+Sylabs introduced the online `Sylabs Cloud
+<https://cloud.sylabs.io/home>`_ to enable users to `Create
+<https://cloud.sylabs.io/builder>`_, `Secure
+<https://cloud.sylabs.io/keystore?sign=true>`_, and `Share
+<https://cloud.sylabs.io/library/guide#create>`_ their container
+images with others.
+
+Singularity allows users to login to an account on the Sylabs Cloud, or
+configure Singularity to use an API compatable container service such as
+a local installation of Singularity Enterprise, which provides an on-premise
+private Container Library, Remote Builder and Key Store.
+
+
+System-wide remote endpoints are defined in a configuration file typically
+located at ``/usr/local/etc/singularity/remote.yaml`` (this location may
+vary depending on installation parameters) and can be managed by
+administrators with the ``remote`` command group with the ``--global``
+flag so that they are easily available for users.
+
+.. note::
+
+   A fresh installation of Singularity is automatically configured
+   to connect to the public `Sylabs Cloud <https://cloud.sylabs.io>`__
+   services.
+
+Examples
+========
+
+Use the ``remote`` command group with the ``--global`` flag to create a
+system-wide remote endpoint:
+
+.. code-block:: none
+
+    $ sudo singularity remote add --global company-remote https://enterprise.example.com
+    [sudo] password for dave:
+    INFO:    Remote "company-remote" added.
+    INFO:    Global option detected. Will not automatically log into remote.
+
+Conversely, to remove a system-wide endpoint:
+
+.. code-block:: none
+
+    $ sudo singularity remote remove --global company-remote
+    [sudo] password for dave:
+    INFO:    Remote "company-remote" removed.
+
+.. note::
+   Once users login to a system wide endpoint, a copy of the endpoint will be listed in
+   a their ``~/.singularity/remote.yaml`` file. This means modifications or removal of
+   the system-wide endpoint will not be reflected in the users configuration unless they
+   remove the endpoint themselves.
+
+For more insight into the ``remote`` command group, using remote endpoints,
+etc, please check the `Remote Userdocs <https://www.sylabs.io/guides/3.5/user-guide/endpoint.html>`_.
