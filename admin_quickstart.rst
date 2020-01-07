@@ -18,7 +18,7 @@ Installation
 This section will explain how to install Singularity from an RPM. If you want
 more information on installation, including alternate installation procedures
 and options for other operating systems, see the `user guide installation page
-<https://www.sylabs.io/guides/3.0/user-guide/installation.html>`_.
+<https://www.sylabs.io/guides/\{userversion\}/user-guide/installation.html>`_.
 
 Install Dependencies
 --------------------
@@ -145,7 +145,7 @@ without worrying.
 Key signing and verification is made easy using the `Sylabs Keystore
 infrastructure <https://cloud.sylabs.io/keystore>`_. Join the party! And get
 more information about signing and verifying in the `Singularity user guide
-<https://www.sylabs.io/guides/3.0/user-guide/signNverify.html>`_.
+<https://www.sylabs.io/guides/\{userversion\}/user-guide/signNverify.html>`_.
 
 Administrator Control of Users' Containers
 ------------------------------------------

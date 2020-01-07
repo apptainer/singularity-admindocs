@@ -376,8 +376,8 @@ Use the ``--security`` option to invoke the container like:
   $ sudo singularity shell --security seccomp:/home/david/my.json my_container.sif
 
 For more insight into security options, network options, cgroups, capabilities,
-etc, please check the `Userdocs <https://www.sylabs.io/guides/3.0/user-guide/>`_
-and it's `Appendix <https://www.sylabs.io/guides/3.0/user-guide/appendix.html>`_.
+etc, please check the `Userdocs <https://www.sylabs.io/guides/\{userversion\}/user-guide/>`_
+and it's `Appendix <https://www.sylabs.io/guides/\{userversion\}/user-guide/appendix.html>`_.
 
 ------------
 remote.yaml
@@ -436,4 +436,4 @@ Conversely, to remove a system-wide endpoint:
    remove the endpoint themselves.
 
 For more insight into the ``remote`` command group, using remote endpoints,
-etc, please check the `Remote Userdocs <https://www.sylabs.io/guides/3.5/user-guide/endpoint.html>`_.
+etc, please check the `Remote Userdocs <https://www.sylabs.io/guides/\{userversion\}/user-guide/endpoint.html>`_.
