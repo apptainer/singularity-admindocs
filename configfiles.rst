@@ -22,69 +22,325 @@ Using this file, system administrators can have direct say as to what functions
 the users can utilize. As a security measure, it must be owned by root and must
 not be writable by users or Singularity will refuse to run.
 
-The following are some of the configurable options:
+Configuration Options
+=====================
+
+The following are the configurable options in the order of appearance
+in singularity.conf:
 
 ``ALLOW SETUID``:
-To use containers, your users will have to have access to some privileged system
-calls. One way singularity achieves this is by using binaries with the `setuid`
-bit enabled. This variable lets you enable/disable users ability to utilize
-these binaries within Singularity. By default, it is set to "Yes", but when
-disabled, various Singularity features will not function (e.g. mounting of the
-Singularity image file format).
+To fully use Singularity containers, Singularity will need to have access to
+some privileged system calls. One way singularity achieves this is by using
+binaries with the ``setuid`` bit enabled. This variable lets you enable/disable
+users ability to utilize these binaries within Singularity. By default, it is
+set to "Yes", but when disabled, various Singularity features will not
+function. Please see :ref:`Unprivileged Installations <userns-limitations>` for
+more information about running Singularity without ``setuid`` enabled.
 
-``USER BIND CONTROL``:
-This allows admins to enable/disable users to define bind points at runtime.
-By Default, its "YES", which means users can specify bind points, scratch and
-tmp locations.
+``MAX LOOP DEVICES``:
+Singularity uses loop devices to facilitate the mounting of container
+filesystems from SIF images. This option allows an admin to limit the total
+number of loop devices Singularity will consume at a given time.
+
+``ALLOW PID NS``:
+This option determines if users can leverage the PID namespace when running
+their containers.
+
+.. note::
+  For some HPC systems, using the PID namespace has the potential of confusing
+  some resource managers as well as some MPI implementations.
+
+``CONFIG PASSWD``:
+This option determines if Singularity should automatically append an entry to
+``/etc/passwd`` for the user running the container.
+
+.. note::
+  This option will do nothing if the container does not have an ``/etc/passwd``.
+
+``CONFIG GROUP``:
+This option determines if Singularity should automatically append the calling
+users group entries to the containers ``/etc/group``.
+
+.. note::
+  This option will do nothing if the container does not have an ``/etc/group``.
+
+``CONFIG RESOLV_CONF``:
+This option determines if Singularity should automatically bind the hosts
+``/etc/resolv/conf`` within the container.
+
+.. note::
+  This option will do nothing if the container does not have an ``/etc/resolv.conf``.
+
+``MOUNT PROC``:
+This option determines if Singularity should automatically bind mount ``/proc``
+within the container.
+
+``MOUNT SYS``:
+This option determines if Singularity should automatically bind mount ``/sys``
+within the container.
+
+``MOUNT DEV``:
+Should be set to "YES", if you want Singularity to automatically bind mount
+`/dev` within the container. If set to 'minimal', then only 'null', 'zero',
+'random', 'urandom', and 'shm' will be included.
+
+``MOUNT DEVPTS``:
+This option determines if Singularity will mount a new instance of ``devpts``
+when there is a ``minimal`` ``/dev`` directory as explained above, or when the
+``--contain`` option is passed.
+
+.. note::
+  This requires either a kernel configured with
+  ``CONFIG_DEVPTS_MULTIPLE_INSTANCES=y``, or a kernel version at or newer than
+  ``4.7``.
+
+``MOUNT HOME``:
+When this option is enabled, Singularity will automatically determine the
+calling of user's home directory and attempt to mount it into the container.
+
+``MOUNT TMP``:
+When this option is enabled, Singularity will automatically bind mount
+``/tmp`` and ``/var/tmp`` into the container from the host. If the
+``--contain`` option is passed, Singularity will create both locations within
+the ``sessiondir`` or within the directory specified by the ``--workdir``
+option if that is passed as well.
+
+``MOUNT HOSTFS``:
+This option will cause Singularity to probe the host for all mounted
+filesystems and bind those into containers at runtime.
 
 ``BIND PATH``:
-Used for setting of  automatic `bind points` entries. You can define a list
-of files/directories that should be made available from within the container.
-If the file exists within the container on which to attach to use the path
-like:
+This option is used for defining a list of files or directories to
+automatically be made available when Singularity runs a container.
+The file or directory path must exist within the container for this option.
+
+.. note::
+  This option is ignored when containers are invoked with the ``--contain`` option.
+
+You can define the a bind point where the source and destination are identical:
 
 .. code-block:: none
 
   bind path = /etc/localtime
 
-You can specify different source and destination locations using:
+Or you can specify different source and destination locations using:
 
 .. code-block:: none
 
   bind path = /etc/singularity/default-nsswitch.conf:/etc/nsswitch.conf
 
-``MOUNT DEV``:
-Should be set to "YES", if you want to automatically bind mount `/dev`
-within the container. If set to 'minimal', then only 'null', 'zero',
-'random', 'urandom', and 'shm' will be included.
 
-``MOUNT HOME``:
-To automatically determine the calling of user's home directory and
-attempt to mount it's base path into the container.
+``USER BIND CONTROL``:
+This allows admins to decide if users can define bind points at runtime.
+By Default, this option is set to ``YES``, which means users can specify bind
+points, scratch and tmp locations.
 
-Limiting containers
-====================
+``ENABLE FUSEMOUNT``:
+This will allow users to mount fuse filesystems inside containers using the
+``--fusemount`` flag.
 
-There are several ways in which you can limit the running of containers in your
-system:
+``ENABLE OVERLAY``:
+This option will allow Singularity to create bind mounts at paths that do not
+exist within the container image. This option can be set to ``try``, which will
+try to use an overlayfs. If it fails to create an overlayfs in this case the
+bind path will be silently ignored.
 
- ``LIMIT CONTAINER OWNERS``: Only allow containers to be used that are owned by a
- given user.
+``ENABLE UNDERLAY``:
+This option will allow Singularity to create bind mounts at paths that do not
+exist within the container image, just like ``ENABLE OVERLAY``, but instead
+using an underlay. This is suitable for systems where ovelay is not possible
+or not working. If the overlay option is available and working, it will be
+used instead.
 
- ``LIMIT CONTAINER GROUPS``: Only allow containers to be used that are owned by
- a given group.
+``MOUNT SLAVE``:
+Singularity automatically mounts a handful host system directories to the
+container by default. This option determines if filesystem changes on the host
+should automatically be propogated to those directories in the container.
 
- ``LIMIT CONTAINER PATHS``: Only allow containers to be used that are located
- within an allowed path prefix.
+.. note::
+  This should be set to ``yes`` when autofs mounts in the system should
+  show up in the container.
+
+``SESSIONDIR MAX SIZE``:
+In order for the Singularity runtime to create a container it needs to create a
+``sessiondir`` to manage various components of the container. This option
+specifies how large the default ``sessiondir`` should be (in MB) and will
+only affect users who use the "--contain" options without also specifying a
+location to perform default read/writes to via the ``--workdir`` or ``--home``
+options.
+
+``LIMIT CONTAINER OWNERS``:
+This restricts container execution to only allow conatiners that are owned by
+the specified user.
 
 .. note::
 
-  These features will only apply when Singularity is running in SUID mode and the
-  user is non-root. By default they all are set to `NULL`.
+  This feature will only apply when Singularity is running in SUID mode and the
+  user is non-root. By default this is set to `NULL`.
+
+``LIMIT CONTAINER GROUPS``:
+This restricts container execution to only allow conatiners that are owned by
+the specified group.
+
+.. note::
+
+  This feature will only apply when Singularity is running in SUID mode and the
+  user is non-root. By default this is set to `NULL`.
+
+``LIMIT CONTAINER PATHS``:
+This restricts container execution to only allow containers that are located
+within the specified path prefix.
+
+.. note::
+
+  This feature will only apply when Singularity is running in SUID mode and the
+  user is non-root. By default this is set to `NULL`.
+
+``ALLOW CONTAINER ${TYPE}``:
+This option allows admins to limit the types of image formats that can be
+leveraged by users with Singularity. Formats include ``squashfs`` which is used
+by SIF and v2.x Singularity images, ``extfs`` which is used for writable
+overlays and some legacy Singularity images, ``dir`` which is used by sandbox
+images and ``encrypted`` which is only used by SIF images to encrypt filesystem
+contents.
+
+.. note::
+  These limitations do not apply to the root user.
+
+``ALWAYS USE NV ${TYPE}``:
+Enabling this option will cause every action command
+(``exec/shell/run/instance``) to be executed with the ``--nv`` option
+implicitly added.
+
+.. note::
+  Useful for GPU only environments.
+
+``ALWAYS USE ROCM ${TYPE}``:
+Enabling this option will cause every action command
+(``exec/shell/run/instance``) to be executed with the ``--rocm`` option
+implicitly added.
+
+.. note::
+  Useful for GPU only environments.
+
+``ROOT DEFAULT CAPABILITIES``:
+Singularity allows the specification of capabilities kept by the root user
+when running a container. Options include:
+* full: all capabilities are maintained, this gives the same behavior as the ``--keep-privs`` option.
+* file: only capabilities granted in /usr/local/etc/singularity/capabilities/user.root are maintained.
+* no: no capabilities are maintained, this gives the same behavior as the ``--no-privs`` option.
 
 
-The ``singularity.conf`` file is well documented and most information can be
-gleaned by consulting it directly.
+``MEMORY FS TYPE``:
+This option allows admins to choose the temporary filesystem used by
+Singularity. Temoporary filesystems are primarily used for system
+directories like ``/dev`` when the host system directory is not mounted
+within the container.
+
+.. note::
+
+  For Cray CLE 5 and 6, up to CLE 6.0.UP05, there is an issue (kernel panic) when Singularity
+  uses tmpfs, so on affected systems it's recommended to set this value to ramfs to avoid a
+  kernel panic
+
+``CNI CONFIGURATION PATH``:
+This option allows admins to specify a custom path for the CNI configuration
+that Singularity will use for [Network Virtualization](https://sylabs.io/guides/\{userversion\}/user-guide/networking.html).
+
+``CNI PLUGIN PATH``:
+This option allows admins to specify a custom path for Singularity to access
+CNI plugin executables. Check out the [Network Virtualization](https://sylabs.io/guides/\{userversion\}/user-guide/networking.html)
+section of the user guide for more information.
+
+``MKSQUASHFS PATH``:
+This allows an admin to specify the location of ``mksquashfs`` if it is not
+installed in a standard location. If set, ``mksquashfs`` at this path will be
+used instead of a ``mksquashfs`` found in ``PATH``.
+
+``CRYPTSETUP PATH``:
+The location for ``cryptsetup`` is recorded by Singularity at build time and
+will use that value if this is undefined. This option allows an admin to set
+the path of ``cryptsetup`` if it is located in a custom location and will
+override the value recorded at build time.
+
+``SHARED LOOP DEVICES``:
+This allows containers running the same image to share a single loop device.
+This minimizes loop device usage and helps optimize kernel cache usage.
+Enabling this feature can be particularly useful for MPI jobs.
+
+Updating Configuration Options
+==============================
+In order to manage this configuration file, Singularity has a ``config global``
+command group that allows you to get, set, reset, and unset values through the
+CLI. It's important to note that these commands must be run with elevated
+priveledges because the ``singularity.conf`` can only be modified by an
+administrator.
+
+Example
+-------
+
+First we can see the current list of bind paths set within our system
+configuration:
+
+.. code-block:: none
+
+  $ sudo singularity config global --get "bind path"
+  /etc/localtime,/etc/hosts
+
+Now we can add a new path and verify it was successfully added:
+
+.. code-block:: none
+
+  $ sudo singularity config global --set "bind path" /etc/resolv.conf
+  $ sudo singularity config global --get "bind path"
+  /etc/resolv.conf,/etc/localtime,/etc/hosts
+
+From here we can remove a path with:
+
+.. code-block:: none
+
+  $ sudo singularity config global --unset "bind path" /etc/localtime
+  $ sudo singularity config global --get "bind path"
+  /etc/resolv.conf,/etc/hosts
+
+If we want to reset the option to the default at installation, then we can
+reset it with:
+
+.. code-block:: none
+
+  $ sudo singularity config global --reset "bind path"
+  $ sudo singularity config global --get "bind path"
+  /etc/localtime,/etc/hosts
+
+And now we are back to our original option settings. You can also test what a
+change would look like by using the ``--dry-run`` option in conjunction with
+the above commands. Instead of writing to the configuration file, it will
+output what would have been written to the configuration file if the command
+had been run without the ``--dry-run`` option:
+
+.. code-block:: none
+
+  $ sudo singularity config global --dry-run --set "bind path" /etc/resolv.conf
+  # SINGULARITY.CONF
+  # This is the global configuration file for Singularity. This file controls
+  [...]
+  # BIND PATH: [STRING]
+  # DEFAULT: Undefined
+  # Define a list of files/directories that should be made available from within
+  # the container. The file or directory must exist within the container on
+  # which to attach to. you can specify a different source and destination
+  # path (respectively) with a colon; otherwise source and dest are the same.
+  # NOTE: these are ignored if singularity is invoked with --contain.
+  bind path = /etc/resolv.conf
+  bind path = /etc/localtime
+  bind path = /etc/hosts
+  [...]
+  $ sudo singularity config global --get "bind path"
+  /etc/localtime,/etc/hosts
+
+Above we can see that ``/etc/resolv.conf`` is listed as a bind path in the
+output of the ``--dry-run`` command, but did not affect the actual bind paths
+of the system.
 
 ------------
 cgroups.toml
@@ -250,7 +506,7 @@ ecl.toml
 --------
 
 The execution control list is defined here. You can authorize the containers by
-validating both the location of the SIF file in the file system and by
+validating both the location of the SIF file in the filesystem and by
 checking against a list of signing entities.
 
 .. code-block:: none
