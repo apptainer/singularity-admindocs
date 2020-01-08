@@ -202,7 +202,8 @@ Resulting in the following allocation:
 
 Inside a user namespace / container, ``foo`` and ``bar`` can now act
 as any UID/GID between 0 and 65536, but these UIDs are confined to the
-container. For ``foo`` UID 0 in the container will map to ``100000``
+container. For ``foo`` UID 0 in the container will map to the host
+``foo`` UID ``1000`` and ``1 to 65535`` will map to ``100000-165535``
 outside of the container etc. This impacts the ownership of files,
 which will have different IDs inside and outside of the container.
 
