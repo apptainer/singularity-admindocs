@@ -307,7 +307,7 @@ If ``nvidia-container-cli`` is not present, the ``nvliblist.conf``
 file is used to specify libraries and executables that need to be
 injected into the container when running Singularity with the ``--nv``
 Nvidia GPU support option. The default ``nvliblist.conf`` is suitable
-for CUDA 10.1, but may need to modified if you need to include
+for CUDA 10.1, but may need to be modified if you need to include
 additional libraries, or further libraries are added to newer versions
 of the Nvidia driver/CUDA distribution.
 
