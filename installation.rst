@@ -361,6 +361,31 @@ following:
      installing Singularity in an HPC environment with a shared file
      system. 
 
+Build an RPM from Git source
+============================
+
+Alternatively, to build an RPM from a branch of the Git repository you
+can clone the repository, directly ``make`` an rpm, and use it to install
+Singularity:
+
+.. code-block:: none
+   
+  $ ./mconfig && \
+  make -C builddir rpm && \
+  sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/singularity-3.5.2.el7.x86_64.rpm # or whatever version you built
+
+
+To build an rpm with an alternative install prefix set ``RPMPREFIX``
+on the make step, for example:
+
+.. code-block:: none
+
+  $ make -C builddir rpm RPMPREFIX=/usr/local
+
+For finer control of the rpmbuild process you may wish to use ``make
+dist`` to create a tarball that you can then build into an rpm with
+``rpmbuild -tb`` as above.
+
 .. _remove-an-old-version:
 
 ---------------------
