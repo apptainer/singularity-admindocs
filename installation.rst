@@ -417,6 +417,95 @@ install Singularity.  For instance, on CentOS 6/7/8 do the following:
         sudo yum update -y && \
         sudo yum install -y singularity
 
+------------------------------------------
+Testing & Checking the Build Configuration
+------------------------------------------
+
+After installation you can perform a basic test of Singularity
+functionality by executing a simple container from the Sylabs Cloud
+library:
+
+.. code-block:: none
+
+    $ singularity exec library://alpine cat /etc/alpine-release
+    3.9.2
+
+
+See the `user guide
+<https://www.sylabs.io/guides/\{userversion\}/user-guide/>`__ for more
+information about how to use Singularity.
+
+singularity buildcfg
+====================
+
+Running ``singularity buildcfg`` will show the build configuration of
+an installed version of Singularity, and lists the paths used by
+Singularity. Use ``singularity buildcfg`` to confirm paths are set
+correctly for your installation, and troubleshoot any 'not-found'
+errors at runtime.
+
+.. code-block:: none
+
+    $ singularity buildcfg
+    PACKAGE_NAME=singularity
+    PACKAGE_VERSION=3.5.2
+    BUILDDIR=/home/dtrudg/Sylabs/Git/singularity/builddir
+    PREFIX=/usr/local
+    EXECPREFIX=/usr/local
+    BINDIR=/usr/local/bin
+    SBINDIR=/usr/local/sbin
+    LIBEXECDIR=/usr/local/libexec
+    DATAROOTDIR=/usr/local/share
+    DATADIR=/usr/local/share
+    SYSCONFDIR=/usr/local/etc
+    SHAREDSTATEDIR=/usr/local/com
+    LOCALSTATEDIR=/usr/local/var
+    RUNSTATEDIR=/usr/local/var/run
+    INCLUDEDIR=/usr/local/include
+    DOCDIR=/usr/local/share/doc/singularity
+    INFODIR=/usr/local/share/info
+    LIBDIR=/usr/local/lib
+    LOCALEDIR=/usr/local/share/locale
+    MANDIR=/usr/local/share/man
+    SINGULARITY_CONFDIR=/usr/local/etc/singularity
+    SESSIONDIR=/usr/local/var/singularity/mnt/session
+
+Note that the ``LOCALSTATEDIR`` and ``SESSIONDIR`` should be on local,
+non-shared storage.
+
+Test Suite
+==========
+
+The Singularity codebase includes a test suite that is run during
+development using CI services.
+
+If you would like to run the test suite locally you can run the test
+targets from the ``builddir`` directory in the source tree:
+
+  - ``make check`` runs source code linting and dependency checks
+  - ``make unit-test`` runs basic unit tests
+  - ``make integration-test`` runs integration tests
+  - ``make e2e-test`` runs end-to-end tests, which exercise a large
+    number of operations by calling the singularity CLI with different
+    execution profiles.
+
+.. note::
+
+    Running the full test suite requires a ``docker`` installation,
+    and ``nc`` in order to test docker and instance/networking
+    functionality.
+
+    Singularity must be installed in order to run the full
+    test suite, as it must run the CLI with setuid privilege for the 
+    ``starter-suid`` binary.
+
+.. warning::
+   
+    ``sudo`` privilege is required to run the full tests, and you
+    should not run the tests on a production system. We recommend
+    running the tests in an isolated development or build
+    environment.
+        
 ==============================
 Installation on Windows or Mac
 ==============================
