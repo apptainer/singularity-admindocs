@@ -43,7 +43,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Singularity container'
+project = u'Singularity Admin Guide'
 copyright = u'2017-2020, Sylabs Inc'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -322,6 +322,7 @@ epub_exclude_files = []
 sys.path.append(os.path.join(os.path.dirname(__file__), '.'))
 from sphinx.highlighting import lexers
 from pygments_singularity import SingularityLexer
+from replacements import *
 
 # lexer for Singularity definition files (added here until it is upstreamed into Pygments).
 lexers['singularity'] = SingularityLexer(startinline=True)
