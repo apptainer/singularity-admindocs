@@ -274,30 +274,85 @@ container is allowed to run.
 **Blacklist**: Only the containers whose keys are not mentioned in the group
 are allowed to run.
 
---------------
-nvliblist.conf
---------------
 
-When a container includes a GPU enabled application and libraries, Singularity
-(with the ``--nv`` option) can properly inject the required Nvidia GPU driver
-libraries into the container, to match the host's kernel. This config file is
-the place where it searches for NVIDIA libraries in your host system.
-However, ``nvliblist.conf`` will be ignored in case of having `nvidia-container-cli <https://github.com/NVIDIA/libnvidia-container>`_
-installed, which will be used to locate any nvidia libraries and binaries on
-the host system.
 
-Examples
-========
+-------------------------
+GPU Library Configuration
+-------------------------
 
-For GPU and CUDA support --nv option works like:
+When a container includes a GPU enabled application, Singularity (with
+the ``--nv`` or ``--rocm`` options) can properly inject the required
+Nvidia or AMD GPU driver libraries into the container, to match the
+host's kernel. The GPU ``/dev`` entries are provided in containers run
+with ``--nv`` or ``--rocm`` even if the ``--contain`` option is used
+to restrict the in-container device tree.
+
+Compatibility between containerized CUDA/ROCm/OpenCL applications and
+host drivers/libraries is dependent on the versions of the GPU compute
+frameworks that were used to build the applications. Compatibility and
+usage information is discussed in the `GPU Support` section of the
+`user guide
+<https://www.sylabs.io/guides/\{userversion\}/user-guide/>`__
+
+
+NVIDIA GPUs / CUDA
+==================
+
+If the `nvidia-container-cli
+<https://github.com/NVIDIA/libnvidia-container>`_ tool is installed on
+the host system, it will be used to locate any Nvidia libraries and
+binaries on the host system.
+
+If ``nvidia-container-cli`` is not present, the ``nvliblist.conf``
+file is used to specify libraries and executables that need to be
+injected into the container when running Singularity with the ``--nv``
+Nvidia GPU support option. The default ``nvliblist.conf`` is suitable
+for CUDA 10.1, but may need to modified if you need to include
+additional libraries, or further libraries are added to newer versions
+of the Nvidia driver/CUDA distribution.
+
+AMD Radeon GPUs / ROCm
+======================
+
+The ``rocmliblist.conf`` file is used to specify libraries and
+executables that need to be injected into the container when running
+Singularity with the ``--rocm`` Radeon GPU support option. The default
+``rocmliblist.conf`` is suitable for ROCm 2.10, but may need to modified
+if you need to include additional libraries, or further libraries are
+added to newer versions of the ROCm distribution.
+
+
+GPU liblist format
+==================
+
+The ``nvliblist.conf`` and ``rocmliblist`` files list the basename of
+executables and libraries to be bound into the container, without path
+information.
+
+Binaries are found by searching ``$PATH``:
 
 .. code-block:: none
 
-  $ singularity exec --nv ubuntu.sif gpu_program.exec
-  $ singularity run --nv docker://tensorflow/tensorflow:gpu_latest
+    # put binaries here
+    # In shared environments you should ensure that permissions on these files 
+    # exclude writing by non-privileged users.  
+    rocm-smi
+    rocminfo
 
-You can also mention libraries/binaries and they will be mounted into the
-container when the ``--nv`` option is passed.
+Libraries should be specified without version information,
+i.e. ``libname.so``, and are resolved using ``ldconfig``.
+
+.. code-block:: none
+
+   # put libs here (must end in .so)
+   libamd_comgr.so
+   libcomgr.so
+   libCXLActivityLogger.so
+      
+If you receive warnings that binaries or libraries are not found,
+ensure that they are in a system path (binaries), or available in paths
+configured in ``/etc/ld.so.conf`` (libraries).
+
 
 ---------------
 capability.json
