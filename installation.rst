@@ -29,11 +29,11 @@ There are no specific CPU or memory requirements at runtime, though
 
 Full functionality of Singularity requires that the kernel supports:
 
- - **OverlayFS mounts** - required for full flexiblity in bind mounts
-   to containers, and to support persistent overlays for writable
-   containers.
+ - **OverlayFS mounts** - (minimum kernel >=3.18) Required for full
+   flexiblity in bind mounts to containers, and to support persistent
+   overlays for writable containers.
  - **Unprivileged user namespaces** - (minimum kernel >=3.8, >=3.18
-   recommended). Required to run containers without root or setuid
+   recommended) Required to run containers without root or setuid
    privilege.
 
 RHEL & CentOS 6 do not support these features, but Singularity can be

@@ -32,7 +32,8 @@ User Namespace Requirements
 ---------------------------
 
 To allow unprivileged creation of user namespaces a kernel >=3.8 is
-required, with >=3.18 being recommended as it adds OverlayFS support.
+required, with >=3.18 being recommended due to security fixes for user
+namespaces (3.18 also adds OverlayFS support which is used by Singularity).
 
 Additionally, some Linux distributions require that unprivileged user
 namespace creation is enabled using a ``sysctl`` or kernel command
