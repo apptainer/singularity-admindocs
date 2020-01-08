@@ -498,6 +498,10 @@ errors at runtime.
 Note that the ``LOCALSTATEDIR`` and ``SESSIONDIR`` should be on local,
 non-shared storage.
 
+The list of files installed by a successful `setuid` installation of
+Singularity can be found in the :ref:`appendix, installed files
+section <installed-files>`.
+
 Test Suite
 ==========
 
@@ -530,7 +534,7 @@ targets from the ``builddir`` directory in the source tree:
     should not run the tests on a production system. We recommend
     running the tests in an isolated development or build
     environment.
-        
+    
 ==============================
 Installation on Windows or Mac
 ==============================

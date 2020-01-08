@@ -20,3 +20,5 @@ information about how to use Singularity.
    Configuration files <configfiles>
    User Namespaces & Fakeroot <user_namespace>
    Container Security <security>
+
+   Appendix <appendix>
