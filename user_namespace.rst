@@ -145,7 +145,10 @@ Fakeroot relies on ``/etc/subuid`` and ``/etc/subgid`` files to find
 configured mappings from real user and group IDs, to a range of
 otherwise vacant IDs for each user on the host system that can be
 remapped in the usernamespace. A user must have an entry in these
-system configuration files to use the fakeroot feature.
+system configuration files to use the fakeroot feature. Singularity
+provides a :ref:`config fakeroot <config-fakeroot>` command to assist
+in managing these files, but it is important to understand how they
+work.
 
 For user ``foo`` an entry in ``/etc/subuid`` might be:
 
@@ -180,8 +183,8 @@ Same for ``/etc/subgid``:
   for each mapping. Larger ranges may be defined without error.
 
   It is also important to ensure that the subuid and subgid ranges
-  defined in these files don't overlap with any real UIDs and GIDs on
-  the host system.
+  defined in these files don't overlap with eachother, or any real
+  UIDs and GIDs on the host system.
 
 So if you want to add another user ``bar``, ``/etc/subuid`` and
 ``/etc/subgid`` will look like:
@@ -209,8 +212,19 @@ outside of the container etc. This impacts the ownership of files,
 which will have different IDs inside and outside of the container.
 
 
-Filesystem consideration
-========================
+.. note::
+
+   If you are managing large numbers of fakeroot mappings you may wish
+   to specify users by UID rather than username in the ``/etc/subuid``
+   and ``/etc/subgid`` files. The man page for ``subuid`` advises:
+
+     When large number of entries (10000-100000 or more) are defined in
+     /etc/subuid, parsing performance penalty will become noticeable. In
+     this case it is recommended to use UIDs instead of login
+     names. Benchmarks have shown speed-ups up to 20x.
+
+Filesystem considerations
+=========================
 
 Based on the above range, here we can see what happens when the user
 ``foo`` create files with ``--fakeroot`` feature:
@@ -231,8 +245,8 @@ the user's UID on the host. The user can remove these files by using a
 container shell running with fakeroot.
 
 
-Network configurations
-======================
+Network configuration
+=====================
 
 With fakeroot, users can request a container network named
 ``fakeroot``, other networks are restricted and can only be used by
@@ -251,4 +265,110 @@ configured to use a network veth pair.
   network as it requires privilege during container creation to setup
   the network.
 
-.. _updating_singularity:
+.. _config-fakeroot:
+  
+Configuration with ``config fakeroot``
+======================================
+
+Singularity 3.5 and above provides a ``config fakeroot`` command that
+can be used by a root user to administer local system ``/etc/subuid``
+and ``/etc/subgid`` files in a simple manner. This allows users to be
+granted the ability to use Singularity's fakeroot functionality
+without editing the files manually. The ``config fakeroot`` command
+will automatically ensure that generated subuid/subgid ranges are an
+approriate size, and do not overlap.
+
+``config fakeroot`` must be run as the ``root`` user, or via ``sudo
+singularity config fakeroot`` as the ``/etc/subuid`` and
+``/etc/subgid`` files form part of the system configuration, and are
+security sensitive. You may ``--add`` or ``--remove`` user
+subuid/subgid mappings. You can also ``--enable`` or ``--disable``
+existing mappings.
+
+
+.. note::
+
+  If you deploy Singularity to a cluster you will need to make
+  arrangements to synchronize ``/etc/subid`` and ``/etc/subgid``
+  mapping files to all nodes.
+
+  At this time, the glibc name service switch functionality does not
+  support subuid or subgid mappings, so they cannot be definied in a
+  central directory such as LDAP.
+
+
+Adding a fakeroot mapping
+--------------------------
+
+Use the ``-a/--add <user>`` option to ``config fakeroot`` to create new
+mapping entries so that ``<user>`` can use the fakeroot feature of Singularity:
+ 
+ .. code-block:: none
+
+  $ sudo singularity config fakeroot --add dave
+
+  # Show generated `/etc/subuid`
+  $ cat /etc/subuid 
+  1000:4294836224:65536
+
+  # Show generated `/etc/subgid`
+  $ cat /etc/subgid
+  1000:4294836224:65536
+
+
+ The first subuid range will be set to the top of the 32-bit UID
+ space. Subsequent subuid ranges for additional users will be created
+ working down from this value. This minimizes the change of overlap
+ with real UIDs on most systems.
+
+.. note::
+  
+   The ``config fakeroot`` command generates mappings specified using
+   the user's uid, rather than their username. This is the preferred
+   format for faster lookups when configuring a large number of
+   mappings, and the command can be used to manipulate these by
+   username.
+
+
+Deleting, disabling, enabling mappings 
+--------------------------------------
+
+Use the ``-r/--remove <user>`` option to ``config fakeroot`` to
+completely remove mapping entries. The ``<user>`` will no longer be
+able to use the fakeroot feature of Singularity:
+
+.. code-block:: none
+
+  $ sudo singularity config fakeroot --remove dave
+
+.. warning::
+
+   If a fakeroot mapping is removed, the subuid/subgid range may be
+   assigned to another user via ``--add``. Any remaining files from
+   the prior user that were created with this mapping will be
+   accessible to the new user via fakeroot.
+
+  
+The ``-d/--disable`` and ``-e/--enable`` options will comment and
+uncomment entries in the mapping files, to temporarily disable and
+subsequently re-enable fakeroot functionality for a user. This can be
+useful to disable fakeroot for a user, but ensure the subuid/subgid
+range assigned to them is reserved, and not re-assigned to a different
+user.
+
+.. code-block:: none
+
+  # Disable dave
+  $ sudo singularity config fakeroot --disable dave
+
+  # Entry is commented
+  $ cat /etc/subuid
+  !1000:4294836224:65536
+
+  # Enable dave
+  $ sudo singularity config fakeroot --enable dave
+  
+  # Entry is active
+  $ cat /etc/subuid
+  1000:4294836224:65536
+  
