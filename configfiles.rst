@@ -668,50 +668,85 @@ configured in ``/etc/ld.so.conf`` (libraries).
 capability.json
 ---------------
 
-Singularity provides full support for granting and revoking Linux capabilities
-on a user or group basis. By default, all Linux capabilities are dropped when a
-user enters the container system. When you decide to add/revoke some capabilities,
-you can do so using the ``Singularity capability`` options: ``Add``, ``Drop``
-and ``List``.
-
-For example, if you do:
-
-.. code-block:: none
-
-  $ sudo singularity capability add --user david CAP_SYS_RAWIO
-
-You've let the user David to perform I/O port operations, perform a range of
-device-specific operations on other devices etc.
-To perform the same for a group of users do:
-
-.. code-block:: none
-
-  $ sudo singularity capability add --group mygroup audit_write
-
-Use ``drop`` in the same format for revoking their capabilities.
-
-To see a list of all users and their capabilities, simply do:
-
-.. code-block:: none
-
-  $ sudo singularity capability list --all
-
-*capability.json* is the file maintained by Singularity where the ``capability``
-commands create/delete entries accordingly.
-
-
-To know more about the capabilities you can add do:
-
-.. code-block:: none
-
-  $ singularity capability add --help
-
 .. note::
+     It is extremely important to recognize that **granting users Linux
+     capabilities with the** ``capability`` **command group is usually identical
+     to granting those users root level access on the host system**. Most if not
+     all capabilities will allow users to "break out" of the container and
+     become root on the host. This feature is targeted toward special use cases
+     (like cloud-native architectures) where an admin/developer might want to
+     limit the attack surface within a container that normally runs as root.
+     This is not a good option in multi-tenant HPC environments where an admin
+     wants to grant a user special privileges within a container. For that and
+     similar use cases, the :ref:`fakeroot feature <fakeroot>` is a better
+     option.
 
-  The above commands can only be issued by root user(admin).
+Singularity provides full support for admins to grant and revoke Linux
+capabilities on a user or group basis. The ``capability.json`` file is
+maintained by Singularity in order to manage these capabilities. The
+``capability`` command group allows you to ``add``, ``drop``, and ``list``
+capabilities for users and groups.
 
-The `--add-caps <https://www.sylabs.io/guides/3.0/user-guide/security_options.html?highlight=seccomp#security-related-action-options>`_ and
-related options will let the user request the capability when executing a container.
+For example, let us suppose that we have decided to grant a user (named
+``pinger``) capabilities to open raw sockets so that they can use ``ping`` in
+a container where the binary is controlled via capabilities.
+
+To do so, we would issue a command such as this:
+
+.. code-block:: none
+
+    $ sudo singularity capability add --user pinger CAP_NET_RAW
+
+This means the user ``pinger`` has just been granted permissions (through Linux
+capabilities) to open raw sockets within Singularity containers.
+
+We can check that this change is in effect with the ``capability list``
+command.
+
+.. code-block:: none
+
+    $ sudo singularity capability list --user pinger
+    CAP_NET_RAW
+
+To take advantage of this new capability, the user ``pinger`` must also request
+the capability when executing a container with the ``--add-caps`` flag.
+``pinger`` would need to run a command like this:
+
+.. code-block:: none
+
+    $ singularity exec --add-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
+    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+    64 bytes from 8.8.8.8: icmp_seq=1 ttl=52 time=73.1 ms
+
+    --- 8.8.8.8 ping statistics ---
+    1 packets transmitted, 1 received, 0% packet loss, time 0ms
+    rtt min/avg/max/mdev = 73.178/73.178/73.178/0.000 ms
+
+If we decide that it is no longer necessary to allow the user ``pinger``
+to open raw sockets within Singularity containers, we can revoke the
+appropriate Linux capability like so:
+
+.. code-block:: none
+
+    $ sudo singularity capability drop --user pinger CAP_NET_RAW
+
+Now if ``pinger`` tries to use ``CAP_NET_RAW``, Singularity will not give the
+capability to the container and ``ping`` will fail to create a socket:
+
+.. code-block:: none
+
+    $ singularity exec --add-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
+    WARNING: not authorized to add capability: CAP_NET_RAW
+    ping: socket: Operation not permitted
+
+The ``capability add`` and ``drop`` subcommands will also accept the case
+insensitive keyword ``all`` to grant or revoke all Linux capabilities to a user
+or group.
+
+For more information about individual Linux capabilities check out the
+`man pages <http://man7.org/linux/man-pages/man7/capabilities.7.html>`_ or
+use the ``capability avail`` command to output available capabilities with a
+description of their behaviors.
 
 ----------------
 seccomp-profiles
