@@ -19,57 +19,102 @@ singularity.conf
 Most of the configuration options are set using the file ``singularity.conf``
 that defines the global configuration for Singularity across the entire system.
 Using this file, system administrators can have direct say as to what functions
-the users can utilize. As a security measure, it must be owned by root and must
-not be writable by users or Singularity will refuse to run.
+the users can utilize. As a security measure, for ``setuid`` installations of
+Singularity it must be owned by root and must not be writable by users or
+Singularity will refuse to run. This is not the case for ``non-setuid``
+installations that will only ever execute with user priviledge and thus do not
+require such limitations. The options for this configuration are listed below.
+Options are grouped together based on relevance, the order of options within
+``singularity.conf`` differs.
 
-Configuration Options
-=====================
-
-The following are the configurable options in the order of appearance
-in singularity.conf:
+Setuid and Capabilities
+=======================
 
 ``ALLOW SETUID``:
-To fully use Singularity containers, Singularity will need to have access to
-some privileged system calls. One way singularity achieves this is by using
-binaries with the ``setuid`` bit enabled. This variable lets you enable/disable
-users ability to utilize these binaries within Singularity. By default, it is
-set to "Yes", but when disabled, various Singularity features will not
-function. Please see :ref:`Unprivileged Installations <userns-limitations>` for
-more information about running Singularity without ``setuid`` enabled.
+To use all features of Singularity containers, Singularity will need to have
+access to some privileged system calls. One way singularity achieves this is by
+using binaries with the ``setuid`` bit enabled. This variable lets you
+enable/disable users ability to utilize these binaries within Singularity. By
+default, it is set to "yes", but when disabled, various Singularity features
+will not function. Please see
+:ref:`Unprivileged Installations <userns-limitations>` for more information
+about running Singularity without ``setuid`` enabled.
+
+``ROOT DEFAULT CAPABILITIES``:
+Singularity allows the specification of capabilities kept by the root user
+when running a container by default. Options include:
+
+* full: all capabilities are maintained, this gives the same behavior as the ``--keep-privs`` option.
+* file: only capabilities granted in ``/usr/local/etc/singularity/capabilities/user.root`` are maintained.
+* no: no capabilities are maintained, this gives the same behavior as the ``--no-privs`` option.
+
+.. note::
+
+  The root user can manage the capabilities granted to individual containers when they
+  are launched through the ``--add-caps`` and ``drop-caps`` flags.
+  Please see `Linux Capabilities <https://sylabs.io/guides/\{userversion\}/user-guide/security_options.html#linux-capabilities>`_
+  in the user guide for more information.
+
+Loop Devices
+============
+
+Singularity uses loop devices to facilitate the mounting of container
+filesystems from SIF images.
 
 ``MAX LOOP DEVICES``:
-Singularity uses loop devices to facilitate the mounting of container
-filesystems from SIF images. This option allows an admin to limit the total
-number of loop devices Singularity will consume at a given time.
+This option allows an admin to limit the total number of loop devices
+Singularity will consume at a given time.
+
+``SHARED LOOP DEVICES``:
+This allows containers running the same image to share a single loop device.
+This minimizes loop device usage and helps optimize kernel cache usage.
+Enabling this feature can be particularly useful for MPI jobs.
+
+Namespace Options
+=================
 
 ``ALLOW PID NS``:
 This option determines if users can leverage the PID namespace when running
-their containers.
+their containers through the ``--pid`` flag.
 
 .. note::
   For some HPC systems, using the PID namespace has the potential of confusing
   some resource managers as well as some MPI implementations.
 
+Configuration Files
+===================
+
+Singularity allows for the automatic configuration of several system
+configuration files within containers to ease usage across systems.
+
+.. note::
+
+  These options will do nothing unless the file or directory path exists within
+  the container or Singularity has either overlay or underlay support enabled.
+
 ``CONFIG PASSWD``:
 This option determines if Singularity should automatically append an entry to
 ``/etc/passwd`` for the user running the container.
 
-.. note::
-  This option will do nothing if the container does not have an ``/etc/passwd``.
-
 ``CONFIG GROUP``:
 This option determines if Singularity should automatically append the calling
-users group entries to the containers ``/etc/group``.
-
-.. note::
-  This option will do nothing if the container does not have an ``/etc/group``.
+user's group entries to the containers ``/etc/group``.
 
 ``CONFIG RESOLV_CONF``:
-This option determines if Singularity should automatically bind the hosts
+This option determines if Singularity should automatically bind the host's
 ``/etc/resolv/conf`` within the container.
 
-.. note::
-  This option will do nothing if the container does not have an ``/etc/resolv.conf``.
+Session Directory and System Mounts
+===================================
+
+``SESSIONDIR MAX SIZE``:
+In order for the Singularity runtime to create a container it needs to create a
+``sessiondir`` to manage various components of the container, including
+mounting filesystems over the base image filesystem. This option
+specifies how large the default ``sessiondir`` should be (in MB) and will
+only affect users who use the ``--contain`` options without also specifying a
+location to perform default read/writes to via the ``--workdir`` or ``--home``
+options.
 
 ``MOUNT PROC``:
 This option determines if Singularity should automatically bind mount ``/proc``
@@ -96,7 +141,7 @@ when there is a ``minimal`` ``/dev`` directory as explained above, or when the
 
 ``MOUNT HOME``:
 When this option is enabled, Singularity will automatically determine the
-calling of user's home directory and attempt to mount it into the container.
+calling user's home directory and attempt to mount it into the container.
 
 ``MOUNT TMP``:
 When this option is enabled, Singularity will automatically bind mount
@@ -109,10 +154,36 @@ option if that is passed as well.
 This option will cause Singularity to probe the host for all mounted
 filesystems and bind those into containers at runtime.
 
+``MOUNT SLAVE``:
+Singularity automatically mounts a handful host system directories to the
+container by default. This option determines if filesystem changes on the host
+should automatically be propogated to those directories in the container.
+
+.. note::
+  This should be set to ``yes`` when autofs mounts in the system should
+  show up in the container.
+
+``MEMORY FS TYPE``:
+This option allows admins to choose the temporary filesystem used by
+Singularity. Temporary filesystems are primarily used for system
+directories like ``/dev`` when the host system directory is not mounted
+within the container.
+
+.. note::
+
+  For Cray CLE 5 and 6, up to CLE 6.0.UP05, there is an issue (kernel panic) when Singularity
+  uses tmpfs, so on affected systems it's recommended to set this value to ramfs to avoid a
+  kernel panic
+
+Bind Mount Management
+=====================
+
 ``BIND PATH``:
 This option is used for defining a list of files or directories to
 automatically be made available when Singularity runs a container.
-The file or directory path must exist within the container for this option.
+In order to successfully mount listed paths the file or directory path must
+exist within the container, or Singularity has either overlay or underlay
+support enabled.
 
 .. note::
   This option is ignored when containers are invoked with the ``--contain`` option.
@@ -135,39 +206,12 @@ This allows admins to decide if users can define bind points at runtime.
 By Default, this option is set to ``YES``, which means users can specify bind
 points, scratch and tmp locations.
 
-``ENABLE FUSEMOUNT``:
-This will allow users to mount fuse filesystems inside containers using the
-``--fusemount`` flag.
+Limiting Container Execution
+============================
 
-``ENABLE OVERLAY``:
-This option will allow Singularity to create bind mounts at paths that do not
-exist within the container image. This option can be set to ``try``, which will
-try to use an overlayfs. If it fails to create an overlayfs in this case the
-bind path will be silently ignored.
-
-``ENABLE UNDERLAY``:
-This option will allow Singularity to create bind mounts at paths that do not
-exist within the container image, just like ``ENABLE OVERLAY``, but instead
-using an underlay. This is suitable for systems where ovelay is not possible
-or not working. If the overlay option is available and working, it will be
-used instead.
-
-``MOUNT SLAVE``:
-Singularity automatically mounts a handful host system directories to the
-container by default. This option determines if filesystem changes on the host
-should automatically be propogated to those directories in the container.
-
-.. note::
-  This should be set to ``yes`` when autofs mounts in the system should
-  show up in the container.
-
-``SESSIONDIR MAX SIZE``:
-In order for the Singularity runtime to create a container it needs to create a
-``sessiondir`` to manage various components of the container. This option
-specifies how large the default ``sessiondir`` should be (in MB) and will
-only affect users who use the "--contain" options without also specifying a
-location to perform default read/writes to via the ``--workdir`` or ``--home``
-options.
+There are several ways to limit container execution as an admin listed below.
+If stricter controls are required, check out the
+:ref:`Execution Control List <execution_control_list>`.
 
 ``LIMIT CONTAINER OWNERS``:
 This restricts container execution to only allow conatiners that are owned by
@@ -207,49 +251,58 @@ contents.
 .. note::
   These limitations do not apply to the root user.
 
+GPU Options
+===========
+
+Singularity provides integration with GPUs in order to facilitate GPU based
+workloads seamlessly. Both options listed below are particularly useful in
+GPU only environments. For more information on using GPUs with Singularity
+checkout :ref:`GPU Library Configuration <_GPU_library_configuration>`.
+
 ``ALWAYS USE NV ${TYPE}``:
 Enabling this option will cause every action command
 (``exec/shell/run/instance``) to be executed with the ``--nv`` option
 implicitly added.
-
-.. note::
-  Useful for GPU only environments.
 
 ``ALWAYS USE ROCM ${TYPE}``:
 Enabling this option will cause every action command
 (``exec/shell/run/instance``) to be executed with the ``--rocm`` option
 implicitly added.
 
-.. note::
-  Useful for GPU only environments.
+Supplemental Filesystems
+========================
 
-``ROOT DEFAULT CAPABILITIES``:
-Singularity allows the specification of capabilities kept by the root user
-when running a container. Options include:
-* full: all capabilities are maintained, this gives the same behavior as the ``--keep-privs`` option.
-* file: only capabilities granted in /usr/local/etc/singularity/capabilities/user.root are maintained.
-* no: no capabilities are maintained, this gives the same behavior as the ``--no-privs`` option.
+``ENABLE FUSEMOUNT``:
+This will allow users to mount fuse filesystems inside containers using the
+``--fusemount`` flag.
 
+``ENABLE OVERLAY``:
+This option will allow Singularity to create bind mounts at paths that do not
+exist within the container image. This option can be set to ``try``, which will
+try to use an overlayfs. If it fails to create an overlayfs in this case the
+bind path will be silently ignored.
 
-``MEMORY FS TYPE``:
-This option allows admins to choose the temporary filesystem used by
-Singularity. Temoporary filesystems are primarily used for system
-directories like ``/dev`` when the host system directory is not mounted
-within the container.
+``ENABLE UNDERLAY``:
+This option will allow Singularity to create bind mounts at paths that do not
+exist within the container image, just like ``ENABLE OVERLAY``, but instead
+using an underlay. This is suitable for systems where overlay is not possible
+or not working. If the overlay option is available and working, it will be
+used instead.
 
-.. note::
+External Tooling Paths
+======================
 
-  For Cray CLE 5 and 6, up to CLE 6.0.UP05, there is an issue (kernel panic) when Singularity
-  uses tmpfs, so on affected systems it's recommended to set this value to ramfs to avoid a
-  kernel panic
+Internally, Singularity leverages several pieces of tooling in order to provide
+a wide breadth of features for users. Locations for these tools can be
+customized by system admins and referenced with the options below:
 
 ``CNI CONFIGURATION PATH``:
 This option allows admins to specify a custom path for the CNI configuration
-that Singularity will use for [Network Virtualization](https://sylabs.io/guides/\{userversion\}/user-guide/networking.html).
+that Singularity will use for `Network Virtualization <https://sylabs.io/guides/\{userversion\}/user-guide/networking.html>`_.
 
 ``CNI PLUGIN PATH``:
 This option allows admins to specify a custom path for Singularity to access
-CNI plugin executables. Check out the [Network Virtualization](https://sylabs.io/guides/\{userversion\}/user-guide/networking.html)
+CNI plugin executables. Check out the `Network Virtualization <https://sylabs.io/guides/\{userversion\}/user-guide/networking.html>`_
 section of the user guide for more information.
 
 ``MKSQUASHFS PATH``:
@@ -263,13 +316,9 @@ will use that value if this is undefined. This option allows an admin to set
 the path of ``cryptsetup`` if it is located in a custom location and will
 override the value recorded at build time.
 
-``SHARED LOOP DEVICES``:
-This allows containers running the same image to share a single loop device.
-This minimizes loop device usage and helps optimize kernel cache usage.
-Enabling this feature can be particularly useful for MPI jobs.
-
 Updating Configuration Options
 ==============================
+
 In order to manage this configuration file, Singularity has a ``config global``
 command group that allows you to get, set, reset, and unset values through the
 CLI. It's important to note that these commands must be run with elevated
@@ -279,6 +328,7 @@ administrator.
 Example
 -------
 
+In this example we will changing the ``BIND PATH`` option described above.
 First we can see the current list of bind paths set within our system
 configuration:
 
@@ -366,7 +416,7 @@ the path as an argument to the ``--apply-cgroups`` option like so:
 
 
 Limiting memory
-----------------
+===============
 To limit the amount of memory that your container uses to 500MB (524288000 bytes):
 
 .. code-block:: none
@@ -394,7 +444,7 @@ Similarly, the remaining examples can be tested by starting instances and
 examining the contents of the appropriate subdirectories of ``/sys/fs/cgroup/``.
 
 Limiting CPU
--------------
+============
 
 Limit CPU resources using one of the following strategies. The ``cpu`` section
 of the configuration file can limit memory with the following:
@@ -449,7 +499,7 @@ Where container has limited access to CPU 0 and CPU 1.
 
 
 Limiting IO
-------------
+===========
 
 You can limit and monitor access to I/O for block devices.  Use the
 ``[blockIO]`` section of the configuration file to do this like so:
@@ -466,7 +516,8 @@ You can limit and monitor access to I/O for block devices.  Use the
 unless overridden by a per device rule.
 
 ``leafWeight`` relates to weight for the purpose of deciding how heavily to
-weigh tasks in the given cgroup while competing with the cgroup's child cgroups.
+weigh tasks in the given cgroup while competing with the cgroup's child
+cgroups.
 
 To override ``weight/leafWeight`` for ``/dev/loop0`` and ``/dev/loop1`` block
 devices you would do something like this:
@@ -501,6 +552,8 @@ per second.
           minor = 0
           rate = 16777216
 
+.. _sec:_execution_control_list:
+
 --------
 ecl.toml
 --------
@@ -531,6 +584,7 @@ container is allowed to run.
 are allowed to run.
 
 
+.. _sec:_GPU_library_configuration:
 
 -------------------------
 GPU Library Configuration
