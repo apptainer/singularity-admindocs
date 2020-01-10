@@ -44,14 +44,56 @@ block within the SIF file which can guarantee immutability and provide accountab
 later can be verified (``singularity verify``) while pulling or downloading the image. This feature in particular 
 protects collaboration within and between systems and teams. 
 
-With a new development to SIF, the root file system that resides in the squashFS partition of SIF can be encrypted, rendering it's contents
-inaccessible without a secret. This feature will make it necessary for users to 
-provide a password or key file to run the container. It also ensures that no other user on the system will be able to look at your
-container files. Since it is all encrypted, it can defend against intruders manipulating the image while in transit.
+SIF Encryption
+**************
 
-Unlike other container platforms where the build step requires a number of layers to be read and written into another layer 
-involving the creation of intermediate containers, Singularity executes it in a single step resulting in a ``.sif`` file thereby
-reducing the attack surface and eliminating any chances of injecting malicious content during building and running of containers.
+In Singularity 3.4 and above the container root filesystem that
+resides in the squashFS partition of a SIF can be encrypted, rendering
+it's contents inaccessible without a secret. Unlike other platforms,
+where encrypted layers must be assembled into an unencrypted runtime
+directory on disk, Singularity mounts the encrypted root file system
+directly from the SIF using Kernel dm-crypt/LUKS functionality, so
+that the content is not exposed on disk. Singularity containers
+provide a comparable level of security to LUKS2 full disk encryption
+commonly deployed on Linux server and desktop systems.
+
+As with all matters of security, a layered approach must be taken and
+the system as a whole considered. For example, it is possible that
+decrypted memory pages could be paged out the system swap file or
+device, which could result in decrypted information being stored at
+rest on physical media. Operating system level mitigations such as
+encrypted swap space may be required depending on the needs of your
+application.
+
+Encryption and decryption of containers requires ``cryptsetup``
+version 2. The SIF root filesystem will be encrypted using the
+default LUKS cipher on the host. The current default cipher used by
+``cryptsetup`` for LUKS2 in mainstream Linux distributions is
+``aes-xts-plain64`` with a 256 bit key size. The default key
+derivation function for LUKS2 is ``argon2i``.
+
+Singularity currently supports 2 types of secrets for encrypted
+containers:
+
+  - *Passphrase*: a text passphrase is passed directly to
+    ``cryptsetup`` for LUKS encryption of the root fs.
+  - *Asymmetric RSA keypair*: a randomly generated 256-bit secret is
+    used to perform LUKS encryption of the rootfs.  This secret is
+    encrypted with a user-provided RSA public key, and the ciphertext
+    stored in the SIF file. At runtime the RSA private key must be
+    provided to decrypt the secret and allow decryption of the root
+    filesystem to use the container.
+
+.. note::
+
+   You can verify the default LUKS2 cipher and PBKDF on your system by
+   running ``cryptsetup --help``.
+
+   ``cryptsetup`` sets a memory cost for the ``argon2i`` PBKDF based on
+   the RAM available in the system used for encryption, up to a
+   maximum of 1GiB. Encrypted containers created on systems with >2GiB
+   RAM may be unusable on systems with <1GiB of free RAM.
+
 
 
 Admin Configurable Files
