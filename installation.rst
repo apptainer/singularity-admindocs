@@ -372,7 +372,7 @@ Singularity:
    
   $ ./mconfig && \
   make -C builddir rpm && \
-  sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/singularity-3.5.2.el7.x86_64.rpm # or whatever version you built
+  sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/singularity-{InstallationVersion}.el7.x86_64.rpm # or whatever version you built
 
 
 To build an rpm with an alternative install prefix set ``RPMPREFIX``
@@ -473,7 +473,7 @@ errors at runtime.
 
     $ singularity buildcfg
     PACKAGE_NAME=singularity
-    PACKAGE_VERSION=3.5.2
+    PACKAGE_VERSION={InstallationVersion}
     BUILDDIR=/home/dtrudg/Sylabs/Git/singularity/builddir
     PREFIX=/usr/local
     EXECPREFIX=/usr/local
@@ -623,7 +623,7 @@ You can check the installed version of Singularity with the following:
 .. code-block:: none
 
     vagrant@vagrant:~$ singularity version
-    3.5.2
+    {InstallationVersion}
 
 
 Of course, you can also start with a plain OS Vagrant box as a base and then
