@@ -40,23 +40,104 @@ RHEL & CentOS 6 do not support these features, but Singularity can be
 used with some limitations.
 
 
-Filesystem support
-==================
+Filesystem support / limitations
+================================
 
-Singularity supports most filesystems, but there are limitations when
-installing Singularity on, or running containers from common parallel
-/ network filesystems:
+Singularity supports most filesystems, but there are some limitations
+when installing Singularity on, or running containers from, common
+parallel / network filesystems. In general:
 
  - We strongly recommend installing Singularity on local disk on each
    compute node.
  - If Singularity is installed to a network location, a
-   ``--localstatedir`` must be provided on each node, and Singularity
+   ``--localstatedir`` should be provided on each node, and Singularity
    configured to use it.
  - The ``--localstatedir`` filesystem should support overlay mounts.
- - When running sandbox containers with the ``--fakeroot`` option,
-   filesystem user namespace support is required. User namespace
-   support is known to be incomplete on Lustre, and GPFS.
+ - ``TMPDIR`` / ``SINGULARITY_TMPDIR`` should be on a local filesystem
+   wherever possible.
 
+
+Overlay support
+---------------
+   
+Various features of Singularity, such as the ``--writable-tmpfs`` and
+``--overlay``, options use the Linux ``overlay`` filesystem driver to
+construct a container root filesystem that combines files from
+different locations. Not all filesystems can be used with the
+``overlay`` driver, so when containers are run from these filesystems
+some Singularity features may not be available.
+
+Overlay support has two aspects:
+
+  - ``lowerdir`` support for a filesystem allows a directory on that
+    filesystem to act as the 'base' of a container. A filesystem must
+    support overlay ``lowerdir`` for you be able to run a Singularity
+    sandbox container on it, while using functionality such as
+    ``--writable-tmpfs`` / ``--overlay``.
+  - ``upperdir`` support for a filesystem allows a directory on that
+    filesystem to be merged on top of a ``lowerdir`` to construct a
+    container. If you use the ``--overlay`` option to overlay a
+    directory onto a container, then the filesystem holding the
+    overlay directory must support ``upperdir``.
+
+Note that any overlay limitations mainly apply to sandbox (directory)
+containers only. A SIF container is mounted into the
+``--localstatedir`` location, which should generally be on a local
+filesystem that supports overlay.
+
+
+Fakeroot / (sub)uid/gid mapping
+-------------------------------
+
+When Singularity is run using the :ref:`fakeroot <fakeroot>` option it
+creates a user namespace for the container, and UIDs / GIDs in that
+user namepace are mapped to different host UID / GIDs.
+
+Most local filesystems (ext4/xfs etc.) support this uid/gid mapping in
+a user namespace.
+
+Most network filesystems (NFS/Lustre/GPFS etc.) *do not* support this
+uid/gid mapping in a user namespace. Because the fileserver is not
+aware of the mappings it will deny many operations, with 'permission
+denied' errors. This is currently a generic problem for rootless
+container runtimes.
+   
+NFS
+---
+
+NFS filesystems support overlay mounts as a ``lowerdir`` only, and do not
+support user-namespace (sub)uid/gid mapping.
+
+ - Containers run from SIF files located on an NFS filesystem do not
+   have restrictions.
+ - You cannot use ``--overlay mynfsdir/`` to overlay a directory onto
+   a container when the overlay (upperdir) directory is on an NFS
+   filesystem.
+ - When using ``--fakeroot`` to build or run a container, your
+   ``TMPDIR`` / ``SINGULARITY_TMPDIR`` should not be set to an NFS
+   location.
+ - You should not run a sandbox container with ``--fakeroot`` from an
+   NFS location.
+
+Lustre / GPFS
+-------------
+
+Lustre and GPFS do not have sufficient ``upperdir`` or ``lowerdir``
+overlay support for certain Singularity features, and do not support
+user-namespace (sub)uid/gid mapping.
+
+  - You cannot use ``-overlay`` or ``--writable-tmpfs`` with a sandbox
+    container that is located on a Lustre or GPFS filesystem. SIF
+    containers on Lustre / GPFS will work correctly with these
+    options.
+  - You cannot use ``--overlay`` to overlay a directory onto a
+    container, when the overlay (upperdir) directory is on a Lustre or
+    GPFS filesystem.
+  - When using ``--fakeroot`` to build or run a container, your
+    ``TMPDIR/SINGULARITY_TMPDIR`` should not be a Lustre or GPFS
+    location.
+  - You should not run a sandbox container with ``--fakeroot`` from a
+    Lustre or GPFS location.
 
 ----------------
 Before you begin
