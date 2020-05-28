@@ -272,11 +272,11 @@ Unprivileged (non-setuid) Installation
 
 If you need to install Singularity as a non-root user, or do not wish
 to allow the use of a setuid root binary, you can configure
-singularity with the ``--without-setuid`` option to mconfig:
+singularity with the ``--without-suid`` option to mconfig:
 
 .. code-block:: none
 
-    $ ./mconfig --without-setuid --prefix=/home/dave/singularity && \
+    $ ./mconfig --without-suid --prefix=/home/dave/singularity && \
         make -C ./builddir && \
         make -C ./builddir install
 
