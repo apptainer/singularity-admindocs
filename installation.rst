@@ -56,7 +56,19 @@ parallel / network filesystems. In general:
  - ``TMPDIR`` / ``SINGULARITY_TMPDIR`` should be on a local filesystem
    wherever possible.
 
+.. note::
 
+   Set the ``--localstatedir`` location by by providing
+   ``--localstatedir my/dir`` as an option when you configure your
+   Singularity build with ``./mconfig``.
+
+   Disk usage at the ``--localstatedir`` location is neglible
+   (<1MiB). The directory is used as a location to mount the container
+   root filesystem, overlays, bind mounts etc. that construct the
+   runtime view of a container. You will not see these mounts from a
+   host shell, as they are made in a separate mount namespace.
+
+ 
 Overlay support
 ---------------
    
@@ -101,7 +113,46 @@ uid/gid mapping in a user namespace. Because the fileserver is not
 aware of the mappings it will deny many operations, with 'permission
 denied' errors. This is currently a generic problem for rootless
 container runtimes.
-   
+
+Singularity cache / atomic rename
+---------------------------------
+
+Singularity will cache SIF container images generated from remote
+sources, and any OCI/docker layers used to create them. The cache is
+created at ``$HOME/.singularity/cache`` by default. The location of
+the cache can be changed by setting the ``SINGULARITY_CACHEDIR``
+environment variable.
+
+The directory used for ``SINGULARITY_CACHEDIR`` should be:
+
+ - A unique location for each user. Permissions are set on the cache
+   so that private images cached for one user are not exposed to
+   another. This means that ``SINGULARITY_CACHEDIR`` cannot be shared.
+ - Located on a filesystem with sufficient space for the number and size of
+   container images anticipated.
+ - Located on a filesystem that supports atomic rename, if possible.
+
+In Singularity version 3.6 and above the cache is concurrency safe.
+Parallel runs of Singularity that would create overlapping cache
+entries will not conflict, as long as the filesystem used by
+``SINGULARITY_CACHEDIR`` supports atomic rename operations.
+
+Support for atomic rename operations is expected on local POSIX
+filesystems, but varies for network / parallel filesystems and may be
+affected by topology and configuration. For example, Lustre supports
+atomic rename of files only on a single MDT. Rename on NFS is only
+atomic to a single client, not across systems accessing the same NFS
+share.
+
+If you are not certain that your ``$HOME`` or ``SINGULARITY_CACHEDIR``
+filesytems support atomic rename, do not run Singularity in parallel
+using remote container URLs. Instead use ``singularity pull`` to
+create a local SIF image, and then run this SIF image in a parallel
+step. An alternative is to use the ``--disable-cache`` option, but
+this will result in each Singularity instance independently fetching
+the container from the remote source, into a temporary location.
+
+
 NFS
 ---
 
