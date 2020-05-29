@@ -56,7 +56,19 @@ parallel / network filesystems. In general:
  - ``TMPDIR`` / ``SINGULARITY_TMPDIR`` should be on a local filesystem
    wherever possible.
 
+.. note::
 
+   Set the ``--localstatedir`` location by by providing
+   ``--localstatedir my/dir`` as an option when you configure your
+   Singularity build with ``./mconfig``.
+
+   Disk usage at the ``--localstatedir`` location is neglible
+   (<1MiB). The directory is used as a location to mount the container
+   root filesystem, overlays, bind mounts etc. that construct the
+   runtime view of a container. You will not see these mounts from a
+   host shell, as they are made in a separate mount namespace.
+
+ 
 Overlay support
 ---------------
    
