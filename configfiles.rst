@@ -583,6 +583,15 @@ container is allowed to run.
 **Blacklist**: Only the containers whose keys are not mentioned in the group
 are allowed to run.
 
+.. note::
+
+    The ECL checks will use the new signature format introduced in
+    Singularity 3.6.0. Containers signed with older versions of Singularity
+    Singularity will not pass ECL checks.
+
+    To temporarily permit the use of legacy insecure signatures, set
+    ``legacyinsecure = true`` in ``ecl.toml``.
+
 
 .. _sec:_GPU_library_configuration:
 
