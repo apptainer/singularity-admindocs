@@ -22,3 +22,4 @@ information about how to use Singularity.
    Container Security <security>
 
    Appendix <appendix>
+   License <license>
