@@ -292,7 +292,7 @@ existing mappings.
 .. note::
 
   If you deploy Singularity to a cluster you will need to make
-  arrangements to synchronize ``/etc/subid`` and ``/etc/subgid``
+  arrangements to synchronize ``/etc/subuid`` and ``/etc/subgid``
   mapping files to all nodes.
 
   At this time, the glibc name service switch functionality does not
