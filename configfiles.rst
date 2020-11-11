@@ -257,7 +257,7 @@ GPU Options
 Singularity provides integration with GPUs in order to facilitate GPU based
 workloads seamlessly. Both options listed below are particularly useful in
 GPU only environments. For more information on using GPUs with Singularity
-checkout :ref:`GPU Library Configuration <_GPU_library_configuration>`.
+checkout :ref:`GPU Library Configuration <gpu_library_configuration>`.
 
 ``ALWAYS USE NV ${TYPE}``:
 Enabling this option will cause every action command
@@ -552,7 +552,7 @@ per second.
           minor = 0
           rate = 16777216
 
-.. _sec:_execution_control_list:
+.. _execution_control_list:
 
 --------
 ecl.toml
@@ -593,7 +593,7 @@ are allowed to run.
     ``legacyinsecure = true`` in ``ecl.toml``.
 
 
-.. _sec:_GPU_library_configuration:
+.. _gpu_library_configuration:
 
 -------------------------
 GPU Library Configuration
