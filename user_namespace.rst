@@ -130,16 +130,6 @@ no`` is set in ``singularity.conf``, Singularity attempts to use
 external setuid binaries ``newuidmap`` and ``newgidmap``, so you
 need to install those binaries on your system.
 
-.. note::
-
-  CentOS/RHEL 7 doesn't provide a package for ``newuidmap`` and
-  ``newgidmap``, so you will need to compile/install **shadow-utils**
-  by yourself.
-  
-  Singularity expects to find these binaries in one of those standard
-  paths:
-  ``/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin``
-
 
 Basics
 ======
