@@ -9,9 +9,9 @@ def variableReplace(app, docname, source):
 
 #Add the needed variables to be replaced either on code or on text on the next dictionary structure.
 variable_replacements = {
-    "{InstallationVersion}" : "3.6.4",
-    "\{adminversion\}" : "3.6",
-    "\{userversion\}" : "3.6"
+    "{InstallationVersion}" : "3.7.0",
+    "\{adminversion\}" : "3.7",
+    "\{userversion\}" : "3.7"
 }
 
 def setup(app):
