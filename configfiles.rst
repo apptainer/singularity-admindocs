@@ -592,6 +592,24 @@ are allowed to run.
     To temporarily permit the use of legacy insecure signatures, set
     ``legacyinsecure = true`` in ``ecl.toml``.
 
+Manage ECL public keys
+======================
+
+Since Singularity 3.6.0, public keys associated to ECL key fingerprints
+are required to be present in user's local keyring which is not very
+convenient. Singularity 3.7.0 provides a mechanism to administrators for managing
+a global keyring that ECL uses during signature verification, for that purpose a
+``--global`` option was added for:
+
+  * ``singularity key import`` (root user only)
+  * ``singularity key pull`` (root user only)
+  * ``singularity key remove`` (root user only)
+  * ``singularity key export``
+  * ``singularity key list``
+
+.. note::
+    For security reasons, it is not possible to import private keys
+    into this global keyring because it must be accessible by users.
 
 .. _gpu_library_configuration:
 
