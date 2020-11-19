@@ -811,6 +811,14 @@ and it's `Appendix <https://www.sylabs.io/guides/\{userversion\}/user-guide/appe
 remote.yaml
 ------------
 
+System-wide remote endpoints are defined in a configuration file typically
+located at ``/usr/local/etc/singularity/remote.yaml`` (this location may
+vary depending on installation parameters) and can be managed by
+administrators with the ``remote`` command group.
+
+Remote Endpoints
+================
+
 Sylabs introduced the online `Sylabs Cloud
 <https://cloud.sylabs.io/home>`_ to enable users to `Create
 <https://cloud.sylabs.io/builder>`_, `Secure
@@ -823,21 +831,14 @@ configure Singularity to use an API compatable container service such as
 a local installation of Singularity Enterprise, which provides an on-premise
 private Container Library, Remote Builder and Key Store.
 
-
-System-wide remote endpoints are defined in a configuration file typically
-located at ``/usr/local/etc/singularity/remote.yaml`` (this location may
-vary depending on installation parameters) and can be managed by
-administrators with the ``remote`` command group with the ``--global``
-flag so that they are easily available for users.
-
 .. note::
 
    A fresh installation of Singularity is automatically configured
    to connect to the public `Sylabs Cloud <https://cloud.sylabs.io>`__
    services.
 
-Examples
-========
+**Examples**
+
 
 Use the ``remote`` command group with the ``--global`` flag to create a
 system-wide remote endpoint:
@@ -858,10 +859,20 @@ Conversely, to remove a system-wide endpoint:
     INFO:    Remote "company-remote" removed.
 
 .. note::
+
    Once users login to a system wide endpoint, a copy of the endpoint will be listed in
    a their ``~/.singularity/remote.yaml`` file. This means modifications or removal of
    the system-wide endpoint will not be reflected in the users configuration unless they
    remove the endpoint themselves.
+
+Keyserver Configuration
+=======================
+
+By default, Singularity will use the keyserver correlated to the active cloud
+service endpoint. This behavior can be changed or supplemented via the
+``add-keyserver`` and ``remove-keyserver`` commands. These commands allow an
+administrator to create a global list of key servers used to verify container
+signatures by default.
 
 For more insight into the ``remote`` command group, using remote endpoints,
 etc, please check the `Remote Userdocs <https://www.sylabs.io/guides/\{userversion\}/user-guide/endpoint.html>`_.
