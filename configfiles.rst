@@ -595,7 +595,7 @@ are allowed to run.
 Managing ECL public keys
 ======================
 
-Since Singularity 3.6.0, public keys associated to ECL key fingerprints
+In Singularity 3.6, public keys associated with fingerprints specified in ECL rules
 are required to be present in user's local keyring which is not very
 convenient. Singularity 3.7.0 provides a mechanism to administrators for managing
 a global keyring that ECL uses during signature verification, for that purpose a
