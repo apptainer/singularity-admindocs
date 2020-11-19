@@ -592,7 +592,7 @@ are allowed to run.
     To temporarily permit the use of legacy insecure signatures, set
     ``legacyinsecure = true`` in ``ecl.toml``.
 
-Manage ECL public keys
+Managing ECL public keys
 ======================
 
 Since Singularity 3.6.0, public keys associated to ECL key fingerprints
