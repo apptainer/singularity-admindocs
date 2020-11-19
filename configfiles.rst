@@ -593,7 +593,7 @@ are allowed to run.
     ``legacyinsecure = true`` in ``ecl.toml``.
 
 Managing ECL public keys
-======================
+========================
 
 In Singularity 3.6, public keys associated with fingerprints specified in ECL rules
 were required to be present in user's local keyring which is not very
@@ -609,7 +609,8 @@ a global keyring that ECL uses during signature verification, for that purpose a
 
 .. note::
     For security reasons, it is not possible to import private keys
-    into this global keyring because it must be accessible by users.
+    into this global keyring because it must be accessible by users
+    and is stored in the file ``SYSCONFDIR/singularity/global-pgp-public``.
 
 .. _gpu_library_configuration:
 
