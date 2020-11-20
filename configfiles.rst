@@ -858,6 +858,35 @@ Conversely, to remove a system-wide endpoint:
     [sudo] password for dave:
     INFO:    Remote "company-remote" removed.
 
+Singularity 3.7 introduces the ability for an administrator to make a remote
+the only usable remote for the system by using the ``--exclusive`` flag:
+
+.. code-block:: none
+
+    $ sudo singularity remote use --exclusive company-remote
+    [sudo] password for dave:
+    INFO:    Remote "company-remote" now in use.
+    $ singularity remote list
+    Cloud Services Endpoints
+    ========================
+
+    NAME            URI                     ACTIVE  GLOBAL  EXCLUSIVE
+    SylabsCloud     cloud.sylabs.io         NO      YES     NO
+    company-remote  enterprise.example.com  YES     YES     YES
+    myremote        enterprise.example.com  NO      NO      NO
+
+    Keyservers
+    ==========
+
+    URI                       GLOBAL  INSECURE  ORDER
+    https://keys.example.com  YES     NO        1*
+
+    * Active cloud services keyserver
+
+For more details on the ``remote`` command group and managing remote endpoints,
+please check the `Remote Userdocs <https://www.sylabs.io/guides/\{userversion\}/user-guide/endpoint.html>`_.
+
+
 .. note::
 
    Once users login to a system wide endpoint, a copy of the endpoint will be listed in
@@ -874,5 +903,5 @@ service endpoint. This behavior can be changed or supplemented via the
 administrator to create a global list of key servers used to verify container
 signatures by default.
 
-For more insight into the ``remote`` command group, using remote endpoints,
-etc, please check the `Remote Userdocs <https://www.sylabs.io/guides/\{userversion\}/user-guide/endpoint.html>`_.
+For more details on the ``remote`` command group and managing keyservers,
+please check the `Remote Userdocs <https://www.sylabs.io/guides/\{userversion\}/user-guide/endpoint.html>`_.
