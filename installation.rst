@@ -277,7 +277,7 @@ page).
 
 .. code-block:: none
 
-    $ export VERSION=1.13.5 OS=linux ARCH=amd64 && \
+    $ export VERSION=1.14.12 OS=linux ARCH=amd64 && \
         wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \
         sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \
         rm go$VERSION.$OS-$ARCH.tar.gz
@@ -295,14 +295,14 @@ Download Singularity from a release
 
 You can download Singularity from one of the releases. To see a full
 list, visit `the GitHub release page
-<https://github.com/sylabs/singularity/releases>`_.  After deciding on
+<https://github.com/hpcng/singularity/releases>`_.  After deciding on
 a release to install, you can run the following commands to proceed
 with the installation.
 
 .. code-block:: none
 
     $ export VERSION={InstallationVersion} && # adjust this as necessary \
-        wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
+        wget https://github.com/hpcng/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
         tar -xzf singularity-${VERSION}.tar.gz && \
         cd singularity
 
@@ -310,7 +310,7 @@ Checkout Code from Git
 ======================
 
 The following commands will install Singularity from the `GitHub repo
-<https://github.com/sylabs/singularity>`_ to ``/usr/local``. This
+<https://github.com/hpcng/singularity>`_ to ``/usr/local``. This
 method will work for >=v{InstallationVersion}. To install an older
 tagged release see `older versions of the docs
 <https://www.sylabs.io/docs/>`_.
@@ -320,7 +320,7 @@ When installing from source, you can decide to install from either a
 
 - **tag**: GitHub tags form the basis for releases, so installing from
   a tag is the same as downloading and installing a `specific release
-  <https://github.com/sylabs/singularity/releases>`_.  Tags are
+  <https://github.com/hpcng/singularity/releases>`_.  Tags are
   expected to be relatively stable and well-tested.
 
 - **release branch**: A release branch represents the latest version
@@ -341,7 +341,7 @@ appropriate directory use these commands.
 
 .. code-block:: none
 
-    $ git clone https://github.com/sylabs/singularity.git && \
+    $ git clone https://github.com/hpcng/singularity.git && \
         cd singularity && \
         git checkout v{InstallationVersion}
 
@@ -449,12 +449,12 @@ If you use RHEL, CentOS or SUSE, building and installing a Singularity
 RPM allows your Singularity installation be more easily managed,
 upgraded and removed. In Singularity >=v3.0.1 you can build an RPM
 directly from the `release tarball
-<https://github.com/sylabs/singularity/releases>`_.
+<https://github.com/hpcng/singularity/releases>`_.
 
 .. note::
 
     Be sure to download the correct asset from the `GitHub releases
-    page <https://github.com/sylabs/singularity/releases>`_.  It
+    page <https://github.com/hpcng/singularity/releases>`_.  It
     should be named `singularity-<version>.tar.gz`.
 
 After installing the :ref:`dependencies <install-dependencies>` and
@@ -464,7 +464,7 @@ download the tarball and build and install the RPM.
 .. code-block:: none
 
     $ export VERSION={InstallationVersion} && # adjust this as necessary \
-        wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
+        wget https://github.com/hpcng/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
         rpmbuild -tb singularity-${VERSION}.tar.gz && \
         sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/singularity-$VERSION-1.el7.x86_64.rpm && \
         rm -rf ~/rpmbuild singularity-$VERSION*.tar.gz
