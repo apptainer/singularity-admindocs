@@ -589,7 +589,7 @@ library:
 
 
 See the `user guide
-<https://www.sylabs.io/guides/\{userversion\}/user-guide/>`__ for more
+<\{userdocbaseurl\}/\{userversion\}/>`__ for more
 information about how to use Singularity.
 
 singularity buildcfg
