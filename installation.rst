@@ -237,6 +237,7 @@ On Ubuntu or Debian install the following dependencies:
         uuid-dev \
         libgpgme-dev \
         squashfs-tools \
+        libssl-dev \
         libseccomp-dev \
         wget \
         pkg-config \
