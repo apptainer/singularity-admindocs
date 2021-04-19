@@ -251,6 +251,40 @@ contents.
 .. note::
   These limitations do not apply to the root user.
 
+Networking Options
+==================
+
+The ``--network`` option can be used to specify a CNI networking
+configuration that will be used when running a container with `network
+virtualization
+<https://sylabs.io/guides/\{userversion\}/user-guide/networking.html>`_. Unrestricted
+use of CNI network configurations requires root privilege, as certain
+configurations may disrupt the host networking environment.
+
+Singularity 3.8 allows specific users or groups to be granted the
+ability to run containers with adminstrator specified CNI
+configurations.
+
+``ALLOW NET USERS``:
+Allow specified root administered CNI network configurations to be used by the
+specified list of users. By default only root may use CNI configuration,
+except in the case of a fakeroot execution where only 40_fakeroot.conflist
+is used. This feature only applies when Singularity is running in
+SUID mode and the user is non-root.
+
+``ALLOW NET GROUPS``:
+Allow specified root administered CNI network configurations to be used by the
+specified list of users. By default only root may use CNI configuration,
+except in the case of a fakeroot execution where only 40_fakeroot.conflist
+is used. This feature only applies when Singularity is running in
+SUID mode and the user is non-root.
+
+``ALLOW NET NETWORKS``:
+Specify the names of CNI network configurations that may be used by users and
+groups listed in the allow net users / allow net groups directives. Thus feature
+only applies when Singularity is running in SUID mode and the user is non-root.
+
+
 GPU Options
 ===========
 
@@ -672,8 +706,8 @@ Binaries are found by searching ``$PATH``:
 .. code-block:: none
 
     # put binaries here
-    # In shared environments you should ensure that permissions on these files 
-    # exclude writing by non-privileged users.  
+    # In shared environments you should ensure that permissions on these files
+    # exclude writing by non-privileged users.
     rocm-smi
     rocminfo
 
@@ -686,7 +720,7 @@ i.e. ``libname.so``, and are resolved using ``ldconfig``.
    libamd_comgr.so
    libcomgr.so
    libCXLActivityLogger.so
-      
+
 If you receive warnings that binaries or libraries are not found,
 ensure that they are in a system path (binaries), or available in paths
 configured in ``/etc/ld.so.conf`` (libraries).
