@@ -716,9 +716,9 @@ To use Vagrant via Homebrew:
 .. code-block:: none
 
     $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    $ brew cask install virtualbox && \
-        brew cask install vagrant && \
-        brew cask install vagrant-manager
+    $ brew install --cask virtualbox && \
+        brew install --cask vagrant && \
+        brew install --cask vagrant-manager
 
 -----------------------        
 Singularity Vagrant Box
