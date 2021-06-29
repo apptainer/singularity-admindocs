@@ -7,7 +7,7 @@ Installing Singularity
 This section will guide you through the process of installing
 Singularity {InstallationVersion} via several different methods. (For
 instructions on installing earlier versions of Singularity please see
-`earlier versions of the docs <https://www.sylabs.io/docs/>`_.)
+`earlier versions of the docs <https://singularity.hpcng.org/docs/>`_.)
 
 =====================
 Installation on Linux
@@ -313,7 +313,7 @@ The following commands will install Singularity from the `GitHub repo
 <https://github.com/hpcng/singularity>`_ to ``/usr/local``. This
 method will work for >=v{InstallationVersion}. To install an older
 tagged release see `older versions of the docs
-<https://www.sylabs.io/docs/>`_.
+<https://singularity.hpcng.org/docs/>`_.
 
 When installing from source, you can decide to install from either a
 **tag**, a **release branch**, or from the **master branch**.
@@ -589,7 +589,7 @@ library:
 
 
 See the `user guide
-<https://www.sylabs.io/guides/\{userversion\}/user-guide/>`__ for more
+<https://singularity.hpcng.org/user-docs/master/>`__ for more
 information about how to use Singularity.
 
 singularity buildcfg
