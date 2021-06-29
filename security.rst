@@ -183,5 +183,5 @@ Security Considerations of Cloud Services:
 Security is not a check box that one can tick and forget.  It’s an ongoing process that begins with software architecture, and 
 continues all the way through to ongoing security practices.  In addition to ensuring that containers are run without elevated 
 privileges where appropriate, and that containers are produced by trusted sources, users must monitor their containers for newly 
-discovered vulnerabilities and update when necessary just as they would with any other software. Singularity Security Team is constantly probing to 
+discovered vulnerabilities and update when necessary just as they would with any other software. The Singularity community is constantly probing to 
 find and patch vulnerabilities within Singularity, and will continue to do so.
