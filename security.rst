@@ -119,7 +119,7 @@ file and cgroups are configured accordingly. More about cgroups support `here <c
 
 Singularity supports a number of methods for specifying the security scope and context when running Singularity containers. 
 Additionally, it supports new flags that can be passed to the action commands; ``shell``, ``exec``, and ``run`` allowing fine 
-grained control of security. Details about them are documented `here <https://singularity.hpcng.org/user-docs/\{userversion\}/security_options.html>`__.
+grained control of security. Details about them are documented `here <\{userdocs\}/security_options.html>`__.
 
 Security in SCS
 ################

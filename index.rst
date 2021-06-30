@@ -9,7 +9,7 @@ detail, and other topics important to system adminstrators working
 with Singularity.
 
 See the `user guide
-<https://singularity.hpcng.org/user-docs/\{userversion\}>`__ for more
+<\{userdocs\}>`__ for more
 information about how to use Singularity.
 
 .. toctree::
