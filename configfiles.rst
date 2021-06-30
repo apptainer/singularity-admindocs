@@ -52,7 +52,7 @@ when running a container by default. Options include:
 
   The root user can manage the capabilities granted to individual containers when they
   are launched through the ``--add-caps`` and ``drop-caps`` flags.
-  Please see `Linux Capabilities <https://singularity.hpcng.org/\{userversion\}/security_options.html#linux-capabilities>`_
+  Please see `Linux Capabilities <https://singularity.hpcng.org/user-docs/\{userversion\}/security_options.html#linux-capabilities>`_
   in the user guide for more information.
 
 Loop Devices
@@ -332,11 +332,11 @@ customized by system admins and referenced with the options below:
 
 ``CNI CONFIGURATION PATH``:
 This option allows admins to specify a custom path for the CNI configuration
-that Singularity will use for `Network Virtualization <https://singularity.hpcng.org/\{userversion\}/networking.html>`_.
+that Singularity will use for `Network Virtualization <https://singularity.hpcng.org/user-docs/\{userversion\}/networking.html>`_.
 
 ``CNI PLUGIN PATH``:
 This option allows admins to specify a custom path for Singularity to access
-CNI plugin executables. Check out the `Network Virtualization <https://singularity.hpcng.org/\{userversion\}/networking.html>`_
+CNI plugin executables. Check out the `Network Virtualization <https://singularity.hpcng.org/user-docs/\{userversion\}/networking.html>`_
 section of the user guide for more information.
 
 ``MKSQUASHFS PATH``:
@@ -838,8 +838,8 @@ Use the ``--security`` option to invoke the container like:
   $ sudo singularity shell --security seccomp:/home/david/my.json my_container.sif
 
 For more insight into security options, network options, cgroups, capabilities,
-etc, please check the `Userdocs <https://singularity.hpcng.org/\{userversion\}>`_
-and it's `Appendix <https://singularity.hpcng.org/\{userversion\}/appendix.html>`_.
+etc, please check the `Userdocs <https://singularity.hpcng.org/user-docs/\{userversion\}>`_
+and it's `Appendix <https://singularity.hpcng.org/user-docs/\{userversion\}/appendix.html>`_.
 
 ------------
 remote.yaml
@@ -938,4 +938,4 @@ administrator to create a global list of key servers used to verify container
 signatures by default.
 
 For more details on the ``remote`` command group and managing keyservers,
-please check the `Remote Userdocs <https://singularity.hpcng.org/\{userversion\}/endpoint.html>`_.
+please check the `Remote Userdocs <https://singularity.hpcng.org/user-docs/\{userversion\}/endpoint.html>`_.

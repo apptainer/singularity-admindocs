@@ -5,7 +5,7 @@ import re
 
 class SingularityLexer(RegexLexer):
     """
-    Lexer for pages in Singularity Admin Guide at https://www.sylabs.io/guides/3.0/admin-guide/
+    Lexer for pages in Singularity Admin Guide at https://www.singularity.hpcng.org/admin-docs/\{adminversion\}/
     """
 
     name = 'Singularity'
