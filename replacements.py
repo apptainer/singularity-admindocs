@@ -9,8 +9,8 @@ def variableReplace(app, docname, source):
 
 #Add the needed variables to be replaced either on code or on text on the next dictionary structure.
 variable_replacements = {
-    "{InstallationVersion}" : "3.7.0",
-    "\{userdocs\}" : "https://singularity.hpcng.org/user-docs/3.7"
+    "{InstallationVersion}" : "3.8.0",
+    "\{userdocs\}" : "https://singularity.hpcng.org/user-docs/3.8"
 }
 
 def setup(app):
