@@ -257,7 +257,7 @@ Networking Options
 The ``--network`` option can be used to specify a CNI networking
 configuration that will be used when running a container with `network
 virtualization
-<https://singularity.hpcng.org/\{userversion\}/networking.html>`_. Unrestricted
+<https://singularity.hpcng.org/user-docs/\{userversion\}/networking.html>`_. Unrestricted
 use of CNI network configurations requires root privilege, as certain
 configurations may disrupt the host networking environment.
 
@@ -664,7 +664,7 @@ host drivers/libraries is dependent on the versions of the GPU compute
 frameworks that were used to build the applications. Compatibility and
 usage information is discussed in the `GPU Support` section of the
 `user guide
-<https://singularity.hpcng.org/\{userversion\}>`__
+<https://singularity.hpcng.org/user-docs/\{userversion\}>`__
 
 
 NVIDIA GPUs / CUDA
@@ -918,7 +918,7 @@ the only usable remote for the system by using the ``--exclusive`` flag:
     * Active cloud services keyserver
 
 For more details on the ``remote`` command group and managing remote endpoints,
-please check the `Remote Userdocs <https://singularity.hpcng.org/\{userversion\}/endpoint.html>`_.
+please check the `Remote Userdocs <https://singularity.hpcng.org/user-docs/\{userversion\}/endpoint.html>`_.
 
 
 .. note::

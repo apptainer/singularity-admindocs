@@ -273,5 +273,5 @@ Sylabs Container Library:
 
 
 See the `user guide
-<https://singularity.hpcng.org/\{userversion\}>`__ for more
+<https://singularity.hpcng.org/user-docs/\{userversion\}>`__ for more
 information about how to use Singularity.
