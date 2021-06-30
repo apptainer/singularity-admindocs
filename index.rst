@@ -9,7 +9,7 @@ detail, and other topics important to system adminstrators working
 with Singularity.
 
 See the `user guide
-<https://www.sylabs.io/guides/\{userversion\}/user-guide/>`__ for more
+<https://singularity.hpcng.org/user-docs/\{userversion\}>`__ for more
 information about how to use Singularity.
 
 .. toctree::
