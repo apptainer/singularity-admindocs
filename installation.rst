@@ -666,6 +666,20 @@ Install the following programs:
  -  `Vagrant for Windows <https://www.vagrantup.com/downloads.html>`_
  -  `Vagrant Manager for Windows <http://vagrantmanager.com/downloads/>`_
 
+---
+Mac
+---
+
+Singularity is available via Vagrant (installable with
+`Homebrew <https://brew.sh>`_ or manually)
+
+To use Vagrant via Homebrew:
+
+.. code-block:: none
+
+    $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    $ brew install --cask virtualbox vagrant vagrant-manager
+
 -------------------------        
 {Singularity} Vagrant Box
 -------------------------
