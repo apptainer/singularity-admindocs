@@ -720,3 +720,29 @@ You can check the installed version of {Singularity} with the following:
 
 Of course, you can also start with a plain OS Vagrant box as a base and then
 install {Singularity} using one of the above methods for Linux.
+
+--------------------------        
+{Singularity} Docker Image
+--------------------------
+
+It is possible to use a Dockerized Singularity,
+here is a sample ``compose.yaml`` (Singularity version 3.7.4) for use with Docker Compose:
+
+.. code-block:: none
+
+    services:
+      singularity:
+        image: quay.io/singularity/singularity:v3.7.4-slim 
+        stdin_open: true
+        tty: true
+        privileged: true
+        volumes:
+          - .:/root
+        entrypoint: ["/bin/sh"]
+
+Singularity in Docker can have various disadvantages,
+but basic container operations will work.
+Currently, the intended use case is continuous integration,
+meaning that you should be able to build a Singularity container using this Docker Compose file.
+For more information see `issue#5 <https://github.com/sylabs/singularity-admindocs/issues/5#issuecomment-852307931>`_
+and the image's source `repo <https://github.com/singularityhub/singularity-docker#use-cases>`_
