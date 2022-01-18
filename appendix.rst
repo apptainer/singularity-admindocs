@@ -5,7 +5,7 @@
 Installed Files
 ===============
 
-An installation of Singularity {InstallationVersion}, performed as root via
+An installation of {Singularity} {InstallationVersion}, performed as root via
 ``sudo make install`` consists of the following files, with ownership
 and permissions required to use the `setuid` workflow:
 
