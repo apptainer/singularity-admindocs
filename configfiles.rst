@@ -880,7 +880,6 @@ system-wide remote endpoint:
 .. code-block:: none
 
     $ sudo singularity remote add --global company-remote https://enterprise.example.com
-    [sudo] password for dave:
     INFO:    Remote "company-remote" added.
     INFO:    Global option detected. Will not automatically log into remote.
 
@@ -892,22 +891,31 @@ Conversely, to remove a system-wide endpoint:
     [sudo] password for dave:
     INFO:    Remote "company-remote" removed.
 
+.. note::
+
+   Once users login to a system wide endpoint, a copy of the endpoint will be listed in
+   a their ``~/.singularity/remote.yaml`` file. This means modifications or removal of
+   the system-wide endpoint will not be reflected in the users configuration unless they
+   remove the endpoint themselves.
+
+Exclusive Endpoint
+------------------
+
 {Singularity} 3.7 introduces the ability for an administrator to make a remote
 the only usable remote for the system by using the ``--exclusive`` flag:
 
 .. code-block:: none
 
     $ sudo singularity remote use --exclusive company-remote
-    [sudo] password for dave:
     INFO:    Remote "company-remote" now in use.
     $ singularity remote list
     Cloud Services Endpoints
     ========================
 
-    NAME            URI                     ACTIVE  GLOBAL  EXCLUSIVE
-    SylabsCloud     cloud.sylabs.io         NO      YES     NO
-    company-remote  enterprise.example.com  YES     YES     YES
-    myremote        enterprise.example.com  NO      NO      NO
+    NAME            URI                     ACTIVE  GLOBAL  EXCLUSIVE  INSECURE
+    SylabsCloud     cloud.sylabs.io         NO      YES     NO         NO
+    company-remote  enterprise.example.com  YES     YES     YES        NO
+    myremote        enterprise.example.com  NO      NO      NO         NO
 
     Keyservers
     ==========
@@ -917,16 +925,29 @@ the only usable remote for the system by using the ``--exclusive`` flag:
 
     * Active cloud services keyserver
 
-For more details on the ``remote`` command group and managing remote endpoints,
-please check the `Remote Userdocs <\{userdocs\}/endpoint.html>`_.
+Insecure (HTTP) Endpoints
+-------------------------
 
+From {Singularity} 3.9, if you are using a endpoint that exposes its
+service discovery file over an insecure HTTP connection only, it can
+be added by specifying the ``--insecure`` flag:
 
-.. note::
+.. code-block::
 
-   Once users login to a system wide endpoint, a copy of the endpoint will be listed in
-   a their ``~/.singularity/remote.yaml`` file. This means modifications or removal of
-   the system-wide endpoint will not be reflected in the users configuration unless they
-   remove the endpoint themselves.
+   $ sudo singularity remote add --global --insecure test http://test.example.com
+   INFO:    Remote "test" added.
+   INFO:    Global option detected. Will not automatically log into remote.
+
+This flag controls HTTP vs HTTPS for service discovery only. The
+protocol used to access individual library, build and keyservice URLs is
+set by the service discovery file.
+
+Additional Information
+----------------------
+
+For more details on the ``remote`` command group and managing remote
+endpoints, please check the `Remote Userdocs
+<\{userdocs\}/endpoint.html>`_.
 
 Keyserver Configuration
 =======================
