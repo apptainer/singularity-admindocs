@@ -244,7 +244,7 @@ latex_logo = 'logo.png'
 
 # The title of the document. It defaults to the html_title option
 # but can be set independently for epub creation.
-epub_title = 'Singularity ' + version + ' Administrator Guide'
+epub_title = '{Singularity}  ' + version + ' Administrator Guide'
 
 # The author of the document. This is put in the Dublin Core metadata.
 # It defaults to the author option.

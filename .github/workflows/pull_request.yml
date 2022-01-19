@@ -12,6 +12,10 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Update repositories
+        run: |
+          sudo apt update
+
       - name: Install LaTeX dependencies
         run: |
           sudo apt-get install -f -y texlive-latex-extra latexmk

@@ -17,9 +17,9 @@ can act as root inside a container to perform administrative tasks,
 without being root on the host outside.
 
 
-Singularity uses user namespaces in 3 situations:
+{Singularity} uses user namespaces in 3 situations:
 
- - When the ``setuid`` workflow is disabled or Singularity was
+ - When the ``setuid`` workflow is disabled or {Singularity} was
    installed without root.
  - When a container is run with the ``--userns`` option.
  - When ``--fakeroot`` is used to impersonate a root user when
@@ -68,11 +68,11 @@ Unprivileged Installations
 --------------------------
 
 As detailed in the :ref:`non-setuid installation <install-nonsetuid>`
-section, Singularity can be compiled or configured with the ``allow
+section, {Singularity} can be compiled or configured with the ``allow
 setuid = no`` option in ``singularity.conf`` to not perform privileged
 operations using the ``starter-setuid`` binary.
 
-When singularity does not use ``setuid`` all container execution will
+When {Singularity} does not use ``setuid`` all container execution will
 use a user namespace. In this mode of operation, some features are not
 available, and there are impacts to the security/integrity guarantees
 when running SIF container images:
@@ -83,7 +83,7 @@ when running SIF container images:
    modification of the container at runtime.
  - Filesystem image, and SIF-embedded persistent overlays cannot be
    used.
- - Encrypted containers cannot be used. Singularity mounts encrypted
+ - Encrypted containers cannot be used. {Singularity} mounts encrypted
    containers directly through the kernel, so that encrypted content
    is not extracted to disk. This requires the setuid workflow.
  - Fakeroot functionality will rely on external setuid root
@@ -96,7 +96,7 @@ when running SIF container images:
 
 The ``--userns`` option to `singularity run/exec/shell` will start a
 container using a user namespace, avoiding the setuid privileged
-workflow for container setup even if Singularity was compiled and
+workflow for container setup even if {Singularity} was compiled and
 configured to use setuid by default.
 
 The same limitations apply as in an unprivileged installation.
@@ -122,11 +122,11 @@ have no privilege on the host.
 Requirements
 ============
 
-In addition to user namespace support, Singularity must manipulate
+In addition to user namespace support, {Singularity} must manipulate
 ``subuid`` and ``subgid`` maps for the user namepsace it creates. By
 default this happens transparently in the setuid workflow. With
-unprivileged installations of Singularity or where ``allow setuid =
-no`` is set in ``singularity.conf``, Singularity attempts to use
+unprivileged installations of {Singularity} or where ``allow setuid =
+no`` is set in ``singularity.conf``, {Singularity} attempts to use
 external setuid binaries ``newuidmap`` and ``newgidmap``, so you
 need to install those binaries on your system.
 
@@ -138,7 +138,7 @@ Fakeroot relies on ``/etc/subuid`` and ``/etc/subgid`` files to find
 configured mappings from real user and group IDs, to a range of
 otherwise vacant IDs for each user on the host system that can be
 remapped in the usernamespace. A user must have an entry in these
-system configuration files to use the fakeroot feature. Singularity
+system configuration files to use the fakeroot feature. {Singularity}
 provides a :ref:`config fakeroot <config-fakeroot>` command to assist
 in managing these files, but it is important to understand how they
 work.
@@ -172,7 +172,7 @@ Same for ``/etc/subgid``:
 
 .. warning::
 
-  Singularity requires that a range of at least ``65536`` IDs is used
+  {Singularity} requires that a range of at least ``65536`` IDs is used
   for each mapping. Larger ranges may be defined without error.
 
   It is also important to ensure that the subuid and subgid ranges
@@ -254,7 +254,7 @@ configured to use a network veth pair.
 
 .. note::
 
-  Unprivileged installations of Singularity cannot use ``fakeroot``
+  Unprivileged installations of {Singularity} cannot use ``fakeroot``
   network as it requires privilege during container creation to setup
   the network.
 
@@ -263,7 +263,7 @@ configured to use a network veth pair.
 Configuration with ``config fakeroot``
 ======================================
 
-Singularity 3.5 and above provides a ``config fakeroot`` command that
+{Singularity} 3.5 and above provides a ``config fakeroot`` command that
 can be used by a root user to administer local system ``/etc/subuid``
 and ``/etc/subgid`` files in a simple manner. This allows users to be
 granted the ability to use Singularity's fakeroot functionality
@@ -281,7 +281,7 @@ existing mappings.
 
 .. note::
 
-  If you deploy Singularity to a cluster you will need to make
+  If you deploy {Singularity} to a cluster you will need to make
   arrangements to synchronize ``/etc/subuid`` and ``/etc/subgid``
   mapping files to all nodes.
 
