@@ -695,7 +695,7 @@ is targeted at OCI container runtimes.
 which will call out to ``nvidia-container-cli`` for container GPU
 setup, rather than use the ``nvliblist.conf`` approach.
 
-To use ``--nvccli`` a root-owned ``nvidia-container-cli`` binary must
+To use ``--nvccli`` a ``nvidia-container-cli`` binary must
 be present on the host. The binary that is run is controlled by the
 ``nvidia-container-cli`` directive in ``singularity.conf``. During
 installation of {Singularity}, the ``./mconfig`` step will set the
@@ -709,10 +709,8 @@ empty, {Singularity} will look for the binary on ``$PATH`` at runtime.
    flag, you may set ``nvidia-container-cli path`` to ``/bin/false``
    in ``singularity.conf``.
 
-``nvidia-container-cli`` is run as the ``root`` user during setuid
-operation of {Singularity}. The container starter process grants a
-number of Linux capabilities to ``nvidia-container-cli``, which are
-required for it to configure the container for GPU operation. The
+For security reasons, ``nvidia-container-cli`` cannot be used with privileged mode
+in a setuid installation of {Singularity}, it can only be used unprivileged.  The
 operations performed by ``nvidia-container-cli`` are broadly similar
 to those which {Singularity} carries out when setting up a GPU
 container from ``nvliblist.conf``.
