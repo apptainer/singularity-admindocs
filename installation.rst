@@ -39,6 +39,83 @@ Full functionality of {Singularity} requires that the kernel supports:
 RHEL & CentOS 6 do not support these features, but {Singularity} can be
 used with some limitations.
 
+External Binaries
+=================
+
+Singularity depends on a number of external binaries for full
+functionality. From {Singularity} 3.9, the methods that are used to
+find these binaries have been standardized as below.
+
+Configurable Paths
+------------------
+
+The following binaries are found on ``$PATH`` during build time when
+``./mconfig`` is run, and their location is added to the
+``singularity.conf`` configuration file. At runtime this configured
+location is used. To specify an alternate executable, change the
+relevant path entry in ``singularity.conf``. If the
+``singularity.conf`` entry is left blank, then ``$PATH`` will be
+searched at runtime.
+
+* ``cryptsetup`` version 2 with kernel LUKS2 support is required for
+  building or executing encrypted containers.
+* ``go`` is required to compile plugins, and must be an identical
+  version as that used to build {Singularity}.
+* ``ldconfig`` is used to resolve library locations / symlinks when
+  using the ``-nv`` or ``--rocm`` GPU support.
+* ``mksquashfs`` from squashfs-tools 4.3+ is used to create the
+  squashfs container filesystem that is embedded into SIF container
+  images. The ``mksquashfs procs`` and ``mksquashfs mem`` directives
+  in ``singularity.conf`` can be used to control its resource usage.
+* ``unsquashfs`` from squashfs-tools 4.3+ is used to extract the
+  squashfs container filesystem from a SIF file when necessary.
+* ``nvidia-container-cli`` is used to configure a container for Nvidia
+  GPU / CUDA support when running with the experimental ``--nvccli``
+  option.
+
+Searching $PATH
+---------------
+
+The following standard utilities are always found by searching
+``$PATH`` at runtime:
+
+* ``true``
+* ``mkfs.ext3`` is used to create overlay images.
+* ``cp``
+* ``dd``
+* ``newuidmap`` and ``newgidmap`` are distribution provided setuid
+  binaries used to configure subuid/gid mappings forr ``--fakeroot``
+  in non-setuid installs.
+
+Bootstrap Utilities
+-------------------
+
+The following utilities are required to bootstrap containerized
+distributions using their native tooling:
+
+* ``mount``, ``umount``, ``pacstrap`` for Arch Linux.
+* ``mount``, ``umount``, ``mknod``, ``debootstrap`` for Debian based
+  distributions.
+* ``dnf`` or ``yum``, ``rpm``, ``curl`` for EL derived RPM based
+  distributions.
+* ``uname``, ``zypper``, ``SUSEConnect`` for SLES derived RPM based
+  distributions.
+
+Non-standard ldconfig / Nix & Guix Environments
+===============================================
+
+If {Singularity} is installed under a package manager such as Nix or
+Guix, but on top of a standard Linux distribution (e.g. CentOS or
+Debian), it may be unable to correctly find the libraries for ``--nv``
+and ``--rocm`` GPU support. This issue occurs as the package manager
+supplies an alternative ``ldconfig``, which does not identify GPU
+libraries installed from host packages.
+
+To allow {Singularity} to locate the host (i.e. CentOS / Debian) GPU
+libraries correctly, set ``ldconfig path`` in ``singularity.conf`` to
+point to the host ``ldconfig``. I.E. it should be set to
+``/sbin/ldconfig`` or ``/sbin/ldconfig.real`` rather than a Nix or
+Guix related path.
 
 Filesystem support / limitations
 ================================
@@ -68,10 +145,10 @@ parallel / network filesystems. In general:
    runtime view of a container. You will not see these mounts from a
    host shell, as they are made in a separate mount namespace.
 
- 
+
 Overlay support
 ---------------
-   
+
 Various features of {Singularity}, such as the ``--writable-tmpfs`` and
 ``--overlay``, options use the Linux ``overlay`` filesystem driver to
 construct a container root filesystem that combines files from
@@ -227,7 +304,7 @@ On Red Hat Enterprise Linux or CentOS install the following dependencies:
         squashfs-tools \
         cryptsetup
 
-        
+
 On Ubuntu or Debian install the following dependencies:
 
 .. code-block:: sh
@@ -502,7 +579,7 @@ following:
      It is very important to set the local state directory to a
      directory that physically exists on nodes within a cluster when
      installing {Singularity} in an HPC environment with a shared file
-     system. 
+     system.
 
 Build an RPM from Git source
 ============================
@@ -512,7 +589,7 @@ can clone the repository, directly ``make`` an rpm, and use it to install
 Singularity:
 
 .. code-block:: none
-   
+
   $ ./mconfig && \
   make -C builddir rpm && \
   sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/singularity-{InstallationVersion}.el7.x86_64.rpm # or whatever version you built
@@ -640,16 +717,16 @@ targets from the ``builddir`` directory in the source tree:
     functionality.
 
     {Singularity} must be installed in order to run the full
-    test suite, as it must run the CLI with setuid privilege for the 
+    test suite, as it must run the CLI with setuid privilege for the
     ``starter-suid`` binary.
 
 .. warning::
-   
+
     ``sudo`` privilege is required to run the full tests, and you
     should not run the tests on a production system. We recommend
     running the tests in an isolated development or build
     environment.
-    
+
 ==============================
 Installation on Windows or Mac
 ==============================
@@ -691,7 +768,7 @@ To use Vagrant via Homebrew:
     $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     $ brew install --cask virtualbox vagrant vagrant-manager
 
--------------------------        
+-------------------------
 {Singularity} Vagrant Box
 -------------------------
 
@@ -732,7 +809,7 @@ You can check the installed version of {Singularity} with the following:
 Of course, you can also start with a plain OS Vagrant box as a base and then
 install {Singularity} using one of the above methods for Linux.
 
---------------------------        
+--------------------------
 {Singularity} Docker Image
 --------------------------
 
@@ -743,7 +820,7 @@ here is a sample ``compose.yaml`` (Singularity version 3.7.4) for use with Docke
 
     services:
       singularity:
-        image: quay.io/singularity/singularity:v3.7.4-slim 
+        image: quay.io/singularity/singularity:v3.7.4-slim
         stdin_open: true
         tty: true
         privileged: true

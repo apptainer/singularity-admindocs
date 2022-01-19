@@ -323,12 +323,8 @@ using an underlay. This is suitable for systems where overlay is not possible
 or not working. If the overlay option is available and working, it will be
 used instead.
 
-External Tooling Paths
-======================
-
-Internally, {Singularity} leverages several pieces of tooling in order to provide
-a wide breadth of features for users. Locations for these tools can be
-customized by system admins and referenced with the options below:
+CNI Configuration and Plugins
+=============================
 
 ``CNI CONFIGURATION PATH``:
 This option allows admins to specify a custom path for the CNI configuration
@@ -339,16 +335,48 @@ This option allows admins to specify a custom path for {Singularity} to access
 CNI plugin executables. Check out the `Network Virtualization <\{userdocs\}/networking.html>`_
 section of the user guide for more information.
 
-``MKSQUASHFS PATH``:
-This allows an admin to specify the location of ``mksquashfs`` if it is not
-installed in a standard location. If set, ``mksquashfs`` at this path will be
-used instead of a ``mksquashfs`` found in ``PATH``.
+External Binaries
+=================
 
-``CRYPTSETUP PATH``:
-The location for ``cryptsetup`` is recorded by {Singularity} at build time and
-will use that value if this is undefined. This option allows an admin to set
-the path of ``cryptsetup`` if it is located in a custom location and will
-override the value recorded at build time.
+{Singularity} calls a number of external binaries for full
+functionality. The paths for certain critical binaries can be set in
+``singularity.conf``. At build time, ``mconfig`` will set initial
+values for these, by searching on the ``$PATH`` environment
+variable. You can override which external binaries are called by
+changing the value in ``singularity.conf``. If left unset, ``$PATH``
+will be searched at runtime.
+
+``CRYPTSETUP PATH``: Path to the cryptsetup executable, used to work
+with encrypted containers. NOTE - cryptsetup is called as root, and is
+*required* to be owned by the root user for security reasons.
+
+``GO PATH``: Path to the go executable, used to compile plugins.
+
+``LDCONFIG PATH``: Path to the ldconfig executable, used to find GPU
+libraries.
+
+``MKSQUASHFS PATH``: Path to the mksquashfs executable, used to create
+SIF and SquashFS containers.
+
+``MKSQUASHFS PROCS``: Allows the administrator to specify the number
+of CPUs that mksquashfs may use when building an image.  The fewer
+processors the longer it takes.  To use all available CPU's set this
+to 0.
+
+``MKSQUASHFS MEM``: Allows the administrator to set the maximum amount
+of memory that mksquashfs nay use when building an image.  e.g. 1G for
+1gb or 500M for 500mb. Restricting memory can have a major impact on
+the time it takes mksquashfs to create the image.  NOTE: This
+fuctionality did not exist in squashfs-tools prior to version 4.3.  If
+using an earlier version you should not set this.
+
+``NVIDIA-CONTAINER-CLI PATH``: Path to the nvidia-container-cli
+executable, used to find GPU libraries and configure the container
+when running with the ``--nvccli`` option. Required to be owned by
+root, and is called as root in setuid installations.
+
+``UNSQUASHFS PATH``: Path to the unsquashfs executable, used to
+extract SIF and SquashFS containers.
 
 Updating Configuration Options
 ==============================
