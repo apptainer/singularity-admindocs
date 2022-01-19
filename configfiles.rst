@@ -30,7 +30,7 @@ Options are grouped together based on relevance, the order of options within
 Setuid and Capabilities
 =======================
 
-``ALLOW SETUID``:
+``allow setuid``:
 To use all features of {Singularity} containers, {Singularity} will need to have
 access to some privileged system calls. One way {Singularity} achieves this is by
 using binaries with the ``setuid`` bit enabled. This variable lets you
@@ -40,7 +40,7 @@ will not function. Please see
 :ref:`Unprivileged Installations <userns-limitations>` for more information
 about running {Singularity} without ``setuid`` enabled.
 
-``ROOT DEFAULT CAPABILITIES``:
+``root default capabilities``:
 {Singularity} allows the specification of capabilities kept by the root user
 when running a container by default. Options include:
 
@@ -61,11 +61,11 @@ Loop Devices
 {Singularity} uses loop devices to facilitate the mounting of container
 filesystems from SIF images.
 
-``MAX LOOP DEVICES``:
+``max loop devices``:
 This option allows an admin to limit the total number of loop devices
 {Singularity} will consume at a given time.
 
-``SHARED LOOP DEVICES``:
+``shared loop devices``:
 This allows containers running the same image to share a single loop device.
 This minimizes loop device usage and helps optimize kernel cache usage.
 Enabling this feature can be particularly useful for MPI jobs.
@@ -73,7 +73,7 @@ Enabling this feature can be particularly useful for MPI jobs.
 Namespace Options
 =================
 
-``ALLOW PID NS``:
+``allow pid ns``:
 This option determines if users can leverage the PID namespace when running
 their containers through the ``--pid`` flag.
 
@@ -92,22 +92,22 @@ configuration files within containers to ease usage across systems.
   These options will do nothing unless the file or directory path exists within
   the container or {Singularity} has either overlay or underlay support enabled.
 
-``CONFIG PASSWD``:
+``config passwd``:
 This option determines if {Singularity} should automatically append an entry to
 ``/etc/passwd`` for the user running the container.
 
-``CONFIG GROUP``:
+``config group``:
 This option determines if {Singularity} should automatically append the calling
 user's group entries to the containers ``/etc/group``.
 
-``CONFIG RESOLV_CONF``:
+``config resolv_conf``:
 This option determines if {Singularity} should automatically bind the host's
 ``/etc/resolv/conf`` within the container.
 
 Session Directory and System Mounts
 ===================================
 
-``SESSIONDIR MAX SIZE``:
+``sessiondir max size``:
 In order for the {Singularity} runtime to create a container it needs to create a
 ``sessiondir`` to manage various components of the container, including
 mounting filesystems over the base image filesystem. This option
@@ -116,20 +116,20 @@ only affect users who use the ``--contain`` options without also specifying a
 location to perform default read/writes to via the ``--workdir`` or ``--home``
 options.
 
-``MOUNT PROC``:
+``mount proc``:
 This option determines if {Singularity} should automatically bind mount ``/proc``
 within the container.
 
-``MOUNT SYS``:
+``mount sys``:
 This option determines if {Singularity} should automatically bind mount ``/sys``
 within the container.
 
-``MOUNT DEV``:
+``mount dev``:
 Should be set to "YES", if you want {Singularity} to automatically bind mount
 `/dev` within the container. If set to 'minimal', then only 'null', 'zero',
 'random', 'urandom', and 'shm' will be included.
 
-``MOUNT DEVPTS``:
+``mount devpts``:
 This option determines if {Singularity} will mount a new instance of ``devpts``
 when there is a ``minimal`` ``/dev`` directory as explained above, or when the
 ``--contain`` option is passed.
@@ -139,22 +139,22 @@ when there is a ``minimal`` ``/dev`` directory as explained above, or when the
   ``CONFIG_DEVPTS_MULTIPLE_INSTANCES=y``, or a kernel version at or newer than
   ``4.7``.
 
-``MOUNT HOME``:
+``mount home``:
 When this option is enabled, {Singularity} will automatically determine the
 calling user's home directory and attempt to mount it into the container.
 
-``MOUNT TMP``:
+``mount tmp``:
 When this option is enabled, {Singularity} will automatically bind mount
 ``/tmp`` and ``/var/tmp`` into the container from the host. If the
 ``--contain`` option is passed, {Singularity} will create both locations within
 the ``sessiondir`` or within the directory specified by the ``--workdir``
 option if that is passed as well.
 
-``MOUNT HOSTFS``:
+``mount hostfs``:
 This option will cause {Singularity} to probe the host for all mounted
 filesystems and bind those into containers at runtime.
 
-``MOUNT SLAVE``:
+``mount slave``:
 {Singularity} automatically mounts a handful host system directories to the
 container by default. This option determines if filesystem changes on the host
 should automatically be propogated to those directories in the container.
@@ -163,7 +163,7 @@ should automatically be propogated to those directories in the container.
   This should be set to ``yes`` when autofs mounts in the system should
   show up in the container.
 
-``MEMORY FS TYPE``:
+``memory fs type``:
 This option allows admins to choose the temporary filesystem used by
 {Singularity}. Temporary filesystems are primarily used for system
 directories like ``/dev`` when the host system directory is not mounted
@@ -178,7 +178,7 @@ within the container.
 Bind Mount Management
 =====================
 
-``BIND PATH``:
+``bind path``:
 This option is used for defining a list of files or directories to
 automatically be made available when {Singularity} runs a container.
 In order to successfully mount listed paths the file or directory path must
@@ -201,7 +201,7 @@ Or you can specify different source and destination locations using:
   bind path = /etc/singularity/default-nsswitch.conf:/etc/nsswitch.conf
 
 
-``USER BIND CONTROL``:
+``user bind control``:
 This allows admins to decide if users can define bind points at runtime.
 By Default, this option is set to ``YES``, which means users can specify bind
 points, scratch and tmp locations.
@@ -213,7 +213,7 @@ There are several ways to limit container execution as an admin listed below.
 If stricter controls are required, check out the
 :ref:`Execution Control List <execution_control_list>`.
 
-``LIMIT CONTAINER OWNERS``:
+``limit container owners``:
 This restricts container execution to only allow conatiners that are owned by
 the specified user.
 
@@ -222,7 +222,7 @@ the specified user.
   This feature will only apply when {Singularity} is running in SUID mode and the
   user is non-root. By default this is set to `NULL`.
 
-``LIMIT CONTAINER GROUPS``:
+``limit container groups``:
 This restricts container execution to only allow conatiners that are owned by
 the specified group.
 
@@ -231,7 +231,7 @@ the specified group.
   This feature will only apply when {Singularity} is running in SUID mode and the
   user is non-root. By default this is set to `NULL`.
 
-``LIMIT CONTAINER PATHS``:
+``limit container paths``:
 This restricts container execution to only allow containers that are located
 within the specified path prefix.
 
@@ -240,7 +240,7 @@ within the specified path prefix.
   This feature will only apply when {Singularity} is running in SUID mode and the
   user is non-root. By default this is set to `NULL`.
 
-``ALLOW CONTAINER ${TYPE}``:
+``allow container ${type}``:
 This option allows admins to limit the types of image formats that can be
 leveraged by users with {Singularity}. Formats include ``squashfs`` which is used
 by SIF and v2.x Singularity images, ``extfs`` which is used for writable
@@ -265,21 +265,21 @@ configurations may disrupt the host networking environment.
 ability to run containers with adminstrator specified CNI
 configurations.
 
-``ALLOW NET USERS``:
+``allow net users``:
 Allow specified root administered CNI network configurations to be used by the
 specified list of users. By default only root may use CNI configuration,
 except in the case of a fakeroot execution where only 40_fakeroot.conflist
 is used. This feature only applies when {Singularity} is running in
 SUID mode and the user is non-root.
 
-``ALLOW NET GROUPS``:
+``allow net groups``:
 Allow specified root administered CNI network configurations to be used by the
 specified list of users. By default only root may use CNI configuration,
 except in the case of a fakeroot execution where only 40_fakeroot.conflist
 is used. This feature only applies when {Singularity} is running in
 SUID mode and the user is non-root.
 
-``ALLOW NET NETWORKS``:
+``allow net networks``:
 Specify the names of CNI network configurations that may be used by users and
 groups listed in the allow net users / allow net groups directives. Thus feature
 only applies when {Singularity} is running in SUID mode and the user is non-root.
@@ -293,12 +293,12 @@ workloads seamlessly. Both options listed below are particularly useful in
 GPU only environments. For more information on using GPUs with Singularity
 checkout :ref:`GPU Library Configuration <gpu_library_configuration>`.
 
-``ALWAYS USE NV ${TYPE}``:
+``always use nv``:
 Enabling this option will cause every action command
 (``exec/shell/run/instance``) to be executed with the ``--nv`` option
 implicitly added.
 
-``ALWAYS USE ROCM ${TYPE}``:
+``always use rocm``:
 Enabling this option will cause every action command
 (``exec/shell/run/instance``) to be executed with the ``--rocm`` option
 implicitly added.
@@ -306,19 +306,19 @@ implicitly added.
 Supplemental Filesystems
 ========================
 
-``ENABLE FUSEMOUNT``:
+``enable fusemount``:
 This will allow users to mount fuse filesystems inside containers using the
 ``--fusemount`` flag.
 
-``ENABLE OVERLAY``:
+``enable overlay``:
 This option will allow {Singularity} to create bind mounts at paths that do not
 exist within the container image. This option can be set to ``try``, which will
 try to use an overlayfs. If it fails to create an overlayfs in this case the
 bind path will be silently ignored.
 
-``ENABLE UNDERLAY``:
+``enable underlay``:
 This option will allow {Singularity} to create bind mounts at paths that do not
-exist within the container image, just like ``ENABLE OVERLAY``, but instead
+exist within the container image, just like ``enable overlay``, but instead
 using an underlay. This is suitable for systems where overlay is not possible
 or not working. If the overlay option is available and working, it will be
 used instead.
@@ -326,11 +326,11 @@ used instead.
 CNI Configuration and Plugins
 =============================
 
-``CNI CONFIGURATION PATH``:
+``cni configuration path``:
 This option allows admins to specify a custom path for the CNI configuration
 that {Singularity} will use for `Network Virtualization <\{userdocs\}/networking.html>`_.
 
-``CNI PLUGIN PATH``:
+``cni plugin path``:
 This option allows admins to specify a custom path for {Singularity} to access
 CNI plugin executables. Check out the `Network Virtualization <\{userdocs\}/networking.html>`_
 section of the user guide for more information.
@@ -346,36 +346,36 @@ variable. You can override which external binaries are called by
 changing the value in ``singularity.conf``. If left unset, ``$PATH``
 will be searched at runtime.
 
-``CRYPTSETUP PATH``: Path to the cryptsetup executable, used to work
+``cryptsetup path``: Path to the cryptsetup executable, used to work
 with encrypted containers. NOTE - cryptsetup is called as root, and is
 *required* to be owned by the root user for security reasons.
 
-``GO PATH``: Path to the go executable, used to compile plugins.
+``go path``: Path to the go executable, used to compile plugins.
 
-``LDCONFIG PATH``: Path to the ldconfig executable, used to find GPU
+``ldconfig path``: Path to the ldconfig executable, used to find GPU
 libraries.
 
-``MKSQUASHFS PATH``: Path to the mksquashfs executable, used to create
+``mksquashfs path``: Path to the mksquashfs executable, used to create
 SIF and SquashFS containers.
 
-``MKSQUASHFS PROCS``: Allows the administrator to specify the number
+``mksquashfs procs``: Allows the administrator to specify the number
 of CPUs that mksquashfs may use when building an image.  The fewer
 processors the longer it takes.  To use all available CPU's set this
 to 0.
 
-``MKSQUASHFS MEM``: Allows the administrator to set the maximum amount
+``mksquashfs mem``: Allows the administrator to set the maximum amount
 of memory that mksquashfs nay use when building an image.  e.g. 1G for
 1gb or 500M for 500mb. Restricting memory can have a major impact on
 the time it takes mksquashfs to create the image.  NOTE: This
 fuctionality did not exist in squashfs-tools prior to version 4.3.  If
 using an earlier version you should not set this.
 
-``NVIDIA-CONTAINER-CLI PATH``: Path to the nvidia-container-cli
+``nvidia-container-cli path``: Path to the nvidia-container-cli
 executable, used to find GPU libraries and configure the container
 when running with the ``--nvccli`` option. Required to be owned by
 root, and is called as root in setuid installations.
 
-``UNSQUASHFS PATH``: Path to the unsquashfs executable, used to
+``unsquashfs path``: Path to the unsquashfs executable, used to
 extract SIF and SquashFS containers.
 
 Updating Configuration Options
@@ -390,7 +390,7 @@ administrator.
 Example
 -------
 
-In this example we will changing the ``BIND PATH`` option described above.
+In this example we will changing the ``bind path`` option described above.
 First we can see the current list of bind paths set within our system
 configuration:
 

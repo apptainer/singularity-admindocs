@@ -36,9 +36,6 @@ Full functionality of {Singularity} requires that the kernel supports:
    recommended) Required to run containers without root or setuid
    privilege.
 
-RHEL & CentOS 6 do not support these features, but {Singularity} can be
-used with some limitations.
-
 External Binaries
 =================
 
