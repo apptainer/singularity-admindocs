@@ -888,12 +888,11 @@ Conversely, to remove a system-wide endpoint:
 .. code-block:: none
 
     $ sudo singularity remote remove --global company-remote
-    [sudo] password for dave:
     INFO:    Remote "company-remote" removed.
 
 .. note::
 
-   Once users login to a system wide endpoint, a copy of the endpoint will be listed in
+   Once users log in to a system wide endpoint, a copy of the endpoint will be listed in
    a their ``~/.singularity/remote.yaml`` file. This means modifications or removal of
    the system-wide endpoint will not be reflected in the users configuration unless they
    remove the endpoint themselves.
