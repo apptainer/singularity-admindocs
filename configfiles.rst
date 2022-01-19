@@ -670,29 +670,67 @@ usage information is discussed in the `GPU Support` section of the
 NVIDIA GPUs / CUDA
 ==================
 
-If the `nvidia-container-cli
-<https://github.com/NVIDIA/libnvidia-container>`_ tool is installed on
-the host system, it will be used to locate any Nvidia libraries and
-binaries on the host system.
+By default, the ``nvliblist.conf`` configuration file is used to
+specify libraries and executables that need to be injected into the
+container when running {Singularity} with the ``--nv`` Nvidia GPU
+support option. The provided ``nvliblist.conf`` is suitable for CUDA
+11, but may need to be modified if you need to include additional
+libraries, or further libraries are added to newer versions of the
+Nvidia driver/CUDA distribution.
 
-If ``nvidia-container-cli`` is not present, the ``nvliblist.conf``
-file is used to specify libraries and executables that need to be
-injected into the container when running {Singularity} with the ``--nv``
-Nvidia GPU support option. The default ``nvliblist.conf`` is suitable
-for CUDA 10.1, but may need to be modified if you need to include
-additional libraries, or further libraries are added to newer versions
-of the Nvidia driver/CUDA distribution.
+When adding new entries to ``nvliblist.conf`` use the bare filename of
+executables, and the ``xxxx.so`` form of libraries. Libraries are
+resolved via ``ldconfig -p``, and exectuables are found by searching
+``$PATH``.
+
+Experimental nvidia-container-cli Support
+-----------------------------------------
+
+The `nvidia-container-cli
+<https://github.com/NVIDIA/libnvidia-container>`_ tool is Nvidia's
+officially support method for configuring containers to use a GPU. It
+is targeted at OCI container runtimes.
+
+{Singularity} 3.9 introduces an experimental ``--nvccli`` option,
+which will call out to ``nvidia-container-cli`` for container GPU
+setup, rather than use the ``nvliblist.conf`` approach.
+
+To use ``--nvccli`` a root-owned ``nvidia-container-cli`` binary must
+be present on the host. The binary that is run is controlled by the
+``nvidia-container-cli`` directive in ``singularity.conf``. During
+installation of {Singularity}, the ``./mconfig`` step will set the
+correct value in ``singularity.conf`` if ``nvidia-container-cli`` is
+found on the ``$PATH``. If the value of ``nvidia-container-cli path`` is
+empty, {Singularity} will look for the binary on ``$PATH`` at runtime.
+
+.. note::
+
+   To prevent use of ``nvidia-container-cli`` via the ``--nvccli``
+   flag, you may set ``nvidia-container-cli path`` to ``/bin/false``
+   in ``singularity.conf``.
+
+``nvidia-container-cli`` is run as the ``root`` user during setuid
+operation of {Singularity}. The container starter process grants a
+number of Linux capabilities to ``nvidia-container-cli``, which are
+required for it to configure the container for GPU operation. The
+operations performed by ``nvidia-container-cli`` are broadly similar
+to those which {Singularity} carries out when setting up a GPU
+container from ``nvliblist.conf``.
 
 AMD Radeon GPUs / ROCm
 ======================
 
 The ``rocmliblist.conf`` file is used to specify libraries and
 executables that need to be injected into the container when running
-{Singularity} with the ``--rocm`` Radeon GPU support option. The default
-``rocmliblist.conf`` is suitable for ROCm 2.10, but may need to modified
+{Singularity} with the ``--rocm`` Radeon GPU support option. The provided
+``rocmliblist.conf`` is suitable for ROCm 4.0, but may need to modified
 if you need to include additional libraries, or further libraries are
 added to newer versions of the ROCm distribution.
 
+When adding new entries to ``rocmlist.conf`` use the bare filename of
+executables, and the ``xxxx.so`` form of libraries. Libraries are
+resolved via ``ldconfig -p``, and exectuables are found by searching
+``$PATH``.
 
 GPU liblist format
 ==================
