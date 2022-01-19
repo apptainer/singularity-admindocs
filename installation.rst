@@ -424,7 +424,18 @@ review the :ref:`requirements <userns-requirements>` and
 :ref:`limitations <userns-limitations>` in the :ref:`user namespace
 <userns>` section of this guide.
 
-  
+Relocatable Installation
+========================
+
+Since {Singularity} 3.8, an unprivileged (non-setuid) installation is
+relocatable. As long as the structure inside the installation
+directory (``--prefix``) is maintained, it can be moved to a different
+location and {Singularity} will continue to run normally.
+
+Relocation of a default setuid installation is not supported, as
+restricted location / ownership of configuration files is important to
+security.
+
 Source bash completion file
 ===========================
 
