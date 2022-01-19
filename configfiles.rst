@@ -430,58 +430,97 @@ of the system.
 cgroups.toml
 ------------
 
-Cgroups or Control groups let you implement metering and limiting on the
-resources used by processes. You can limit memory, CPU. You can block IO,
-network IO, set SEL permissions for device nodes etc.
+The cgroups (control groups) functionality of the Linux kernel allows
+you to limit and meter the resources used by a process, or group of
+processes. Using cgroups you can limit memory and CPU usage. You can
+also rate limit block IO, network IO, and control access to device
+nodes.
+
+There are two versions of cgroups in common use. Cgroups v1 sets
+resource limits for a process within separate hierarchies per resource
+class. Cgroups v2, the default in newer Linux distributions,
+implements a unified hierarchy, simplifying the structure of resource
+limits on processes.
+
+* v1 documentation: https://www.kernel.org/doc/Documentation/cgroup-v1/cgroups.txt
+* v2 documentation: https://www.kernel.org/doc/Documentation/cgroup-v2.txt
+
+{Singularity} 3.9 and above can apply resource limitations to systems
+configured for both cgroups v1 and the v2 unified hierarchy. Resource
+limits are specified using a TOML file that represents the `resources`
+section of the OCI runtime-spec:
+https://github.com/opencontainers/runtime-spec/blob/master/config-linux.md#control-groups
+
+On a cgroups v1 system the resources configuration is applied
+directly. On a cgroups v2 system the configuration is translated and
+applied to the unified hierarchy.
+
+Under cgroups v1, access restrictions for device nodes are managed
+directly. Under cgroups v2, the restrictions are applied by attaching
+eBPF programs that implement the requested access controls.
 
 .. note::
 
-  The ``--apply-cgroups`` option can only be used with root privileges.
+   {Singularity} does not currently support applying native cgroups
+   v2 ``unified`` resource limit specifications. Use the cgroups v1
+   limits, which will be translated to v2 format when applied on a
+   cgroups v2 system.
+
 
 Examples
 ========
 
-When you are limiting resources, apply the settings in the TOML file by using
-the path as an argument to the ``--apply-cgroups`` option like so:
+To apply resource limits to a container, use the ``--apply-cgroups``
+flag, which takes a path to a TOML file specifying the cgroups
+configuration to be applied:
 
 .. code-block:: none
 
   $ sudo singularity shell --apply-cgroups /path/to/cgroups.toml my_container.sif
 
+.. note::
+
+  The ``--apply-cgroups`` option can only be used with root privileges.
 
 Limiting memory
-===============
-To limit the amount of memory that your container uses to 500MB (524288000 bytes):
+---------------
+
+To limit the amount of memory that your container uses to 500MB
+(524288000 bytes), set a ``limit`` value inside the ``[memory]``
+section of your cgroups TOML file:
 
 .. code-block:: none
 
   [memory]
       limit = 524288000
 
-Start your container like so:
+Start your container, applying the toml file, e.g.:
 
 .. code-block:: none
 
-  $ sudo singularity instance start --apply-cgroups path/to/cgroups.toml my_container.sif instance1
+  $ sudo singularity run --apply-cgroups path/to/cgroups.toml library://alpine
 
-After that, you can verify that the container is only using 500MB of memory.
-(This example assumes that ``instance1`` is the only running instance.)
+After that, you can verify that the container is only using 500MB of
+memory.  This example assumes that there is only one running
+container. If you are running multiple containers you will find
+multiple cgroups trees under the ``singularity`` directory.
 
 .. code-block:: none
 
+  # cgroups v1
   $ cat /sys/fs/cgroup/memory/singularity/*/memory.limit_in_bytes
     524288000
 
-Do not forget to stop your instances after configuring the options.
+  # cgroups v2 - note translation of memory.limit_in_bytes -> memory.max
+  $ cat /sys/fs/cgroup/singularity/*/memory.max
+  524288000
 
-Similarly, the remaining examples can be tested by starting instances and
-examining the contents of the appropriate subdirectories of ``/sys/fs/cgroup/``.
 
 Limiting CPU
-============
+------------
 
-Limit CPU resources using one of the following strategies. The ``cpu`` section
-of the configuration file can limit memory with the following:
+CPU usage can be limited using different strategies, with limits
+specified in the ``[cpu]`` section of the TOML file.
 
 **shares**
 
@@ -516,8 +555,8 @@ amount of CPU time to 20ms during period of 100ms:
 
 **cpus/mems**
 
-You can also restrict access to specific CPUs and associated memory nodes by
-using ``cpus/mems`` fields:
+You can also restrict access to specific CPUs (cores) and associated
+memory nodes by using ``cpus/mems`` fields:
 
 .. code-block:: none
 
@@ -533,10 +572,10 @@ Where container has limited access to CPU 0 and CPU 1.
 
 
 Limiting IO
-===========
+-----------
 
-You can limit and monitor access to I/O for block devices.  Use the
-``[blockIO]`` section of the configuration file to do this like so:
+To control block device I/O, applying limits to competing container,
+use the ``[blockIO]`` section of the TOML file:
 
 .. code-block:: none
 
@@ -553,8 +592,11 @@ unless overridden by a per device rule.
 weigh tasks in the given cgroup while competing with the cgroup's child
 cgroups.
 
-To override ``weight/leafWeight`` for ``/dev/loop0`` and ``/dev/loop1`` block
-devices you would do something like this:
+
+To apply limits to specific block devices, you must set configuration
+for specific device major/minor numbers. For example, to override
+``weight/leafWeight`` for ``/dev/loop0`` and ``/dev/loop1`` block
+devices, set limits for device major 7, minor 0 and 1:
 
 .. code-block:: none
 
@@ -570,9 +612,9 @@ devices you would do something like this:
           weight = 100
           leafWeight = 50
 
-You could limit the IO read/write rate to 16MB per second for the ``/dev/loop0``
-block device with the following configuration.  The rate is specified in bytes
-per second.
+You can also limit the IO read/write rate to a specific absolute
+value, e.g. 16MB per second for the ``/dev/loop0`` block device. The
+``rate`` is specified in bytes per second.
 
 .. code-block:: none
 
@@ -585,6 +627,19 @@ per second.
           major = 7
           minor = 0
           rate = 16777216
+
+Other limits
+------------
+
+{Singularity} can apply all resource limits that are valid in the OCI
+runtime-spec ``resources`` section, **except** native ``unified``
+cgroups v2 constraints. Use the cgroups v1 limits, which will be
+translated to v2 format when applied on a cgroups v1 system.
+
+See
+https://github.com/opencontainers/runtime-spec/blob/master/config-linux.md#control-groups
+for information about the available limits. Note that {Singularity}
+uses TOML format for the confiuration file, rather than JSON.
 
 .. _execution_control_list:
 
