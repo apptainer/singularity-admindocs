@@ -4,7 +4,7 @@
 Security in {Singularity} Containers
 ************************************
 
-Containers are all the rage today for many good reasons. They are light weight, easy to spin-up and require reduced IT management resources as compared to hardware VM environments. More importantly, container technology facilitates advanced research computing by granting the ability to package software in highly portable and reproducible environments encapsulating all dependencies, including the operating system. But there are still some challenges to container security.
+Containers are all the rage today for many good reasons. They are lightweight, easy to spin-up and require reduced IT management resources as compared to hardware VM environments. More importantly, container technology facilitates advanced research computing by granting the ability to package software in highly portable and reproducible environments encapsulating all dependencies, including the operating system. But there are still some challenges to container security.
 
 Singularity, which is a container paradigm created by necessity for scientific and application driven workloads, addresses some
 core missions of containers : Mobility of Compute, Reproducibility, HPC support, and **Security**. This document intends to inform
@@ -22,7 +22,7 @@ to prevent users from escalating privileges once they are inside of a container.
 for users to run containers and greatly simplifies things like reading and writing data to the host system with appropriate
 ownership.
 
-It is also important to note that the philosophy of {Singularity} is *Integration* over *Isolation*. Most container run times strive
+It is also important to note that the philosophy of {Singularity} is *Integration* over *Isolation*. Most container runtimes strive
 to isolate your container from the host system and other containers as much as possible. {Singularity}, on the
 other hand, assumes that the user’s primary goals are portability, reproducibility, and ease of use and that isolation is often a
 tertiary concern. Therefore, {Singularity} only isolates the mount namespace by default, and will also bind mount several host
@@ -108,7 +108,7 @@ cgroups support
 ****************
 
 {Singularity} provides native support for ``cgroups``, allowing users to limit the resources their containers consume
-without the help of a separate program like a batch scheduling system. This feature helps in preventing  DoS attacks where one
+without the help of a separate program like a batch scheduling system. This feature helps in preventing DoS attacks where one
 container seizes control of all available system resources in order to stop other containers from operating properly.
 To utilize this feature, a user first creates a configuration file. An example configuration file is installed by default with
 {Singularity} to provide a guide. At runtime, the ``--apply-cgroups`` option is used to specify the location of the configuration
@@ -126,7 +126,7 @@ grained control of security. Details about them are documented `here <\{userdocs
 Security in SCS
 ###############
 
-`Singularity Container Services (SCS) <https://cloud.sylabs.io/home>`_ consist of a Remote Builder, a Container Library, and a
+`Singularity Container Services (SCS) <https://cloud.sylabs.io>` consist of a Remote Builder, a Container Library, and a
 Keystore. Taken together, the Singularity Container Services provide an end-to-end solution for packaging and distributing
 applications in secure and trusted containers.
 
