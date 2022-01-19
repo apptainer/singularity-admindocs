@@ -670,7 +670,7 @@ usage information is discussed in the `GPU Support` section of the
 NVIDIA GPUs / CUDA
 ==================
 
-By default, the ``nvliblist.conf`` configuration file is used to
+The ``nvliblist.conf`` configuration file is used to
 specify libraries and executables that need to be injected into the
 container when running {Singularity} with the ``--nv`` Nvidia GPU
 support option. The provided ``nvliblist.conf`` is suitable for CUDA
