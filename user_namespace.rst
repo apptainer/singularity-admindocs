@@ -26,14 +26,15 @@ without being root on the host outside.
    building or running a container.
 
 .. _userns-requirements:
-   
+
 ---------------------------
 User Namespace Requirements
 ---------------------------
 
 To allow unprivileged creation of user namespaces a kernel >=3.8 is
 required, with >=3.18 being recommended due to security fixes for user
-namespaces (3.18 also adds OverlayFS support which is used by Singularity).
+namespaces (3.18 also adds OverlayFS support which is used by
+Singularity).
 
 Additionally, some Linux distributions require that unprivileged user
 namespace creation is enabled using a ``sysctl`` or kernel command
@@ -62,9 +63,9 @@ From 7.4, kernel support is included but must be enabled with:
   sudo sysctl -p /etc/sysctl.d /etc/sysctl.d/90-max_net_namespaces.conf
 
 .. _userns-limitations:
-  
+
 --------------------------
-Unprivileged Installations  
+Unprivileged Installations
 --------------------------
 
 As detailed in the :ref:`non-setuid installation <install-nonsetuid>`
@@ -72,10 +73,10 @@ section, {Singularity} can be compiled or configured with the ``allow
 setuid = no`` option in ``singularity.conf`` to not perform privileged
 operations using the ``starter-setuid`` binary.
 
-When {Singularity} does not use ``setuid`` all container execution will
-use a user namespace. In this mode of operation, some features are not
-available, and there are impacts to the security/integrity guarantees
-when running SIF container images:
+When {Singularity} does not use ``setuid`` all container execution
+will use a user namespace. In this mode of operation, some features
+are not available, and there are impacts to the security/integrity
+guarantees when running SIF container images:
 
  - All containers must be run from sandbox directories. SIF images are
    extracted to a sandbox directory on the fly, preventing
@@ -127,8 +128,8 @@ In addition to user namespace support, {Singularity} must manipulate
 default this happens transparently in the setuid workflow. With
 unprivileged installations of {Singularity} or where ``allow setuid =
 no`` is set in ``singularity.conf``, {Singularity} attempts to use
-external setuid binaries ``newuidmap`` and ``newgidmap``, so you
-need to install those binaries on your system.
+external setuid binaries ``newuidmap`` and ``newgidmap``, so you need
+to install those binaries on your system.
 
 
 Basics
@@ -172,8 +173,8 @@ Same for ``/etc/subgid``:
 
 .. warning::
 
-  {Singularity} requires that a range of at least ``65536`` IDs is used
-  for each mapping. Larger ranges may be defined without error.
+  {Singularity} requires that a range of at least ``65536`` IDs is
+  used for each mapping. Larger ranges may be defined without error.
 
   It is also important to ensure that the subuid and subgid ranges
   defined in these files don't overlap with eachother, or any real
@@ -259,17 +260,17 @@ configured to use a network veth pair.
   the network.
 
 .. _config-fakeroot:
-  
+
 Configuration with ``config fakeroot``
 ======================================
 
-{Singularity} 3.5 and above provides a ``config fakeroot`` command that
-can be used by a root user to administer local system ``/etc/subuid``
-and ``/etc/subgid`` files in a simple manner. This allows users to be
-granted the ability to use Singularity's fakeroot functionality
-without editing the files manually. The ``config fakeroot`` command
-will automatically ensure that generated subuid/subgid ranges are an
-approriate size, and do not overlap.
+{Singularity} 3.5 and above provides a ``config fakeroot`` command
+that can be used by a root user to administer local system
+``/etc/subuid`` and ``/etc/subgid`` files in a simple manner. This
+allows users to be granted the ability to use Singularity's fakeroot
+functionality without editing the files manually. The ``config
+fakeroot`` command will automatically ensure that generated
+subuid/subgid ranges are an approriate size, and do not overlap.
 
 ``config fakeroot`` must be run as the ``root`` user, or via ``sudo
 singularity config fakeroot`` as the ``/etc/subuid`` and
@@ -293,15 +294,16 @@ existing mappings.
 Adding a fakeroot mapping
 --------------------------
 
-Use the ``-a/--add <user>`` option to ``config fakeroot`` to create new
-mapping entries so that ``<user>`` can use the fakeroot feature of Singularity:
- 
+Use the ``-a/--add <user>`` option to ``config fakeroot`` to create
+new mapping entries so that ``<user>`` can use the fakeroot feature of
+Singularity:
+
  .. code-block:: none
 
   $ sudo singularity config fakeroot --add dave
 
   # Show generated `/etc/subuid`
-  $ cat /etc/subuid 
+  $ cat /etc/subuid
   1000:4294836224:65536
 
   # Show generated `/etc/subgid`
@@ -315,7 +317,7 @@ mapping entries so that ``<user>`` can use the fakeroot feature of Singularity:
  with real UIDs on most systems.
 
 .. note::
-  
+
    The ``config fakeroot`` command generates mappings specified using
    the user's uid, rather than their username. This is the preferred
    format for faster lookups when configuring a large number of
@@ -323,7 +325,7 @@ mapping entries so that ``<user>`` can use the fakeroot feature of Singularity:
    username.
 
 
-Deleting, disabling, enabling mappings 
+Deleting, disabling, enabling mappings
 --------------------------------------
 
 Use the ``-r/--remove <user>`` option to ``config fakeroot`` to
@@ -341,7 +343,7 @@ able to use the fakeroot feature of Singularity:
    the prior user that were created with this mapping will be
    accessible to the new user via fakeroot.
 
-  
+
 The ``-d/--disable`` and ``-e/--enable`` options will comment and
 uncomment entries in the mapping files, to temporarily disable and
 subsequently re-enable fakeroot functionality for a user. This can be
@@ -360,8 +362,7 @@ user.
 
   # Enable dave
   $ sudo singularity config fakeroot --enable dave
-  
+
   # Entry is active
   $ cat /etc/subuid
   1000:4294836224:65536
-  

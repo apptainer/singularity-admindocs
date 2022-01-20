@@ -5,9 +5,10 @@ Installing {Singularity}
 ########################
 
 This section will guide you through the process of installing
-{Singularity} {InstallationVersion} via several different methods. (For
-instructions on installing earlier versions of {Singularity} please see
-`earlier versions of the docs <https://singularity.hpcng.org/docs/>`_.)
+{Singularity} {InstallationVersion} via several different
+methods. (For instructions on installing earlier versions of
+{Singularity} please see `earlier versions of the docs
+<https://singularity.hpcng.org/docs/>`_.)
 
 =====================
 Installation on Linux
@@ -202,8 +203,8 @@ The directory used for ``SINGULARITY_CACHEDIR`` should be:
  - A unique location for each user. Permissions are set on the cache
    so that private images cached for one user are not exposed to
    another. This means that ``SINGULARITY_CACHEDIR`` cannot be shared.
- - Located on a filesystem with sufficient space for the number and size of
-   container images anticipated.
+ - Located on a filesystem with sufficient space for the number and
+   size of container images anticipated.
  - Located on a filesystem that supports atomic rename, if possible.
 
 In {Singularity} version 3.6 and above the cache is concurrency safe.
@@ -219,9 +220,9 @@ atomic to a single client, not across systems accessing the same NFS
 share.
 
 If you are not certain that your ``$HOME`` or ``SINGULARITY_CACHEDIR``
-filesytems support atomic rename, do not run ``singularity`` in parallel
-using remote container URLs. Instead use ``singularity pull`` to
-create a local SIF image, and then run this SIF image in a parallel
+filesytems support atomic rename, do not run ``singularity`` in
+parallel using remote container URLs. Instead use ``singularity pull``
+to create a local SIF image, and then run this SIF image in a parallel
 step. An alternative is to use the ``--disable-cache`` option, but
 this will result in each {Singularity} instance independently fetching
 the container from the remote source, into a temporary location.
@@ -230,8 +231,8 @@ the container from the remote source, into a temporary location.
 NFS
 ---
 
-NFS filesystems support overlay mounts as a ``lowerdir`` only, and do not
-support user-namespace (sub)uid/gid mapping.
+NFS filesystems support overlay mounts as a ``lowerdir`` only, and do
+not support user-namespace (sub)uid/gid mapping.
 
  - Containers run from SIF files located on an NFS filesystem do not
    have restrictions.
@@ -279,15 +280,16 @@ dependencies and install `Go <https://golang.org/>`_.
 Install from Source
 -------------------
 
-To use the latest version of {Singularity} from GitHub you will need to
-build and install it from source. This may sound daunting, but the
+To use the latest version of {Singularity} from GitHub you will need
+to build and install it from source. This may sound daunting, but the
 process is straightforward, and detailed below:
 
 
 Install Dependencies
 ====================
 
-On Red Hat Enterprise Linux or CentOS install the following dependencies:
+On Red Hat Enterprise Linux or CentOS install the following
+dependencies:
 
 .. code-block:: sh
 
@@ -319,8 +321,9 @@ On Ubuntu or Debian install the following dependencies:
 
 .. note::
 
-   You can build {Singularity} (3.5+) without ``cryptsetup`` available, but will
-   not be able to use encrypted containers without it installed on your system.
+   You can build {Singularity} (3.5+) without ``cryptsetup``
+   available, but will not be able to use encrypted containers without
+   it installed on your system.
 
 .. _install-go:
 
@@ -344,10 +347,10 @@ This is one of several ways to `install and configure Go
    versions.
 
 
-Visit the `Go download page <https://golang.org/dl/>`_ and pick a package
-archive to download. Copy the link address and download with wget.  Then extract
-the archive to ``/usr/local`` (or use other instructions on go installation
-page).
+Visit the `Go download page <https://golang.org/dl/>`_ and pick a
+package archive to download. Copy the link address and download with
+wget.  Then extract the archive to ``/usr/local`` (or use other
+instructions on go installation page).
 
 .. code-block:: none
 
@@ -383,8 +386,8 @@ with the installation.
 Checkout Code from Git
 ======================
 
-The following commands will install {Singularity} from the `GitHub repo
-<https://github.com/hpcng/singularity>`_ to ``/usr/local``. This
+The following commands will install {Singularity} from the `GitHub
+repo <https://github.com/hpcng/singularity>`_ to ``/usr/local``. This
 method will work for >=v{InstallationVersion}. To install an older
 tagged release see `older versions of the docs
 <https://singularity.hpcng.org/docs/>`_.
@@ -476,8 +479,8 @@ building {Singularity} from source.
 Unprivileged (non-setuid) Installation
 ======================================
 
-If you need to install {Singularity} as a non-root user, or do not wish
-to allow the use of a setuid root binary, you can configure
+If you need to install {Singularity} as a non-root user, or do not
+wish to allow the use of a setuid root binary, you can configure
 {Singularity} with the ``--without-suid`` option to mconfig:
 
 .. code-block:: none
@@ -491,8 +494,8 @@ flow by setting the option ``allow setuid = no`` in
 ``etc/singularity/singularity.conf`` within your installation
 directory.
 
-When {Singularity} does not use setuid all container execution will use
-a user namespace. This requires support from your operating system
+When {Singularity} does not use setuid all container execution will
+use a user namespace. This requires support from your operating system
 kernel, and imposes some limitations on functionality. You should
 review the :ref:`requirements <userns-requirements>` and
 :ref:`limitations <userns-limitations>` in the :ref:`user namespace
@@ -513,16 +516,16 @@ security.
 Source bash completion file
 ===========================
 
-To enjoy bash shell completion with {Singularity} commands and options,
-source the bash completion file:
+To enjoy bash shell completion with {Singularity} commands and
+options, source the bash completion file:
 
 .. code-block:: none
 
     $ . /usr/local/etc/bash_completion.d/singularity
 
 Add this command to your `~/.bashrc` file so that bash completion
-continues to work in new shells.  (Adjust the path if you
-installed {Singularity} to a different location.)
+continues to work in new shells.  (Adjust the path if you installed
+{Singularity} to a different location.)
 
 .. _install-rpm:
 
@@ -582,8 +585,8 @@ Build an RPM from Git source
 ============================
 
 Alternatively, to build an RPM from a branch of the Git repository you
-can clone the repository, directly ``make`` an rpm, and use it to install
-Singularity:
+can clone the repository, directly ``make`` an rpm, and use it to
+install Singularity:
 
 .. code-block:: none
 
@@ -624,8 +627,8 @@ directories to completely remove {Singularity}.
         /usr/local/bin/run-singularity \
         /usr/local/etc/bash_completion.d/singularity
 
-If you anticipate needing to remove {Singularity}, it might be easier to
-install it in a custom directory using the ``--prefix`` option to
+If you anticipate needing to remove {Singularity}, it might be easier
+to install it in a custom directory using the ``--prefix`` option to
 ``mconfig``.  In that case {Singularity} can be uninstalled simply by
 deleting the parent directory. Or it may be useful to install
 {Singularity} :ref:`using a package manager <install-rpm>` so that it
@@ -713,16 +716,15 @@ targets from the ``builddir`` directory in the source tree:
     and ``nc`` in order to test docker and instance/networking
     functionality.
 
-    {Singularity} must be installed in order to run the full
-    test suite, as it must run the CLI with setuid privilege for the
+    {Singularity} must be installed in order to run the full test
+    suite, as it must run the CLI with setuid privilege for the
     ``starter-suid`` binary.
 
 .. warning::
 
     ``sudo`` privilege is required to run the full tests, and you
     should not run the tests on a production system. We recommend
-    running the tests in an isolated development or build
-    environment.
+    running the tests in an isolated development or build environment.
 
 ==============================
 Installation on Windows or Mac
@@ -731,12 +733,12 @@ Installation on Windows or Mac
 Linux container runtimes like {Singularity} cannot run natively on
 Windows or Mac because of basic incompatibilities with the host
 kernel. (Contrary to a popular misconception, MacOS does not run on a
-Linux kernel. It runs on a kernel called Darwin originally forked
-from BSD.)
+Linux kernel. It runs on a kernel called Darwin originally forked from
+BSD.)
 
-For this reason, the {Singularity} community maintains a set of Vagrant
-Boxes via `Vagrant Cloud <https://www.vagrantup.com/>`__, one of
-`Hashicorp's <https://www.hashicorp.com/#open-source-tools>`_ open
+For this reason, the {Singularity} community maintains a set of
+Vagrant Boxes via `Vagrant Cloud <https://www.vagrantup.com/>`__, one
+of `Hashicorp's <https://www.hashicorp.com/#open-source-tools>`_ open
 source tools. The current versions can be found under the `sylabs
 <https://app.vagrantup.com/sylabs>`_ organization.
 
@@ -755,8 +757,8 @@ Install the following programs:
 Mac
 ---
 
-Singularity is available via Vagrant (installable with
-`Homebrew <https://brew.sh>`_ or manually)
+Singularity is available via Vagrant (installable with `Homebrew
+<https://brew.sh>`_ or manually)
 
 To use Vagrant via Homebrew:
 
@@ -777,16 +779,17 @@ directory to be used with your Vagrant VM.
     $ mkdir vm-singularity && \
         cd vm-singularity
 
-If you have already created and used this folder for another VM, you will need
-to destroy the VM and delete the Vagrantfile.
+If you have already created and used this folder for another VM, you
+will need to destroy the VM and delete the Vagrantfile.
 
 .. code-block:: none
 
     $ vagrant destroy && \
         rm Vagrantfile
 
-Then issue the following commands to bring up the Virtual Machine. (Substitute a
-different value for the ``$VM`` variable if you like.)
+Then issue the following commands to bring up the Virtual
+Machine. (Substitute a different value for the ``$VM`` variable if you
+like.)
 
 .. code-block:: none
 
@@ -795,7 +798,8 @@ different value for the ``$VM`` variable if you like.)
         vagrant up && \
         vagrant ssh
 
-You can check the installed version of {Singularity} with the following:
+You can check the installed version of {Singularity} with the
+following:
 
 .. code-block:: none
 
@@ -803,15 +807,17 @@ You can check the installed version of {Singularity} with the following:
     {InstallationVersion}
 
 
-Of course, you can also start with a plain OS Vagrant box as a base and then
-install {Singularity} using one of the above methods for Linux.
+Of course, you can also start with a plain OS Vagrant box as a base
+and then install {Singularity} using one of the above methods for
+Linux.
 
 --------------------------
 {Singularity} Docker Image
 --------------------------
 
-It is possible to use a Dockerized Singularity,
-here is a sample ``compose.yaml`` (Singularity version 3.7.4) for use with Docker Compose:
+It is possible to use a Dockerized Singularity, here is a sample
+``compose.yaml`` (Singularity version 3.7.4) for use with Docker
+Compose:
 
 .. code-block:: none
 
@@ -825,9 +831,11 @@ here is a sample ``compose.yaml`` (Singularity version 3.7.4) for use with Docke
           - .:/root
         entrypoint: ["/bin/sh"]
 
-Singularity in Docker can have various disadvantages,
-but basic container operations will work.
-Currently, the intended use case is continuous integration,
-meaning that you should be able to build a Singularity container using this Docker Compose file.
-For more information see `issue#5 <https://github.com/sylabs/singularity-admindocs/issues/5#issuecomment-852307931>`_
-and the image's source `repo <https://github.com/singularityhub/singularity-docker#use-cases>`_
+Singularity in Docker can have various disadvantages, but basic
+container operations will work.  Currently, the intended use case is
+continuous integration, meaning that you should be able to build a
+Singularity container using this Docker Compose file.  For more
+information see `issue#5
+<https://github.com/sylabs/singularity-admindocs/issues/5#issuecomment-852307931>`_
+and the image's source `repo
+<https://github.com/singularityhub/singularity-docker#use-cases>`_

@@ -2,8 +2,8 @@
 Admin Quick Start
 =================
 
-This quick start gives an overview of installation of {Singularity} from
-source, a description of the architecture of {Singularity}, and
+This quick start gives an overview of installation of {Singularity}
+from source, a description of the architecture of {Singularity}, and
 pointers to configuration files. More information, including alternate
 installation options and detailed configuration options can be found
 later in this guide.
@@ -14,10 +14,10 @@ later in this guide.
 Architecture of {Singularity}
 -----------------------------
 
-{Singularity} is designed to allow containers to be executed as if they
-were native programs or scripts on a host system. No daemon is
-required to build or run containers, and the security model is compatible
-with shared systems.
+{Singularity} is designed to allow containers to be executed as if
+they were native programs or scripts on a host system. No daemon is
+required to build or run containers, and the security model is
+compatible with shared systems.
 
 As a result, integration with clusters and schedulers such as Univa
 Grid Engine, Torque, SLURM, SGE, and many others is as simple as
@@ -62,8 +62,9 @@ features include:
    without extraction to disk. This means that the container can
    always be verified, even at runtime, and encrypted content is not
    exposed on disk.
- - Restrictions can be configured to limit the ownership, location, and
-   cryptographic signatures of containers that are permitted to be run.
+ - Restrictions can be configured to limit the ownership, location,
+   and cryptographic signatures of containers that are permitted to be
+   run.
 
 To support the SIF image format, automated networking setup etc., and
 older Linux distributions without user namespace support, Singularity
@@ -82,36 +83,38 @@ but :ref:`can be disabled <install-nonsetuid>` on build, or in the
    images. This impacts integrity/security guarantees of containers at
    runtime.
 
-   See the :ref:`non-setuid installation section <install-nonsetuid>` for further
-   detail on how to install {Singularity} to run in non-setuid mode.
+   See the :ref:`non-setuid installation section <install-nonsetuid>`
+   for further detail on how to install {Singularity} to run in
+   non-setuid mode.
 
 ------------------------
 Installation from Source
 ------------------------
 
-{Singularity} can be installed from source directly,
-or by building an RPM package from the source. Linux
-distributions may also package {Singularity}, but their packages may not be
-up-to-date with the upstream version on GitHub.
+{Singularity} can be installed from source directly, or by building an
+RPM package from the source. Linux distributions may also package
+{Singularity}, but their packages may not be up-to-date with the
+upstream version on GitHub.
 
 To install {Singularity} directly from source, follow the procedure
 below. Other methods are discussed in the :ref:`Installation
 <installation>` section.
 
 .. Note::
-   
-    This quick-start that you will install as ``root`` using
-    ``sudo``, so that {Singularity} uses the default ``setuid``
-    workflow, and all features are available. See the :ref:`non-setuid
-    installation <install-nonsetuid>` section of this guide for detail
-    of how to install as a non-root user, and how this affects the
-    functionality of {Singularity}.
 
- 
+    This quick-start that you will install as ``root`` using ``sudo``,
+    so that {Singularity} uses the default ``setuid`` workflow, and
+    all features are available. See the :ref:`non-setuid installation
+    <install-nonsetuid>` section of this guide for detail of how to
+    install as a non-root user, and how this affects the functionality
+    of {Singularity}.
+
+
 Install Dependencies
 --------------------
 
-On Red Hat Enterprise Linux or CentOS install the following dependencies:
+On Red Hat Enterprise Linux or CentOS install the following
+dependencies:
 
 .. code-block:: sh
 
@@ -125,7 +128,7 @@ On Red Hat Enterprise Linux or CentOS install the following dependencies:
         squashfs-tools \
         cryptsetup
 
-        
+
 On Ubuntu or Debian install the following dependencies:
 
 .. code-block:: sh
@@ -162,10 +165,10 @@ The method below is one of several ways to `install and configure Go
    versions.
 
 
-Visit the `Go download page <https://golang.org/dl/>`_ and pick a package
-archive to download. Copy the link address and download with wget.  Then extract
-the archive to ``/usr/local`` (or use other instructions on go installation
-page).
+Visit the `Go download page <https://golang.org/dl/>`_ and pick a
+package archive to download. Copy the link address and download with
+wget.  Then extract the archive to ``/usr/local`` (or use other
+instructions on go installation page).
 
 .. code-block:: none
 
@@ -186,10 +189,11 @@ Then, set up your environment for Go.
 Download {Singularity} from a GitHub release
 --------------------------------------------
 
-You can download {Singularity} from one of the releases. To see a full list, visit
-`the GitHub release page <https://github.com/hpcng/singularity/releases>`_.
-After deciding on a release to install, you can run the following commands to
-proceed with the installation.
+You can download {Singularity} from one of the releases. To see a full
+list, visit `the GitHub release page
+<https://github.com/hpcng/singularity/releases>`_.  After deciding on
+a release to install, you can run the following commands to proceed
+with the installation.
 
 .. code-block:: none
 
@@ -202,8 +206,9 @@ proceed with the installation.
 Compile & Install {Singularity}
 -------------------------------
 
-{Singularity} uses a custom build system called ``makeit``.  ``mconfig`` is called
-to generate a ``Makefile`` and then ``make`` is used to compile and install.
+{Singularity} uses a custom build system called ``makeit``.
+``mconfig`` is called to generate a ``Makefile`` and then ``make`` is
+used to compile and install.
 
 .. code-block:: none
 
@@ -211,17 +216,18 @@ to generate a ``Makefile`` and then ``make`` is used to compile and install.
         make -C ./builddir && \
         sudo make -C ./builddir install
 
-By default {Singularity} will be installed in the ``/usr/local`` directory
-hierarchy. You can specify a custom directory with the ``--prefix`` option, to
-``mconfig``:
+By default {Singularity} will be installed in the ``/usr/local``
+directory hierarchy. You can specify a custom directory with the
+``--prefix`` option, to ``mconfig``:
 
 .. code-block:: none
 
     $ ./mconfig --prefix=/opt/singularity
 
 This option can be useful if you want to install multiple versions of
-Singularity, install a personal version of {Singularity} on a shared system, or if
-you want to remove {Singularity} easily after installing it.
+Singularity, install a personal version of {Singularity} on a shared
+system, or if you want to remove {Singularity} easily after installing
+it.
 
 For a full list of ``mconfig`` options, run ``mconfig --help``.  Here
 are some of the most common options that you may need to use when
