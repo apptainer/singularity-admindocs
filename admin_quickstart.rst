@@ -172,7 +172,7 @@ instructions on go installation page).
 
 .. code-block:: none
 
-    $ export VERSION=1.14.12 OS=linux ARCH=amd64 && \
+    $ export VERSION={GoVersion} OS=linux ARCH=amd64 && \
         wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \
         sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \
         rm go$VERSION.$OS-$ARCH.tar.gz
