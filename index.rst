@@ -19,7 +19,7 @@ information about how to use {Singularity}.
    Installing {Singularity} <installation>
    Configuration files <configfiles>
    User Namespaces & Fakeroot <user_namespace>
-   Container Security <security>
+   Security in {Singularity} <security>
 
    Appendix <appendix>
    License <license>

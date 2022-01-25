@@ -42,6 +42,11 @@ namespaces and other security and resource limits to accomplish this.
  {Singularity} Security
 ************************
 
+.. note::
+
+   See also the :ref:`security section <security>` of this guide, for more
+   detail.
+
 {Singularity} uses a number of strategies to provide safety and
 ease-of-use on both single-user and shared systems. Notable security
 features include:
