@@ -14,7 +14,7 @@ def variableReplace(app, docname, source):
 variable_replacements = {
     # This is used in install instructions, so should be a full version
     "{InstallationVersion}" : "3.8.5",
-    "\{userdocs\}" : "https://singularity.hpcng.org/user-docs/3.8",
+    "{userdocs}" : "https://singularity.hpcng.org/user-docs/3.8",
     # The versions in the published guide URLs are for major.minor only
     "{adminversion}": "3.8",
     "{userversion}": "3.8",

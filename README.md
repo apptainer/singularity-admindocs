@@ -61,43 +61,31 @@ Some hints on how to write stuff on RST are described in this section.
 
 #### **1. Create a section/subsection/subsubsection title**
 
-Sections are all described as plain text, but have specific
-notations/underlining for titles and subtitles, very similar to Markup Language.
+Section titles are defined by surrounding or underlining them with different
+characters. Each combination of overline/underline and character used represents
+a different level section. We follow the conventions used by the python
+documentation for headers:
 
-- To create a main section title: A main section title is described as a
-surrounded text (above and below) of ``=`` characters. Like in the following
-example:
+```rst
+##################
+H1: document title
+##################
 
-```sh
-================
-New Main Section
-================
-```
+*********
+Sample H2
+*********
 
-- To create a sub-section: A sub section title is described as a surrounded text
-(above and below) of ``-`` characters. Like in the following example:
+Sample H3
+=========
 
-```sh
----------------
-New Sub section
----------------
-```
+Sample H4
+---------
 
-- To create a sub-sub-section: A sub-sub section title is described as a text
-underlined by ``=`` characters. Like in the following example:
+Sample H5
+^^^^^^^^^
 
-```sh
-New sub-sub section
-===================
-```
-
-- Last but not least, could happen that you would need to insert a sub-sub-sub
-section, in that case the title is described as a text underlined by ``-``
-characters. Like in the following example:
-
-```sh
-New sub-sub-sub section
------------------------
+Sample H6
+"""""""""
 ```
 
 #### 2. Reference sections
