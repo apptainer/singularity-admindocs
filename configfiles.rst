@@ -341,17 +341,22 @@ functionality. The paths for certain critical binaries can be set in
 ``singularity.conf``. At build time, ``mconfig`` will set initial values
 for these, by searching on the ``$PATH`` environment variable. You can
 override which external binaries are called by changing the value in
-``singularity.conf``. If left unset, ``$PATH`` will be searched at
-runtime.
+``singularity.conf``.
 
-``cryptsetup path``: Path to the cryptsetup executable, used to work
-with encrypted containers. NOTE - cryptsetup is called as root, and is
-*required* to be owned by the root user for security reasons.
+``cryptsetup path``: Path to the cryptsetup executable, used to work with
+encrypted containers. Must be owned by root for security reasons.
+
+``ldconfig path``: Path to the ldconfig executable, used to find GPU libraries.
+Must be owned by root for security reasons.
+
+``nvidia-container-cli path``: Path to the nvidia-container-cli executable, used
+to find GPU libraries and configure the container when running with the
+``--nvccli`` option.
+
+For the following additional binaries, if the ``singularity.conf`` entry is left
+blank, then ``$PATH`` will be searched at runtime.
 
 ``go path``: Path to the go executable, used to compile plugins.
-
-``ldconfig path``: Path to the ldconfig executable, used to find GPU
-libraries.
 
 ``mksquashfs path``: Path to the mksquashfs executable, used to create
 SIF and SquashFS containers.
@@ -367,11 +372,6 @@ of memory that mksquashfs nay use when building an image. e.g. 1G for
 time it takes mksquashfs to create the image. NOTE: This fuctionality
 did not exist in squashfs-tools prior to version 4.3. If using an
 earlier version you should not set this.
-
-``nvidia-container-cli path``: Path to the nvidia-container-cli
-executable, used to find GPU libraries and configure the container when
-running with the ``--nvccli`` option. Required to be owned by root, and
-is called as root in setuid installations.
 
 ``unsquashfs path``: Path to the unsquashfs executable, used to extract
 SIF and SquashFS containers.
