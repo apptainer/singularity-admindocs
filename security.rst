@@ -20,14 +20,6 @@ all users to monitor new releases of {Singularity} for security
 information. Security patches are applied to the latest open-source
 release.
 
-SingularityPRO is a professionally curated and licensed version of
-{Singularity} that provides added security, stability, and support
-beyond that offered by the open source project. Security and bug-fix
-patches are backported to select versions of SingularityPRO, so that
-they can be deployed long-term where required. PRO users receive
-security fixes as detailed in the `Apptainer Security Policy
-<https://apptainer.org/security-policy/>`__.
-
 ************
  Background
 ************
@@ -75,13 +67,16 @@ In this mode *all* operations run as the user who starts the
 
 -  SIF and other single file container images cannot be mounted
    directly. The container image must be extracted to a directory on
-   disk to run. This impact the speed of execution. Workloads accessing
+   disk to run. This may impact the speed of execution. Workloads accessing
    large numbers of small files (such as python application startup) do
    not benefit from the reduced metadata load on the filesystem an image
-   file provides.
+   file provides. (This behavior could be done by an unprivileged FUSE
+   mount but that is not yet implemented).
 
--  Replacing direct kernel mounts with a FUSE approach is likely to
-   cause a significant reduction in perfomance.
+-  Persistent overlays using the exec/run/shell ``--overlay`` option does not
+   work because that uses the privileged kernel OverlayFS filesystem.
+   (This behavior could be done with unprivileged OverlayFS in recent
+   kernels but that is not yet implemented).
 
 -  The effectiveness of signing and verifying container images is
    reduced as, when extracted to a directory, modification is possible
@@ -91,11 +86,6 @@ In this mode *all* operations run as the user who starts the
 -  Encryption is not supported. {Singularity} leverages kernel LUKS2
    mounts to run encrypted containers without decrypting their content
    to disk.
-
--  Some sites hold the opinion that vulnerabilities in kernel user
-   namespace code could have greater impact than vulnerabilities
-   confined to a single piece of setuid software. Therefore they are
-   reluctant to enable unprivileged user namespace creation.
 
 Because of the points above, the default mode of operation of
 {Singularity} uses a setuid binary. The Singularity community aims to reduce the
@@ -126,9 +116,9 @@ as the ``root`` user, so that they cannot affect the host system,
 To accomplish this, {Singularity} uses a number of Linux kernel
 features. The container file system is mounted using the ``nosuid``
 option, and processes are started with the ``PR_NO_NEW_PRIVS`` flag set.
-This means that even if you run ``sudo`` inside your container, you
-won't be able to change to another user, or gain root privileges by
-other means.
+This means that there is no possible way to change the user or group id,
+gain root privileges or gain any additional capabilities when executing
+another program.
 
 If you do require the additional isolation of the network, devices, PIDs
 etc. provided by other runtimes, {Singularity} can make use of
@@ -146,16 +136,15 @@ network filesystem this means that reads from the container are
 data-only. Metadata operations happen locally, speeding up workloads
 with many small files.
 
-Holding the container image in a single file also enable unique security
+Holding the container image in a single file also enables unique security
 features. The container filesystem is immutable, and can be signed. The
 signature travels in the SIF image itself so that it is always possible
 to verify that the image has not been tampered with or corrupted.
 
 We use private PGP keys to create a container signature, and the public
 key in order to verify the container. Verification of signed containers
-happens automatically in ``singularity pull`` commands against the
-Sylabs Cloud Container Library. A Keystore in the Sylabs Cloud makes it
-easier to share and obtain public keys for container verification.
+happens automatically in ``singularity pull`` commands when using a
+`library://` URI.
 
 A container may be signed once, by a trusted individual who approves its
 use. It could also be signed with multiple keys to signify it has passed
@@ -181,7 +170,7 @@ decrypted to disk in order to run it.
 *********************************
 
 System administrators who manage {Singularity} can use configuration
-files to set security restrictions, grant or revoke a user’s
+files to set security restrictions, grant or revoke a user's
 capabilities, manage resources and authorize containers etc.
 
 For example, the :ref:`Execution Control List <execution_control_list>` file
