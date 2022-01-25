@@ -115,7 +115,7 @@ as the ``root`` user, so that they cannot affect the host system,
 
 To accomplish this, {Singularity} uses a number of Linux kernel
 features. The container file system is mounted using the ``nosuid``
-option, and processes are started with the ``PR_NO_NEW_PRIVS`` flag set.
+option, and processes are started with the ``PR_SET_NO_NEW_PRIVS`` flag.
 This means that there is no possible way to change the user or group id,
 gain root privileges or gain any additional capabilities when executing
 another program.
