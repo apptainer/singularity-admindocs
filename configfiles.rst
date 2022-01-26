@@ -241,29 +241,26 @@ allow containers that are located within the specified path prefix.
 
 ``allow container ${type}``: This option allows admins to limit the
 types of image formats that can be leveraged by users with
-{Singularity}. 
+{Singularity}.
 
-- ``allow container sif`` permits / denies execution of unencrypted SIF
-  containers.
-
-- ``allow container encrypted`` permits / denies execution of SIF containers with
-  an encrypted root filesystem.
-
-- ``allow container squashfs`` permits / denies execution of bare SquashFS image
-  files. E.g. Singularity 2.x images.
-
-- ``allow container extfs`` permits / denies execution of bare EXT image files.
-
-- ``allow container dir`` permits / denies execution of sandbox directory
-  containers.
+-  ``allow container sif`` permits / denies execution of unencrypted SIF
+   containers.
+-  ``allow container encrypted`` permits / denies execution of SIF
+   containers with an encrypted root filesystem.
+-  ``allow container squashfs`` permits / denies execution of bare
+   SquashFS image files. E.g. Singularity 2.x images.
+-  ``allow container extfs`` permits / denies execution of bare EXT
+   image files.
+-  ``allow container dir`` permits / denies execution of sandbox
+   directory containers.
 
 .. note::
 
    These limitations do not apply to the root user.
 
-   This behavior differes from {Singularity} versions before 3.9, where the
-   `allow container squashfs/extfs` directives also applied to the filesystem
-   embedded in a SIF image. 
+   This behavior differes from {Singularity} versions before 3.9, where
+   the `allow container squashfs/extfs` directives also applied to the
+   filesystem embedded in a SIF image.
 
 Networking Options
 ==================
@@ -357,18 +354,18 @@ for these, by searching on the ``$PATH`` environment variable. You can
 override which external binaries are called by changing the value in
 ``singularity.conf``.
 
-``cryptsetup path``: Path to the cryptsetup executable, used to work with
-encrypted containers. Must be owned by root for security reasons.
+``cryptsetup path``: Path to the cryptsetup executable, used to work
+with encrypted containers. Must be owned by root for security reasons.
 
-``ldconfig path``: Path to the ldconfig executable, used to find GPU libraries.
-Must be owned by root for security reasons.
+``ldconfig path``: Path to the ldconfig executable, used to find GPU
+libraries. Must be owned by root for security reasons.
 
-``nvidia-container-cli path``: Path to the nvidia-container-cli executable, used
-to find GPU libraries and configure the container when running with the
-``--nvccli`` option.
+``nvidia-container-cli path``: Path to the nvidia-container-cli
+executable, used to find GPU libraries and configure the container when
+running with the ``--nvccli`` option.
 
-For the following additional binaries, if the ``singularity.conf`` entry is left
-blank, then ``$PATH`` will be searched at runtime.
+For the following additional binaries, if the ``singularity.conf`` entry
+is left blank, then ``$PATH`` will be searched at runtime.
 
 ``go path``: Path to the go executable, used to compile plugins.
 
@@ -393,20 +390,20 @@ SIF and SquashFS containers.
 Concurrent Downloads
 ====================
 
-{Singularity} 3.9 and above will pull ``library://`` container images using
-multiple concurrent downloads of parts of the image. This speeds up downloads vs
-using a single stream. The defaults are generally appropriate for the Sylabs
-Cloud, but may be tuned for your network conditions, or if you are pulling from
-a different library server.
+{Singularity} 3.9 and above will pull ``library://`` container images
+using multiple concurrent downloads of parts of the image. This speeds
+up downloads vs using a single stream. The defaults are generally
+appropriate for the Sylabs Cloud, but may be tuned for your network
+conditions, or if you are pulling from a different library server.
 
-``download concurrency``: specifies how many concurrent streams when downloading
-(pulling) an image from cloud library.
+``download concurrency``: specifies how many concurrent streams when
+downloading (pulling) an image from cloud library.
 
-``download part size``: specifies the size of each part (bytes) when concurrent
-downloads are enabled.
-
-``download buffer size``: specifies the transfer buffer size (bytes) when
+``download part size``: specifies the size of each part (bytes) when
 concurrent downloads are enabled.
+
+``download buffer size``: specifies the transfer buffer size (bytes)
+when concurrent downloads are enabled.
 
 Updating Configuration Options
 ==============================
@@ -754,8 +751,8 @@ Managing ECL public keys
 ========================
 
 Since {Singularity} 3.7.0 a global keyring is used for ECL signature
-verification. This keyring can be administered using the ``--global`` flag for
-the following commands:
+verification. This keyring can be administered using the ``--global``
+flag for the following commands:
 
 -  ``singularity key import`` (root user only)
 -  ``singularity key pull`` (root user only)
