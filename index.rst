@@ -5,7 +5,7 @@
 Welcome to the {Singularity} Admin Guide!
 
 This guide aims to cover installation instructions, configuration
-detail, and other topics important to system adminstrators working with
+detail, and other topics important to system administrators working with
 {Singularity}.
 
 See the `user guide

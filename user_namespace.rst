@@ -125,7 +125,7 @@ Requirements
 ============
 
 In addition to user namespace support, {Singularity} must manipulate
-``subuid`` and ``subgid`` maps for the user namepsace it creates. By
+``subuid`` and ``subgid`` maps for the user namespace it creates. By
 default this happens transparently in the setuid workflow. With
 unprivileged installations of {Singularity} or where ``allow setuid =
 no`` is set in ``singularity.conf``, {Singularity} attempts to use
@@ -138,7 +138,7 @@ Basics
 Fakeroot relies on ``/etc/subuid`` and ``/etc/subgid`` files to find
 configured mappings from real user and group IDs, to a range of
 otherwise vacant IDs for each user on the host system that can be
-remapped in the usernamespace. A user must have an entry in these system
+remapped in the user namespace. A user must have an entry in these system
 configuration files to use the fakeroot feature. {Singularity} provides
 a :ref:`config fakeroot <config-fakeroot>` command to assist in managing
 these files, but it is important to understand how they work.
@@ -176,7 +176,7 @@ Same for ``/etc/subgid``:
    for each mapping. Larger ranges may be defined without error.
 
    It is also important to ensure that the subuid and subgid ranges
-   defined in these files don't overlap with eachother, or any real UIDs
+   defined in these files don't overlap with each other, or any real UIDs
    and GIDs on the host system.
 
 So if you want to add another user ``bar``, ``/etc/subuid`` and
@@ -267,7 +267,7 @@ and ``/etc/subgid`` files in a simple manner. This allows users to be
 granted the ability to use Singularity's fakeroot functionality without
 editing the files manually. The ``config fakeroot`` command will
 automatically ensure that generated subuid/subgid ranges are an
-approriate size, and do not overlap.
+appropriate size, and do not overlap.
 
 ``config fakeroot`` must be run as the ``root`` user, or via ``sudo
 singularity config fakeroot`` as the ``/etc/subuid`` and ``/etc/subgid``
@@ -282,7 +282,7 @@ also ``--enable`` or ``--disable`` existing mappings.
    mapping files to all nodes.
 
    At this time, the glibc name service switch functionality does not
-   support subuid or subgid mappings, so they cannot be definied in a
+   support subuid or subgid mappings, so they cannot be defined in a
    central directory such as LDAP.
 
 Adding a fakeroot mapping

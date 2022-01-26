@@ -29,7 +29,7 @@ of RAM is recommended when building from source.
 Full functionality of {Singularity} requires that the kernel supports:
 
 -  **OverlayFS mounts** - (minimum kernel >=3.18) Required for full
-   flexiblity in bind mounts to containers, and to support persistent
+   flexibility in bind mounts to containers, and to support persistent
    overlays for writable containers.
 
 -  **Unprivileged user namespaces** - (minimum kernel >=3.8, >=3.18
@@ -91,7 +91,7 @@ at runtime:
 -  ``dd``
 
 -  ``newuidmap`` and ``newgidmap`` are distribution provided setuid
-   binaries used to configure subuid/gid mappings forr ``--fakeroot`` in
+   binaries used to configure subuid/gid mappings for ``--fakeroot`` in
    non-setuid installs.
 
 Bootstrap Utilities
@@ -149,7 +149,7 @@ parallel / network filesystems. In general:
    ``--localstatedir my/dir`` as an option when you configure your
    {Singularity} build with ``./mconfig``.
 
-   Disk usage at the ``--localstatedir`` location is neglible (<1MiB).
+   Disk usage at the ``--localstatedir`` location is negligible (<1MiB).
    The directory is used as a location to mount the container root
    filesystem, overlays, bind mounts etc. that construct the runtime
    view of a container. You will not see these mounts from a host shell,
@@ -189,7 +189,7 @@ Fakeroot / (sub)uid/gid mapping
 
 When {Singularity} is run using the :ref:`fakeroot <fakeroot>` option it
 creates a user namespace for the container, and UIDs / GIDs in that user
-namepace are mapped to different host UID / GIDs.
+namespace are mapped to different host UID / GIDs.
 
 Most local filesystems (ext4/xfs etc.) support this uid/gid mapping in a
 user namespace.
@@ -233,7 +233,7 @@ atomic to a single client, not across systems accessing the same NFS
 share.
 
 If you are not certain that your ``$HOME`` or ``SINGULARITY_CACHEDIR``
-filesytems support atomic rename, do not run ``singularity`` in parallel
+filesystems support atomic rename, do not run ``singularity`` in parallel
 using remote container URLs. Instead use ``singularity pull`` to create
 a local SIF image, and then run this SIF image in a parallel step. An
 alternative is to use the ``--disable-cache`` option, but this will
@@ -282,14 +282,6 @@ user-namespace (sub)uid/gid mapping.
 -  You should not run a sandbox container with ``--fakeroot`` from a
    Lustre or GPFS location.
 
-Before you begin
-================
-
-If you have an earlier version of {Singularity} installed, you should
-:ref:`remove it <remove-an-old-version>` before executing the
-installation commands. You will also need to install some dependencies
-and install `Go <https://golang.org/>`_.
-
 .. _install-dependencies:
 
 Install from Source
@@ -297,7 +289,12 @@ Install from Source
 
 To use the latest version of {Singularity} from GitHub you will need to
 build and install it from source. This may sound daunting, but the
-process is straightforward, and detailed below:
+process is straightforward, and detailed below.
+
+If you have an earlier version of {Singularity} installed, you should
+:ref:`remove it <remove-an-old-version>` before executing the
+installation commands. You will also need to install some dependencies
+and install `Go <https://golang.org/>`_.
 
 Install Dependencies
 --------------------
@@ -343,7 +340,7 @@ On Ubuntu or Debian install the following dependencies:
 Install Go
 ----------
 
-{Singularity} v3 is written primarily in Go, and you will need Go 1.13
+{Singularity} v3 is written primarily in Go, and you will need Go 1.16
 or above installed to compile it from source.
 
 This is one of several ways to `install and configure Go
