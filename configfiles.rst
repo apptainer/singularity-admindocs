@@ -241,15 +241,29 @@ allow containers that are located within the specified path prefix.
 
 ``allow container ${type}``: This option allows admins to limit the
 types of image formats that can be leveraged by users with
-{Singularity}. Formats include ``squashfs`` which is used by SIF and
-v2.x Singularity images, ``extfs`` which is used for writable overlays
-and some legacy Singularity images, ``dir`` which is used by sandbox
-images and ``encrypted`` which is only used by SIF images to encrypt
-filesystem contents.
+{Singularity}. 
+
+- ``allow container sif`` permits / denies execution of unencrypted SIF
+  containers.
+
+- ``allow container encrypted`` permits / denies execution of SIF containers with
+  an encrypted root filesystem.
+
+- ``allow container squashfs`` permits / denies execution of bare SquashFS image
+  files. E.g. Singularity 2.x images.
+
+- ``allow container extfs`` permits / denies execution of bare EXT image files.
+
+- ``allow container dir`` permits / denies execution of sandbox directory
+  containers.
 
 .. note::
 
    These limitations do not apply to the root user.
+
+   This behavior differes from {Singularity} versions before 3.9, where the
+   `allow container squashfs/extfs` directives also applied to the filesystem
+   embedded in a SIF image. 
 
 Networking Options
 ==================
@@ -375,6 +389,24 @@ earlier version you should not set this.
 
 ``unsquashfs path``: Path to the unsquashfs executable, used to extract
 SIF and SquashFS containers.
+
+Concurrent Downloads
+====================
+
+{Singularity} 3.9 and above will pull ``library://`` container images using
+multiple concurrent downloads of parts of the image. This speeds up downloads vs
+using a single stream. The defaults are generally appropriate for the Sylabs
+Cloud, but may be tuned for your network conditions, or if you are pulling from
+a different library server.
+
+``download concurrency``: specifies how many concurrent streams when downloading
+(pulling) an image from cloud library.
+
+``download part size``: specifies the size of each part (bytes) when concurrent
+downloads are enabled.
+
+``download buffer size``: specifies the transfer buffer size (bytes) when
+concurrent downloads are enabled.
 
 Updating Configuration Options
 ==============================
@@ -698,8 +730,7 @@ and keys will be authorized to run.
 
 Three possible list modes you can choose from:
 
-**Whitestrict**: The SIF must be signed by *ALL* of the keys
-   mentioned.
+**Whitestrict**: The SIF must be signed by all of the keys mentioned.
 
 **Whitelist**: As long as the SIF is signed by one or more of the keys,
 the container is allowed to run.
@@ -719,18 +750,15 @@ group are allowed to run.
 Managing ECL public keys
 ========================
 
-In {Singularity} 3.6, public keys associated with fingerprints specified
-in ECL rules were required to be present in user's local keyring which
-is not very convenient. {Singularity} 3.7.0 provides a mechanism to
-administrators for managing a global keyring that ECL uses during
-signature verification, for that purpose a ``--global`` option was added
-for:
+Since {Singularity} 3.7.0 a global keyring is used for ECL signature
+verification. This keyring can be administered using the ``--global`` flag for
+the following commands:
 
-   -  ``singularity key import`` (root user only)
-   -  ``singularity key pull`` (root user only)
-   -  ``singularity key remove`` (root user only)
-   -  ``singularity key export``
-   -  ``singularity key list``
+-  ``singularity key import`` (root user only)
+-  ``singularity key pull`` (root user only)
+-  ``singularity key remove`` (root user only)
+-  ``singularity key export``
+-  ``singularity key list``
 
 .. note::
 
