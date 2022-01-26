@@ -45,7 +45,7 @@ master_doc = 'index'
 # General information about the project.
 project = u'Singularity Admin Guide'
 author = u'Singularity Project Contributors'
-copyright = u'2017-2020, Sylabs Inc'
+copyright = u'2021-2022, Apptainer a Series of LF Projects LLC \xA9 2017-2022, Sylabs Inc'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
