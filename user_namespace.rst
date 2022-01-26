@@ -17,11 +17,11 @@ being root on the host outside.
 
 {Singularity} uses user namespaces in 3 situations:
 
-   -  When the ``setuid`` workflow is disabled or {Singularity} was
-      installed without root.
-   -  When a container is run with the ``--userns`` option.
-   -  When ``--fakeroot`` is used to impersonate a root user when
-      building or running a container.
+-  When the ``setuid`` workflow is disabled or {Singularity} was
+   installed without root.
+-  When a container is run with the ``--userns`` option.
+-  When ``--fakeroot`` is used to impersonate a root user when building
+   or running a container.
 
 .. _userns-requirements:
 
@@ -76,28 +76,27 @@ use a user namespace. In this mode of operation, some features are not
 available, and there are impacts to the security/integrity guarantees
 when running SIF container images:
 
-   -  All containers must be run from sandbox directories. SIF images
-      are extracted to a sandbox directory on the fly, preventing
-      verification at runtime, and potentially allowing external
-      modification of the container at runtime.
+-  All containers must be run from sandbox directories. SIF images are
+   extracted to a sandbox directory on the fly, preventing verification
+   at runtime, and potentially allowing external modification of the
+   container at runtime.
 
-   -  Filesystem image, and SIF-embedded persistent overlays cannot be
-      used.
+-  Filesystem image, and SIF-embedded persistent overlays cannot be
+   used.
 
-   -  Encrypted containers cannot be used. {Singularity} mounts
-      encrypted containers directly through the kernel, so that
-      encrypted content is not extracted to disk. This requires the
-      setuid workflow.
+-  Encrypted containers cannot be used. {Singularity} mounts encrypted
+   containers directly through the kernel, so that encrypted content is
+   not extracted to disk. This requires the setuid workflow.
 
-   -  Fakeroot functionality will rely on external setuid root
-      ``newuidmap`` and ``newgidmap`` binaries which may be provided by
-      the distribution.
+-  Fakeroot functionality will rely on external setuid root
+   ``newuidmap`` and ``newgidmap`` binaries which may be provided by the
+   distribution.
 
 *****************
  --userns option
 *****************
 
-The ``--userns`` option to `singularity run/exec/shell` will start a
+The ``--userns`` option to ``singularity run/exec/shell`` will start a
 container using a user namespace, avoiding the setuid privileged
 workflow for container setup even if {Singularity} was compiled and
 configured to use setuid by default.
@@ -211,10 +210,10 @@ will have different IDs inside and outside of the container.
    to specify users by UID rather than username in the ``/etc/subuid``
    and ``/etc/subgid`` files. The man page for ``subuid`` advises:
 
-      When large number of entries (10000-100000 or more) are defined in
-      /etc/subuid, parsing performance penalty will become noticeable.
-      In this case it is recommended to use UIDs instead of login names.
-      Benchmarks have shown speed-ups up to 20x.
+   "When large number of entries (10000-100000 or more) are defined in
+   /etc/subuid, parsing performance penalty will become noticeable. In
+   this case it is recommended to use UIDs instead of login names.
+   Benchmarks have shown speed-ups up to 20x."
 
 Filesystem considerations
 =========================
@@ -293,22 +292,22 @@ Use the ``-a/--add <user>`` option to ``config fakeroot`` to create new
 mapping entries so that ``<user>`` can use the fakeroot feature of
 Singularity:
 
-   .. code::
+.. code::
 
-      $ sudo singularity config fakeroot --add dave
+   $ sudo singularity config fakeroot --add dave
 
-      # Show generated `/etc/subuid`
-      $ cat /etc/subuid
-      1000:4294836224:65536
+   # Show generated `/etc/subuid`
+   $ cat /etc/subuid
+   1000:4294836224:65536
 
-      # Show generated `/etc/subgid`
-      $ cat /etc/subgid
-      1000:4294836224:65536
+   # Show generated `/etc/subgid`
+   $ cat /etc/subgid
+   1000:4294836224:65536
 
-   The first subuid range will be set to the top of the 32-bit UID
-   space. Subsequent subuid ranges for additional users will be created
-   working down from this value. This minimizes the change of overlap
-   with real UIDs on most systems.
+The first subuid range will be set to the top of the 32-bit UID
+space. Subsequent subuid ranges for additional users will be created
+working down from this value. This minimizes the change of overlap
+with real UIDs on most systems.
 
 .. note::
 

@@ -28,13 +28,13 @@ of RAM is recommended when building from source.
 
 Full functionality of {Singularity} requires that the kernel supports:
 
-   -  **OverlayFS mounts** - (minimum kernel >=3.18) Required for full
-      flexiblity in bind mounts to containers, and to support persistent
-      overlays for writable containers.
+-  **OverlayFS mounts** - (minimum kernel >=3.18) Required for full
+   flexiblity in bind mounts to containers, and to support persistent
+   overlays for writable containers.
 
-   -  **Unprivileged user namespaces** - (minimum kernel >=3.8, >=3.18
-      recommended) Required to run containers without root or setuid
-      privilege.
+-  **Unprivileged user namespaces** - (minimum kernel >=3.8, >=3.18
+   recommended) Required to run containers without root or setuid
+   privilege.
 
 External Binaries
 -----------------
@@ -50,7 +50,7 @@ The following binaries are found on ``$PATH`` during build time when
 ``./mconfig`` is run, and their location is added to the
 ``singularity.conf`` configuration file. At runtime this configured
 location is used. To specify an alternate executable, change the
-relevant path entry in ``singularity.conf``. 
+relevant path entry in ``singularity.conf``.
 
 -  ``cryptsetup`` version 2 with kernel LUKS2 support is required for
    building or executing encrypted containers.
@@ -59,10 +59,11 @@ relevant path entry in ``singularity.conf``.
    using the ``-nv`` or ``--rocm`` GPU support.
 
 -  ``nvidia-container-cli`` is used to configure a container for Nvidia
-   GPU / CUDA support when running with the experimental ``--nvccli`` option.
+   GPU / CUDA support when running with the experimental ``--nvccli``
+   option.
 
-For the following additional binaries, if the ``singularity.conf``
-entry is left blank, then ``$PATH`` will be searched at runtime.
+For the following additional binaries, if the ``singularity.conf`` entry
+is left blank, then ``$PATH`` will be searched at runtime.
 
 -  ``go`` is required to compile plugins, and must be an identical
    version as that used to build {Singularity}.
@@ -74,7 +75,7 @@ entry is left blank, then ``$PATH`` will be searched at runtime.
 
 -  ``unsquashfs`` from squashfs-tools 4.3+ is used to extract the
    squashfs container filesystem from a SIF file when necessary.
-   
+
 Searching $PATH
 ^^^^^^^^^^^^^^^
 
@@ -130,17 +131,17 @@ Filesystem support / limitations
 when installing {Singularity} on, or running containers from, common
 parallel / network filesystems. In general:
 
-   -  We strongly recommend installing {Singularity} on local disk on
-      each compute node.
+-  We strongly recommend installing {Singularity} on local disk on each
+   compute node.
 
-   -  If {Singularity} is installed to a network location, a
-      ``--localstatedir`` should be provided on each node, and
-      Singularity configured to use it.
+-  If {Singularity} is installed to a network location, a
+   ``--localstatedir`` should be provided on each node, and Singularity
+   configured to use it.
 
-   -  The ``--localstatedir`` filesystem should support overlay mounts.
+-  The ``--localstatedir`` filesystem should support overlay mounts.
 
-   -  ``TMPDIR`` / ``SINGULARITY_TMPDIR`` should be on a local
-      filesystem wherever possible.
+-  ``TMPDIR`` / ``SINGULARITY_TMPDIR`` should be on a local filesystem
+   wherever possible.
 
 .. note::
 
@@ -166,17 +167,17 @@ features may not be available.
 
 Overlay support has two aspects:
 
-   -  ``lowerdir`` support for a filesystem allows a directory on that
-      filesystem to act as the 'base' of a container. A filesystem must
-      support overlay ``lowerdir`` for you be able to run a Singularity
-      sandbox container on it, while using functionality such as
-      ``--writable-tmpfs`` / ``--overlay``.
+-  ``lowerdir`` support for a filesystem allows a directory on that
+   filesystem to act as the 'base' of a container. A filesystem must
+   support overlay ``lowerdir`` for you be able to run a Singularity
+   sandbox container on it, while using functionality such as
+   ``--writable-tmpfs`` / ``--overlay``.
 
-   -  ``upperdir`` support for a filesystem allows a directory on that
-      filesystem to be merged on top of a ``lowerdir`` to construct a
-      container. If you use the ``--overlay`` option to overlay a
-      directory onto a container, then the filesystem holding the
-      overlay directory must support ``upperdir``.
+-  ``upperdir`` support for a filesystem allows a directory on that
+   filesystem to be merged on top of a ``lowerdir`` to construct a
+   container. If you use the ``--overlay`` option to overlay a directory
+   onto a container, then the filesystem holding the overlay directory
+   must support ``upperdir``.
 
 Note that any overlay limitations mainly apply to sandbox (directory)
 containers only. A SIF container is mounted into the ``--localstatedir``
@@ -210,15 +211,14 @@ variable.
 
 The directory used for ``SINGULARITY_CACHEDIR`` should be:
 
-   -  A unique location for each user. Permissions are set on the cache
-      so that private images cached for one user are not exposed to
-      another. This means that ``SINGULARITY_CACHEDIR`` cannot be
-      shared.
+-  A unique location for each user. Permissions are set on the cache so
+   that private images cached for one user are not exposed to another.
+   This means that ``SINGULARITY_CACHEDIR`` cannot be shared.
 
-   -  Located on a filesystem with sufficient space for the number and
-      size of container images anticipated.
+-  Located on a filesystem with sufficient space for the number and size
+   of container images anticipated.
 
-   -  Located on a filesystem that supports atomic rename, if possible.
+-  Located on a filesystem that supports atomic rename, if possible.
 
 In {Singularity} version 3.6 and above the cache is concurrency safe.
 Parallel runs of {Singularity} that would create overlapping cache
@@ -246,19 +246,19 @@ NFS
 NFS filesystems support overlay mounts as a ``lowerdir`` only, and do
 not support user-namespace (sub)uid/gid mapping.
 
-   -  Containers run from SIF files located on an NFS filesystem do not
-      have restrictions.
+-  Containers run from SIF files located on an NFS filesystem do not
+   have restrictions.
 
-   -  You cannot use ``--overlay mynfsdir/`` to overlay a directory onto
-      a container when the overlay (upperdir) directory is on an NFS
-      filesystem.
+-  You cannot use ``--overlay mynfsdir/`` to overlay a directory onto a
+   container when the overlay (upperdir) directory is on an NFS
+   filesystem.
 
-   -  When using ``--fakeroot`` to build or run a container, your
-      ``TMPDIR`` / ``SINGULARITY_TMPDIR`` should not be set to an NFS
-      location.
+-  When using ``--fakeroot`` to build or run a container, your
+   ``TMPDIR`` / ``SINGULARITY_TMPDIR`` should not be set to an NFS
+   location.
 
-   -  You should not run a sandbox container with ``--fakeroot`` from an
-      NFS location.
+-  You should not run a sandbox container with ``--fakeroot`` from an
+   NFS location.
 
 Lustre / GPFS
 ^^^^^^^^^^^^^
@@ -267,21 +267,20 @@ Lustre and GPFS do not have sufficient ``upperdir`` or ``lowerdir``
 overlay support for certain {Singularity} features, and do not support
 user-namespace (sub)uid/gid mapping.
 
-   -  You cannot use ``-overlay`` or ``--writable-tmpfs`` with a sandbox
-      container that is located on a Lustre or GPFS filesystem. SIF
-      containers on Lustre / GPFS will work correctly with these
-      options.
+-  You cannot use ``-overlay`` or ``--writable-tmpfs`` with a sandbox
+   container that is located on a Lustre or GPFS filesystem. SIF
+   containers on Lustre / GPFS will work correctly with these options.
 
-   -  You cannot use ``--overlay`` to overlay a directory onto a
-      container, when the overlay (upperdir) directory is on a Lustre or
-      GPFS filesystem.
+-  You cannot use ``--overlay`` to overlay a directory onto a container,
+   when the overlay (upperdir) directory is on a Lustre or GPFS
+   filesystem.
 
-   -  When using ``--fakeroot`` to build or run a container, your
-      ``TMPDIR/SINGULARITY_TMPDIR`` should not be a Lustre or GPFS
-      location.
+-  When using ``--fakeroot`` to build or run a container, your
+   ``TMPDIR/SINGULARITY_TMPDIR`` should not be a Lustre or GPFS
+   location.
 
-   -  You should not run a sandbox container with ``--fakeroot`` from a
-      Lustre or GPFS location.
+-  You should not run a sandbox container with ``--fakeroot`` from a
+   Lustre or GPFS location.
 
 Before you begin
 ================
@@ -532,7 +531,7 @@ source the bash completion file:
 
    $ . /usr/local/etc/bash_completion.d/singularity
 
-Add this command to your `~/.bashrc` file so that bash completion
+Add this command to your ``~/.bashrc`` file so that bash completion
 continues to work in new shells. (Adjust the path if you installed
 {Singularity} to a different location.)
 
@@ -551,7 +550,7 @@ directly from the `release tarball
 
    Be sure to download the correct asset from the `GitHub releases page
    <https://github.com/hpcng/singularity/releases>`_. It should be
-   named `singularity-<version>.tar.gz`.
+   named ``singularity-<version>.tar.gz``.
 
 After installing the :ref:`dependencies <install-dependencies>` and
 installing :ref:`Go <install-go>` as detailed above, you are ready to
@@ -692,7 +691,7 @@ at runtime.
 Note that the ``LOCALSTATEDIR`` and ``SESSIONDIR`` should be on local,
 non-shared storage.
 
-The list of files installed by a successful `setuid` installation of
+The list of files installed by a successful ``setuid`` installation of
 {Singularity} can be found in the :ref:`appendix, installed files
 section <installed-files>`.
 
@@ -705,15 +704,15 @@ development using CI services.
 If you would like to run the test suite locally you can run the test
 targets from the ``builddir`` directory in the source tree:
 
-   -  ``make check`` runs source code linting and dependency checks
+-  ``make check`` runs source code linting and dependency checks
 
-   -  ``make unit-test`` runs basic unit tests
+-  ``make unit-test`` runs basic unit tests
 
-   -  ``make integration-test`` runs integration tests
+-  ``make integration-test`` runs integration tests
 
-   -  ``make e2e-test`` runs end-to-end tests, which exercise a large
-      number of operations by calling the {Singularity} CLI with
-      different execution profiles.
+-  ``make e2e-test`` runs end-to-end tests, which exercise a large
+   number of operations by calling the {Singularity} CLI with different
+   execution profiles.
 
 .. note::
 
@@ -750,17 +749,15 @@ Windows
 
 Install the following programs:
 
-   -  `Git for Windows <https://git-for-windows.github.io/>`_
-   -  `VirtualBox for Windows
-      <https://www.virtualbox.org/wiki/Downloads>`_
-   -  `Vagrant for Windows <https://www.vagrantup.com/downloads.html>`_
-   -  `Vagrant Manager for Windows
-      <http://vagrantmanager.com/downloads/>`_
+-  `Git for Windows <https://git-for-windows.github.io/>`_
+-  `VirtualBox for Windows <https://www.virtualbox.org/wiki/Downloads>`_
+-  `Vagrant for Windows <https://www.vagrantup.com/downloads.html>`_
+-  `Vagrant Manager for Windows <http://vagrantmanager.com/downloads/>`_
 
 Mac
 ===
 
-Singularity is available via Vagrant (installable with `Homebrew
+{Singularity} is available via Vagrant (installable with `Homebrew
 <https://brew.sh>`_ or manually)
 
 To use Vagrant via Homebrew:

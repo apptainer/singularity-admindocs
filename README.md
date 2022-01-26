@@ -3,17 +3,17 @@
 This project uses [reStructured Text (RST)](http://docutils.sourceforge.net/rst.html)
 and [ReadTheDocs](https://readthedocs.org/). As a library for the current theme,
 [Sphinx Python library](https://pypi.org/project/Sphinx/lt="PyPI") was used,
-using Python v. 2.7.
+using Python v. 3.6.
 
 ## Setting up an environment to contribute
 
 First things first, you will need to install the following tools:
 
-- [Install Python 2.7](https://www.python.org/download/releases/2.7/)
+- [Install Python 3.6](https://www.python.org/download/releases/3.6/)
 - After that then you will need to install Sphinx:
 
 ```sh
-pip install -U Sphinx
+pip install -U Sphinx sphinx-rtd-theme
 ```
 
 You're all set! after this you will only need to use your favorite editor for
@@ -104,7 +104,7 @@ specify a tag, allowed characters contain also ``-`` characters but they need to
 be unique name tags. So for example, in the build-docker-module section we can
 have something like:  
 
-```sh
+```rst
 .. _build-docker-module:
 
 -------------------
@@ -123,7 +123,7 @@ The name after the ref tag could also be different, the important thing is that
 the tag between the ``<`` and ``>`` is the one that belongs to the previous
 given tag name. Like in the following example:
 
-```sh
+```rst
 :ref:`quickstart <quick-start>`
 ```
 

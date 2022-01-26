@@ -26,17 +26,19 @@ utilize. As a security measure, for ``setuid`` installations of
 {Singularity} it must be owned by root and must not be writable by users
 or {Singularity} will refuse to run. This is not the case for
 ``non-setuid`` installations that will only ever execute with user
-priviledge and thus do not require such limitations. The options for
-this configuration are listed below. Options are grouped together based
-on relevance, the order of options within ``singularity.conf`` differs.
+privilege and thus do not require such limitations.
+
+The options set via ``singularity.conf`` are listed below. Options are
+grouped together based on relevance. The actual order of options within
+``singularity.conf`` may differ.
 
 Setuid and Capabilities
 =======================
 
 ``allow setuid``: To use all features of {Singularity} containers,
 {Singularity} will need to have access to some privileged system calls.
-One way {Singularity} achieves this is by using binaries with the
-``setuid`` bit enabled. This variable lets you enable/disable users
+{Singularity} achieves this by using a helper binary with the ``setuid``
+bit enabled. The ``allow-setuid`` option lets you enable/disable users
 ability to utilize these binaries within {Singularity}. By default, it
 is set to "yes", but when disabled, various {Singularity} features will
 not function. Please see :ref:`Unprivileged Installations
@@ -66,7 +68,7 @@ Loop Devices
 ============
 
 {Singularity} uses loop devices to facilitate the mounting of container
-filesystems from SIF images.
+filesystems from SIF and other images.
 
 ``max loop devices``: This option allows an admin to limit the total
 number of loop devices {Singularity} will consume at a given time.
@@ -84,20 +86,19 @@ namespace when running their containers through the ``--pid`` flag.
 
 .. note::
 
-   For some HPC systems, using the PID namespace has the potential of
-   confusing some resource managers as well as some MPI implementations.
+   Using the PID namespace can confuse the process tracking of some
+   resource managers, as well as some MPI implementations.
 
 Configuration Files
 ===================
 
-{Singularity} allows for the automatic configuration of several system
-configuration files within containers to ease usage across systems.
+{Singularity} can automatically create or modify several system files
+within containers to ease usage.
 
 .. note::
 
-   These options will do nothing unless the file or directory path
-   exists within the container or {Singularity} has either overlay or
-   underlay support enabled.
+   These options will have no effect if the file does not exist within
+   the container, or overlay or underlay support are enabled.
 
 ``config passwd``: This option determines if {Singularity} should
 automatically append an entry to ``/etc/passwd`` for the user running
@@ -108,18 +109,19 @@ automatically append the calling user's group entries to the containers
 ``/etc/group``.
 
 ``config resolv_conf``: This option determines if {Singularity} should
-automatically bind the host's ``/etc/resolv/conf`` within the container.
+automatically bind the host's ``/etc/resolv.conf`` within the container.
 
 Session Directory and System Mounts
 ===================================
 
-``sessiondir max size``: In order for the {Singularity} runtime to
-create a container it needs to create a ``sessiondir`` to manage various
-components of the container, including mounting filesystems over the
-base image filesystem. This option specifies how large the default
-``sessiondir`` should be (in MB) and will only affect users who use the
-``--contain`` options without also specifying a location to perform
-default read/writes to via the ``--workdir`` or ``--home`` options.
+``sessiondir max size``: In order for the {Singularity} runtime to run a
+container it needs to create a temporary in-memory ``sessiondir`` as a
+location to assemble various components of the container, including
+mounting filesystems over the base image. This option specifies how
+large the default ``sessiondir`` should be (in MB). It should be set
+large enough to accommodate files that will be created in a
+``--writable-tmpfs``, or the empty ``/tmp`` and other paths provided
+when ``--contain`` is used.
 
 ``mount proc``: This option determines if {Singularity} should
 automatically bind mount ``/proc`` within the container.
@@ -128,9 +130,9 @@ automatically bind mount ``/proc`` within the container.
 automatically bind mount ``/sys`` within the container.
 
 ``mount dev``: Should be set to "YES", if you want {Singularity} to
-automatically bind mount `/dev` within the container. If set to
-'minimal', then only 'null', 'zero', 'random', 'urandom', and 'shm' will
-be included.
+automatically bind mount a complete ``/dev`` tree within the container.
+If set to ``minimal``, then only ``/dev/null``, ``/dev/zero``,
+``/dev/random``, ``/dev/urandom``, and ``/dev/shm`` will be included.
 
 ``mount devpts``: This option determines if {Singularity} will mount a
 new instance of ``devpts`` when there is a ``minimal`` ``/dev``
@@ -163,8 +165,8 @@ those directories in the container.
 
 .. note::
 
-   This should be set to ``yes`` when autofs mounts in the system should
-   show up in the container.
+   This should be set to ``yes`` when autofs mounts occuring on the host
+   system should be reflected up in the container.
 
 ``memory fs type``: This option allows admins to choose the temporary
 filesystem used by {Singularity}. Temporary filesystems are primarily
@@ -175,16 +177,16 @@ is not mounted within the container.
 
    For Cray CLE 5 and 6, up to CLE 6.0.UP05, there is an issue (kernel
    panic) when Singularity uses tmpfs, so on affected systems it's
-   recommended to set this value to ramfs to avoid a kernel panic
+   recommended to set this value to ``ramfs`` to avoid a kernel panic.
 
 Bind Mount Management
 =====================
 
-``bind path``: This option is used for defining a list of files or
+``bind path``: This option is used to define a list of files or
 directories to automatically be made available when {Singularity} runs a
 container. In order to successfully mount listed paths the file or
-directory path must exist within the container, or {Singularity} has
-either overlay or underlay support enabled.
+directory must exist within the container, or {Singularity} must be
+configured with either overlay or underlay support enabled.
 
 .. note::
 
@@ -216,20 +218,20 @@ below. If stricter controls are required, check out the :ref:`Execution
 Control List <execution_control_list>`.
 
 ``limit container owners``: This restricts container execution to only
-allow conatiners that are owned by the specified user.
+allow containers that are owned by the specified user.
 
 .. note::
 
    This feature will only apply when {Singularity} is running in SUID
-   mode and the user is non-root. By default this is set to `NULL`.
+   mode and the user is non-root. By default this is set to ``NULL``.
 
 ``limit container groups``: This restricts container execution to only
-allow conatiners that are owned by the specified group.
+allow containers that are owned by the specified group.
 
 .. note::
 
    This feature will only apply when {Singularity} is running in SUID
-   mode and the user is non-root. By default this is set to `NULL`.
+   mode and the user is non-root. By default this is set to ``NULL``.
 
 ``limit container paths``: This restricts container execution to only
 allow containers that are located within the specified path prefix.
@@ -237,33 +239,30 @@ allow containers that are located within the specified path prefix.
 .. note::
 
    This feature will only apply when {Singularity} is running in SUID
-   mode and the user is non-root. By default this is set to `NULL`.
+   mode and the user is non-root. By default this is set to ``NULL``.
 
 ``allow container ${type}``: This option allows admins to limit the
 types of image formats that can be leveraged by users with
-{Singularity}. 
+{Singularity}.
 
-- ``allow container sif`` permits / denies execution of unencrypted SIF
-  containers.
-
-- ``allow container encrypted`` permits / denies execution of SIF containers with
-  an encrypted root filesystem.
-
-- ``allow container squashfs`` permits / denies execution of bare SquashFS image
-  files. E.g. Singularity 2.x images.
-
-- ``allow container extfs`` permits / denies execution of bare EXT image files.
-
-- ``allow container dir`` permits / denies execution of sandbox directory
-  containers.
+-  ``allow container sif`` permits / denies execution of unencrypted SIF
+   containers.
+-  ``allow container encrypted`` permits / denies execution of SIF
+   containers with an encrypted root filesystem.
+-  ``allow container squashfs`` permits / denies execution of bare
+   SquashFS image files. E.g. Singularity 2.x images.
+-  ``allow container extfs`` permits / denies execution of bare EXT
+   image files.
+-  ``allow container dir`` permits / denies execution of sandbox
+   directory containers.
 
 .. note::
 
    These limitations do not apply to the root user.
 
-   This behavior differes from {Singularity} versions before 3.9, where the
-   `allow container squashfs/extfs` directives also applied to the filesystem
-   embedded in a SIF image. 
+   This behavior differes from {Singularity} versions before 3.9, where
+   the ``allow container squashfs/extfs`` directives also applied to the
+   filesystem embedded in a SIF image.
 
 Networking Options
 ==================
@@ -304,7 +303,7 @@ GPU Options
 {Singularity} provides integration with GPUs in order to facilitate GPU
 based workloads seamlessly. Both options listed below are particularly
 useful in GPU only environments. For more information on using GPUs with
-Singularity checkout :ref:`GPU Library Configuration
+{Singularity} checkout :ref:`GPU Library Configuration
 <gpu_library_configuration>`.
 
 ``always use nv``: Enabling this option will cause every action command
@@ -357,18 +356,18 @@ for these, by searching on the ``$PATH`` environment variable. You can
 override which external binaries are called by changing the value in
 ``singularity.conf``.
 
-``cryptsetup path``: Path to the cryptsetup executable, used to work with
-encrypted containers. Must be owned by root for security reasons.
+``cryptsetup path``: Path to the cryptsetup executable, used to work
+with encrypted containers. Must be owned by root for security reasons.
 
-``ldconfig path``: Path to the ldconfig executable, used to find GPU libraries.
-Must be owned by root for security reasons.
+``ldconfig path``: Path to the ldconfig executable, used to find GPU
+libraries. Must be owned by root for security reasons.
 
-``nvidia-container-cli path``: Path to the nvidia-container-cli executable, used
-to find GPU libraries and configure the container when running with the
-``--nvccli`` option.
+``nvidia-container-cli path``: Path to the nvidia-container-cli
+executable, used to find GPU libraries and configure the container when
+running with the ``--nvccli`` option.
 
-For the following additional binaries, if the ``singularity.conf`` entry is left
-blank, then ``$PATH`` will be searched at runtime.
+For the following additional binaries, if the ``singularity.conf`` entry
+is left blank, then ``$PATH`` will be searched at runtime.
 
 ``go path``: Path to the go executable, used to compile plugins.
 
@@ -393,20 +392,20 @@ SIF and SquashFS containers.
 Concurrent Downloads
 ====================
 
-{Singularity} 3.9 and above will pull ``library://`` container images using
-multiple concurrent downloads of parts of the image. This speeds up downloads vs
-using a single stream. The defaults are generally appropriate for the Sylabs
-Cloud, but may be tuned for your network conditions, or if you are pulling from
-a different library server.
+{Singularity} 3.9 and above will pull ``library://`` container images
+using multiple concurrent downloads of parts of the image. This speeds
+up downloads vs using a single stream. The defaults are generally
+appropriate for the Sylabs Cloud, but may be tuned for your network
+conditions, or if you are pulling from a different library server.
 
-``download concurrency``: specifies how many concurrent streams when downloading
-(pulling) an image from cloud library.
+``download concurrency``: specifies how many concurrent streams when
+downloading (pulling) an image from cloud library.
 
-``download part size``: specifies the size of each part (bytes) when concurrent
-downloads are enabled.
-
-``download buffer size``: specifies the transfer buffer size (bytes) when
+``download part size``: specifies the size of each part (bytes) when
 concurrent downloads are enabled.
+
+``download buffer size``: specifies the transfer buffer size (bytes)
+when concurrent downloads are enabled.
 
 Updating Configuration Options
 ==============================
@@ -511,7 +510,7 @@ processes.
 
 {Singularity} 3.9 and above can apply resource limitations to systems
 configured for both cgroups v1 and the v2 unified hierarchy. Resource
-limits are specified using a TOML file that represents the `resources`
+limits are specified using a TOML file that represents the ``resources``
 section of the OCI runtime-spec:
 https://github.com/opencontainers/runtime-spec/blob/master/config-linux.md#control-groups
 
@@ -754,8 +753,8 @@ Managing ECL public keys
 ========================
 
 Since {Singularity} 3.7.0 a global keyring is used for ECL signature
-verification. This keyring can be administered using the ``--global`` flag for
-the following commands:
+verification. This keyring can be administered using the ``--global``
+flag for the following commands:
 
 -  ``singularity key import`` (root user only)
 -  ``singularity key pull`` (root user only)
@@ -785,7 +784,7 @@ restrict the in-container device tree.
 Compatibility between containerized CUDA/ROCm/OpenCL applications and
 host drivers/libraries is dependent on the versions of the GPU compute
 frameworks that were used to build the applications. Compatibility and
-usage information is discussed in the `GPU Support` section of the `user
+usage information is discussed in the 'GPU Support' section of the `user
 guide <{userdocs}>`__
 
 NVIDIA GPUs / CUDA
