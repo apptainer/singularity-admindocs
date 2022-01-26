@@ -50,17 +50,22 @@ The following binaries are found on ``$PATH`` during build time when
 ``./mconfig`` is run, and their location is added to the
 ``singularity.conf`` configuration file. At runtime this configured
 location is used. To specify an alternate executable, change the
-relevant path entry in ``singularity.conf``. If the ``singularity.conf``
-entry is left blank, then ``$PATH`` will be searched at runtime.
+relevant path entry in ``singularity.conf``. 
 
 -  ``cryptsetup`` version 2 with kernel LUKS2 support is required for
    building or executing encrypted containers.
 
--  ``go`` is required to compile plugins, and must be an identical
-   version as that used to build {Singularity}.
-
 -  ``ldconfig`` is used to resolve library locations / symlinks when
    using the ``-nv`` or ``--rocm`` GPU support.
+
+-  ``nvidia-container-cli`` is used to configure a container for Nvidia
+   GPU / CUDA support when running with the experimental ``--nvccli`` option.
+
+For the following additional binaries, if the ``singularity.conf``
+entry is left blank, then ``$PATH`` will be searched at runtime.
+
+-  ``go`` is required to compile plugins, and must be an identical
+   version as that used to build {Singularity}.
 
 -  ``mksquashfs`` from squashfs-tools 4.3+ is used to create the
    squashfs container filesystem that is embedded into SIF container
@@ -69,11 +74,7 @@ entry is left blank, then ``$PATH`` will be searched at runtime.
 
 -  ``unsquashfs`` from squashfs-tools 4.3+ is used to extract the
    squashfs container filesystem from a SIF file when necessary.
-
--  ``nvidia-container-cli`` is used to configure a container for Nvidia
-   GPU / CUDA support when running with the experimental ``--nvccli``
-   option.
-
+   
 Searching $PATH
 ^^^^^^^^^^^^^^^
 
