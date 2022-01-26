@@ -42,6 +42,11 @@ namespaces and other security and resource limits to accomplish this.
  {Singularity} Security
 ************************
 
+.. note::
+
+   See also the :ref:`security section <security>` of this guide, for more
+   detail.
+
 {Singularity} uses a number of strategies to provide safety and
 ease-of-use on both single-user and shared systems. Notable security
 features include:
@@ -51,7 +56,7 @@ features include:
       container is easily controlled with standard POSIX permissions.
 
    -  Container filesystems are mounted ``nosuid`` and container
-      applications run with the ``PR_NO_NEW_PRIVS`` flag set. This means
+      applications run with the ``PR_SET_NO_NEW_PRIVS`` flag. This means
       that applications in a container cannot gain additional
       privileges. A regular user cannot ``sudo`` or otherwise gain root
       privilege on the host via a container.
