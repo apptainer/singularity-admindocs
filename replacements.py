@@ -24,7 +24,7 @@ variable_replacements = {
     # diverge a bit from Singularity<->SingularityPRO due to long-term backports etc.
     "{Singularity}": "Singularity",
     # Version of Go to be used in install instructions
-    "{GoVersion}": "1.17.1"
+    "{GoVersion}": "1.17.6"
 }
 
 

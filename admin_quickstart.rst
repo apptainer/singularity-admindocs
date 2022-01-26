@@ -29,12 +29,13 @@ with the applications running locally within the container.
 containers. By default only the mount namespace is isolated for
 containers, so that they have their own filesystem view. Access to
 hardware such as GPUs, high speed networks, and shared filesystems is
-easy and does not require special configuration. User home directories,
-``/tmp`` space, and installation specific mounts make it simple for
-users to benefit from the reproducibility of containerized applications
-without major changs to their existing workflows. Where more complete
-isolation is important, {Singularity} can use additional Linux
-namespaces and other security and resource limits to accomplish this.
+easy and does not require special configuration. Default access to
+user home directories, ``/tmp`` space, and installation specific
+mounts makes it simple for users to benefit from the reproducibility
+of containerized applications without major changes to their existing
+workflows. Where more complete isolation is important, {Singularity}
+can use additional Linux namespaces and other security and resource
+limits to accomplish this.
 
 .. _singularity-security:
 
@@ -152,7 +153,7 @@ On Ubuntu or Debian install the following dependencies:
 Install Go
 ==========
 
-{Singularity} v3 is written primarily in Go, and you will need Go 1.13
+{Singularity} v3 is written primarily in Go, and you will need Go 1.16
 or above installed to compile it from source. Versions of Go packaged by
 your distribution may not be new enough to build {Singularity}.
 
@@ -255,13 +256,13 @@ some of the most common options that you may need to use when building
 your ``--prefix``, or ``--syconfdir`` if you used that option with
 ``mconfig``. In a default installation from source without a
 ``--prefix`` set you will find them under
-``/usr/local/etc/singularity``.
+``/usr/local/etc/singularity``. In a default installation from RPM or Deb packages you will find them under ``/etc/singularity``.
 
 You can edit these files directly, or using the ``{Singularity} config
 global`` command as the root user to manage them.
 
 ``singularity.conf`` contains the majority of options controlling the
-runtime behaviour of {Singularity}. Additional files control security,
+runtime behavior of {Singularity}. Additional files control security,
 network, and resource configuration. Head over to the
 :ref:`Configuration files <singularity_configfiles>` section where the
 files and configuration options are discussed.

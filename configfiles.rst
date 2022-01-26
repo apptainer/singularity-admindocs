@@ -6,13 +6,14 @@
 
 As a {Singularity} Administrator, you will have access to various
 configuration files, that will let you manage container resources, set
-security restrictions and configure network options etc, when installing
-{Singularity} across the system. All these files can be found in
-``/usr/local/etc/singularity`` by default (though its location will
-obviously differ based on options passed during the installation). This
-page will describe the following configuration files and the various
-parameters contained by them. They are usually self documenting but here
-are several things to pay special attention to:
+security restrictions and configure network options etc, when
+installing {Singularity} across the system. All of these files can be
+found in ``/usr/local/etc/singularity`` by default for installations
+from source (though the location may differ based on options passed
+during the installation). For installations from RPM or Deb packages
+you will find the configuration files in ``/etc/singularity``. This
+section will describe the configuration files and the various
+parameters contained by them.
 
 ******************
  singularity.conf
@@ -21,10 +22,11 @@ are several things to pay special attention to:
 Most of the configuration options are set using the file
 ``singularity.conf`` that defines the global configuration for
 {Singularity} across the entire system. Using this file, system
-administrators can have direct say as to what functions the users can
-utilize. As a security measure, for ``setuid`` installations of
-{Singularity} it must be owned by root and must not be writable by users
-or {Singularity} will refuse to run. This is not the case for
+administrators can influence the behavior of {Singularity} and
+restrict the functionality that users can access. As a security
+measure, for ``setuid`` installations of {Singularity},
+``singularity.conf`` must be owned by root and must not be writable by
+users or {Singularity} will refuse to run. This is not the case for
 ``non-setuid`` installations that will only ever execute with user
 privilege and thus do not require such limitations.
 
@@ -67,8 +69,7 @@ Options include:
 Loop Devices
 ============
 
-{Singularity} uses loop devices to facilitate the mounting of container
-filesystems from SIF and other images.
+{Singularity} uses loop devices to facilitate the mounting of container file systems from SIF and other images.
 
 ``max loop devices``: This option allows an admin to limit the total
 number of loop devices {Singularity} will consume at a given time.
@@ -160,12 +161,12 @@ for all mounted filesystems and bind those into containers at runtime.
 
 ``mount slave``: {Singularity} automatically mounts a handful host
 system directories to the container by default. This option determines
-if filesystem changes on the host should automatically be propogated to
+if filesystem changes on the host should automatically be propagated to
 those directories in the container.
 
 .. note::
 
-   This should be set to ``yes`` when autofs mounts occuring on the host
+   This should be set to ``yes`` when autofs mounts occurring on the host
    system should be reflected up in the container.
 
 ``memory fs type``: This option allows admins to choose the temporary
@@ -260,7 +261,7 @@ types of image formats that can be leveraged by users with
 
    These limitations do not apply to the root user.
 
-   This behavior differes from {Singularity} versions before 3.9, where
+   This behavior differs from {Singularity} versions before 3.9, where
    the ``allow container squashfs/extfs`` directives also applied to the
    filesystem embedded in a SIF image.
 
@@ -275,7 +276,7 @@ Unrestricted use of CNI network configurations requires root privilege,
 as certain configurations may disrupt the host networking environment.
 
 {Singularity} 3.8 allows specific users or groups to be granted the
-ability to run containers with adminstrator specified CNI
+ability to run containers with administrator specified CNI
 configurations.
 
 ``allow net users``: Allow specified root administered CNI network
@@ -382,7 +383,7 @@ processors the longer it takes. To use all available CPU's set this to
 ``mksquashfs mem``: Allows the administrator to set the maximum amount
 of memory that mksquashfs nay use when building an image. e.g. 1G for
 1gb or 500M for 500mb. Restricting memory can have a major impact on the
-time it takes mksquashfs to create the image. NOTE: This fuctionality
+time it takes mksquashfs to create the image. NOTE: This functionality
 did not exist in squashfs-tools prior to version 4.3. If using an
 earlier version you should not set this.
 
@@ -413,7 +414,7 @@ Updating Configuration Options
 In order to manage this configuration file, {Singularity} has a ``config
 global`` command group that allows you to get, set, reset, and unset
 values through the CLI. It's important to note that these commands must
-be run with elevated priveledges because the ``singularity.conf`` can
+be run with elevated privileges because the ``singularity.conf`` can
 only be modified by an administrator.
 
 Example
@@ -699,7 +700,7 @@ translated to v2 format when applied on a cgroups v1 system.
 See
 https://github.com/opencontainers/runtime-spec/blob/master/config-linux.md#control-groups
 for information about the available limits. Note that {Singularity} uses
-TOML format for the confiuration file, rather than JSON.
+TOML format for the configuration file, rather than JSON.
 
 .. _execution_control_list:
 
@@ -1023,7 +1024,7 @@ Sylabs introduced the online `Sylabs Cloud
 with others.
 
 {Singularity} allows users to login to an account on the Sylabs Cloud,
-or configure {Singularity} to use an API compatable container service
+or configure {Singularity} to use an API compatible container service
 such as a local installation of {Singularity} Enterprise, which provides
 an on-premise private Container Library, Remote Builder and Key Store.
 
@@ -1101,7 +1102,7 @@ added by specifying the ``--insecure`` flag:
    INFO:    Global option detected. Will not automatically log into remote.
 
 This flag controls HTTP vs HTTPS for service discovery only. The
-protocol used to access individual library, build and keyservice URLs is
+protocol used to access individual library, build and keyserver URLs is
 set by the service discovery file.
 
 Additional Information
