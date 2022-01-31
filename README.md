@@ -1,5 +1,10 @@
 # Singularity Admin Docs
 
+IMPORTANT NOTE: Singularity is being renamed to Apptainer. This
+repository is now only for maintaining the 3.8 series and archiving the
+history. Submit all current user docs issues and pull requests to
+https://github.com/apptainer/apptainer-admindocs.
+
 This project uses [reStructured Text (RST)](http://docutils.sourceforge.net/rst.html)
 and [ReadTheDocs](https://readthedocs.org/). As a library for the current theme,
 [Sphinx Python library](https://pypi.org/project/Sphinx/lt="PyPI") was used,
